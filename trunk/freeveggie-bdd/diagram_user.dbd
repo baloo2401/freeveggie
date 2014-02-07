@@ -1,0 +1,207 @@
+<XMLDiagram>
+  <TDBADiagramController Locked="0">
+    <Elements>
+      <TDBADiagramObject id="3" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_ADDRESS">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="10" top="213" width="200" height="153"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="10" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_PROFIL">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="10" top="380" width="200" height="167"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="11" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_REF_COUNTRY">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="10" top="30" width="200" height="111"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="21" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_REF_RELATIONS_STATUS">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="485" top="102" width="200" height="69"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="22" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_REF_RELATION_TYPE">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="485" top="402" width="200" height="69"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="23" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_REF_USER_ROLE">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="254" top="32" width="200" height="69"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="24" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_REF_USER_STATUS">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="150" top="560" width="200" height="69"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="25" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_RELATIONSHIP">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="485" top="206" width="200" height="167"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="27" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_USER">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="250" top="150" width="200" height="251"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="83" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_ADDRESS.fk_t_address_rcn_d">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1328" top="1328" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="109" y="294"/>
+                <Point x="109" y="89"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="106" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_RELATIONSHIP.fk_t_relationship_rss_id">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1696" top="1696" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="590" y="287"/>
+                <Point x="582" y="137"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="107" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_RELATIONSHIP.fk_t_relationship_rtt_id">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1712" top="1712" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="590" y="287"/>
+                <Point x="588" y="437"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="108" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_RELATIONSHIP.fk_t_relationship_usr_id_recipient">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1728" top="1728" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="590" y="290"/>
+                <Point x="350" y="280"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="109" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_RELATIONSHIP.fk_t_relationship_usr_id_sender">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1744" top="1744" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="590" y="290"/>
+                <Point x="350" y="280"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="113" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_USER.fk_t_user_adr_id">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1808" top="1808" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="350" y="280"/>
+                <Point x="110" y="290"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="115" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_USER.fk_t_user_rur_id">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1840" top="1840" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="350" y="280"/>
+                <Point x="360" y="70"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="116" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_USER.fk_t_user_rus_id">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="1856" top="1856" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="290" y="270"/>
+                <Point x="290" y="600"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="1" propertiesclass="TDiagramMetaTableProperties" objectname="public.T_SUBSCRIPTION">
+        <TDiagramMetaTableProperties>
+          <Glyph>
+            <Geometry left="370" top="560" width="200" height="111"/>
+          </Glyph>
+        </TDiagramMetaTableProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="2" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_SUBSCRIPTION.fk_t_subscription_usr_id">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="320" top="320" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="470" y="620"/>
+                <Point x="350" y="280"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+      <TDBADiagramObject id="4" propertiesclass="TDiagramForeignKeyProperties" objectname="public.T_PROFIL.fk_t_profil_usr_id">
+        <TDiagramForeignKeyProperties>
+          <Relation>
+            <Geometry left="336" top="336" width="200" height="100"/>
+            <Glyph>
+              <Geometry>
+                <Point x="110" y="460"/>
+                <Point x="350" y="280"/>
+              </Geometry>
+            </Glyph>
+          </Relation>
+        </TDiagramForeignKeyProperties>
+      </TDBADiagramObject>
+    </Elements>
+    <Surface zoom="110,959794318472" scrollx="0" scrolly="0"/>
+  </TDBADiagramController>
+</XMLDiagram>

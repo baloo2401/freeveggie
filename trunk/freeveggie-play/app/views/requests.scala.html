@@ -1,0 +1,42 @@
+@main("requests") {
+
+<div class="container">
+	<div class="row-fluid">
+		<div class="span3">
+			<div class="well sidebar-nav">
+				<ul class="nav nav-list">
+					<li class="nav-header">Demandes de produit re&ccedil;ues</li>
+					<li class="active"><a href="#productsRequestReceived?restriction=PENDING">Pending</a></li>
+					<li class=""><a href="#productsRequestReceived?restriction=ACCEPTED">Accepted</a></li>
+					<li class=""><a href="#productsRequestReceived?restriction=REFUSED">Refused</a></li>
+				</ul>
+				<ul class="nav nav-list">
+					<li class="nav-header">Demandes de produit envoy&eacute;es</li>
+					<li class=""><a href="#productsRequestSend?restriction=PENDING">Pending</a></li>
+					<li class=""><a href="#productsRequestSend?restriction=ACCEPTED">Accepted</a></li>
+					<li class=""><a href="#productsRequestSend?restriction=REFUSED">Refused</a></li>
+				</ul>
+			</div>
+			<!--/.well -->
+		</div>
+		<!--/span-->
+		<div class="span9">
+			<div class="hero-unit hero-unit-custom" id="content">
+			</div>
+		</div>
+		<!--/row-->
+	</div>
+	<!--/.fluid-container-->
+</div>
+<!-- /.container-->
+<div class="modal" id="requestModal" style="display:none;">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">&times;</button>
+    <h3>Demande d&eacute;taill&eacute;e</h3>
+  </div>
+  <div id="modalContent">
+  </div>
+</div>
+
+
+}

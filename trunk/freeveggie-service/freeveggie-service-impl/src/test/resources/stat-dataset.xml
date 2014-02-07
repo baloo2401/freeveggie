@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <!--
+
+    This is just for reference table. But for those one we created java enums.
+    <T_REF_CULTURE_MODE rcm_id="1" rcm_libelle="GARDEN" />
+    <T_REF_CULTURE_MODE rcm_id="2" rcm_libelle="BALCONY" />
+    <T_REF_CULTURE_MODE rcm_id="3" rcm_libelle="TERRACE" />
+
+    <T_REF_CULTURE_TYPE rct_id="1" rct_libelle="REGULAR" />
+    <T_REF_CULTURE_TYPE rct_id="2" rct_libelle="BIO" />
+    <T_REF_CULTURE_TYPE rct_id="3" rct_libelle="GMO" />
+
+    <T_REF_EXCHANGE_TYPE chg_id="1" chg_libelle="SHARES" />
+    <T_REF_EXCHANGE_TYPE chg_id="2" chg_libelle="GIVES" />
+    <T_REF_EXCHANGE_TYPE chg_id="3" chg_libelle="SELLS" />
+
+    <T_REF_PRODUCT_TYPE rpt_id="1" rpt_libelle="FRUIT" />
+    <T_REF_PRODUCT_TYPE rpt_id="2" rpt_libelle="VEGETABLE" />
+
+    <T_REF_EVALUATION_NOTE ren_id="1" ren_libelle="VERYBAD" />
+    <T_REF_EVALUATION_NOTE ren_id="2" ren_libelle="BAD" />
+    <T_REF_EVALUATION_NOTE ren_id="3" ren_libelle="NORMAL" />
+    <T_REF_EVALUATION_NOTE ren_id="4" ren_libelle="GOOD" />
+    <T_REF_EVALUATION_NOTE ren_id="5" ren_libelle="VERYGOOD" />
+
+    <T_REF_EVALUATION_STATUS res_id="1" res_libelle="SETTED" />
+    <T_REF_EVALUATION_STATUS res_id="2" res_libelle="REMOVED" />
+    <T_REF_EVALUATION_STATUS res_id="3" res_libelle="ARCHIVED" />
+    -->
+
+    <T_REF_MONTH rmn_id="1" rmn_name="january"/>
+    <T_REF_MONTH rmn_id="2" rmn_name="february"/>
+    <T_REF_MONTH rmn_id="3" rmn_name="march"/>
+    <T_REF_MONTH rmn_id="4" rmn_name="april"/>
+    <T_REF_MONTH rmn_id="5" rmn_name="may"/>
+    <T_REF_MONTH rmn_id="6" rmn_name="juny"/>
+    <T_REF_MONTH rmn_id="7" rmn_name="july"/>
+    <T_REF_MONTH rmn_id="8" rmn_name="august"/>
+    <T_REF_MONTH rmn_id="9" rmn_name="september"/>
+    <T_REF_MONTH rmn_id="10" rmn_name="october"/>
+    <T_REF_MONTH rmn_id="11" rmn_name="november"/>
+    <T_REF_MONTH rmn_id="12" rmn_name="december"/>
+
+    <T_REF_COUNTRY rcn_id="76" rcn_country_name="FRANCE" rcn_code_iso_a2="FR" rcn_code_iso_a3="FRA" rcn_code_iso_number="250" />
+
+    <!-- Some state  -->
+    <T_REF_STATE rst_id="1" rst_name="ILE DE FRANCE" rst_rcn_id="76"/>
+    <T_REF_STATE rst_id="2" rst_name="FRANCHE COMPTE" rst_rcn_id="76"/>
+
+    <!-- Région ile de france -->
+    <T_REF_REGION rre_id="1" rre_name="PARIS" rre_rst_id="1" />
+    <T_REF_REGION rre_id="5" rre_name="HAUTS DE SEINE" rre_rst_id="1" />
+
+    <!-- Région franche compte -->
+    <T_REF_REGION rre_id="9" rre_name="DOUBS" rre_rst_id="2" />
+
+    <!-- City in PARIS -->
+    <T_REF_CITY rci_id="1" rci_name="PARIS" rci_zip_code="75000" rci_rre_id="1" />
+    <!-- City in HAUTS DE SEINE -->
+    <T_REF_CITY rci_id="2" rci_name="BOIS COLOMBES" rci_zip_code="92270" rci_rre_id="5" />
+
+    <!-- City in DOUBS -->
+    <T_REF_CITY rci_id="6" rci_name="BESANCON" rci_zip_code="25000" rci_rre_id="9" />
+
+    <!-- Some Ref Product (vegetable)-->
+    <T_REF_PRODUCT rpc_id="1" rpc_name="Tomato" rpc_rpt_id="1" rpc_carbohydrate="1" rpc_lipid="0.3" rpc_protein="3.2" rpc_img_filename="/ref/product/tomato.jpg" />
+    <T_REF_PRODUCT rpc_id="2" rpc_name="Letuce" rpc_rpt_id="1" rpc_carbohydrate="1.3" rpc_lipid="0.9" rpc_protein="3" rpc_img_filename="/ref/product/letuce.jpg" />
+    <T_REF_PRODUCT rpc_id="3" rpc_name="Pepper" rpc_rpt_id="1" rpc_carbohydrate="1.9" rpc_lipid="1.3" rpc_protein="3.9" rpc_img_filename="/ref/product/pepper.jpg" />
+    <T_REF_PRODUCT rpc_id="4" rpc_name="Raddish" rpc_rpt_id="1" rpc_carbohydrate="3" rpc_lipid="2.3" rpc_protein="4.5" rpc_img_filename="/ref/product/raddish.jpg" />
+    <T_REF_PRODUCT rpc_id="5" rpc_name="Pumkins" rpc_rpt_id="1" rpc_carbohydrate="2" rpc_lipid="3.3" rpc_protein="1" rpc_img_filename="/ref/product/pumkins.jpg" />
+    <T_REF_PRODUCT rpc_id="6" rpc_name="Oignon" rpc_rpt_id="1" rpc_carbohydrate="0" rpc_lipid="0.3" rpc_protein="2" rpc_img_filename="/ref/product/oignon.jpg" />
+
+    <!-- Some Ref Product (fruit)-->
+    <T_REF_PRODUCT rpc_id="7" rpc_name="Cherry" rpc_rpt_id="2" rpc_carbohydrate="1.6" rpc_lipid="9.3" rpc_protein="3.0" rpc_img_filename="/ref/product/cherry.jpg" />
+    <T_REF_PRODUCT rpc_id="8" rpc_name="Apple" rpc_rpt_id="2" rpc_carbohydrate="1.9" rpc_lipid="2.3" rpc_protein="3.8" rpc_img_filename="/ref/product/apple.jpg" />
+    <T_REF_PRODUCT rpc_id="9" rpc_name="Lemon" rpc_rpt_id="2" rpc_carbohydrate="10" rpc_lipid="5.3" rpc_protein="2" rpc_img_filename="/ref/product/lemon.jpg" />
+    <T_REF_PRODUCT rpc_id="10" rpc_name="Lime" rpc_rpt_id="2" rpc_carbohydrate="1" rpc_lipid="0.3" rpc_protein="1" rpc_img_filename="/ref/product/lime.jpg" />
+
+    <!-- Some reap month -->
+    <TJ_REAP_CALENDAR rpc_id="1" rmn_id="1" />
+    <TJ_REAP_CALENDAR rpc_id="1" rmn_id="2" />
+    <TJ_REAP_CALENDAR rpc_id="1" rmn_id="3" />
+    <TJ_REAP_CALENDAR rpc_id="2" rmn_id="2" />
+    <TJ_REAP_CALENDAR rpc_id="2" rmn_id="3" />
+    <TJ_REAP_CALENDAR rpc_id="2" rmn_id="4" />
+    <TJ_REAP_CALENDAR rpc_id="3" rmn_id="7" />
+    <TJ_REAP_CALENDAR rpc_id="3" rmn_id="8" />
+    <TJ_REAP_CALENDAR rpc_id="4" rmn_id="9" />
+    <TJ_REAP_CALENDAR rpc_id="5" rmn_id="10" />
+    <TJ_REAP_CALENDAR rpc_id="6" rmn_id="1" />
+    <TJ_REAP_CALENDAR rpc_id="7" rmn_id="12" />
+    <TJ_REAP_CALENDAR rpc_id="8" rmn_id="12" />
+    <TJ_REAP_CALENDAR rpc_id="9" rmn_id="12" />
+    <TJ_REAP_CALENDAR rpc_id="10" rmn_id="12" />
+
+    <!-- Some seed month -->
+    <TJ_SEED_CALENDAR rpc_id="1" rmn_id="10" />
+    <TJ_SEED_CALENDAR rpc_id="1" rmn_id="12" />
+    <TJ_SEED_CALENDAR rpc_id="1" rmn_id="9" />
+    <TJ_SEED_CALENDAR rpc_id="2" rmn_id="8" />
+    <TJ_SEED_CALENDAR rpc_id="2" rmn_id="7" />
+    <TJ_SEED_CALENDAR rpc_id="2" rmn_id="6" />
+    <TJ_SEED_CALENDAR rpc_id="3" rmn_id="1" />
+    <TJ_SEED_CALENDAR rpc_id="3" rmn_id="2" />
+    <TJ_SEED_CALENDAR rpc_id="4" rmn_id="1" />
+    <TJ_SEED_CALENDAR rpc_id="5" rmn_id="2" />
+    <TJ_SEED_CALENDAR rpc_id="6" rmn_id="3" />
+    <TJ_SEED_CALENDAR rpc_id="7" rmn_id="3" />
+    <TJ_SEED_CALENDAR rpc_id="8" rmn_id="4" />
+    <TJ_SEED_CALENDAR rpc_id="9" rmn_id="5" />
+    <TJ_SEED_CALENDAR rpc_id="10" rmn_id="6" />
+
+
+    <!-- Some address -->
+    <T_ADDRESS adr_id="1" adr_name="Home" adr_street_number="1" adr_street_name="evaluator1" adr_rci_id="1"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="2" adr_name="Home" adr_street_number="2" adr_street_name="evaluator2" adr_rci_id="1"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="3" adr_name="Home" adr_street_number="1" adr_street_name="evaluator1" adr_rci_id="1"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+
+    <T_ADDRESS adr_id="4" adr_name="Mickael home" adr_street_number="6" adr_street_name="RUE CHARLES DUPORT" adr_rci_id="2"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="5" adr_name="Francis home" adr_street_number="7" adr_street_name="RUE DU LUXEMBOURG" adr_rci_id="6"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="6" adr_name="Thierry home" adr_street_number="1" adr_street_name="RUE DES CHAMPS ELYSEES" adr_rci_id="1"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="7" adr_name="Thierry holiday home 7" adr_street_number="6" adr_street_name="RUE DU LUXEMBOURG" adr_rci_id="2"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="8" adr_name="Thierry holiday home 8" adr_street_number="6" adr_street_name="RUE DU LUXEMBOURG" adr_rci_id="2"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="9" adr_name="Thierry holiday home 9" adr_street_number="6" adr_street_name="RUE DU LUXEMBOURG" adr_rci_id="2"  adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+
+    <T_USER usr_id="1" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="evaluator1" usr_lastname="evaluator1" usr_username="evaluator1" usr_password="evaluator1" usr_email_address="evaluator1@edubois.org" usr_adr_id="1" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="2" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="evaluator2" usr_lastname="evaluator2" usr_username="evaluator2" usr_password="evaluator2" usr_email_address="evaluator2@edubois.org" usr_adr_id="2" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="3" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="evaluator3" usr_lastname="evaluator3" usr_username="evaluator3" usr_password="evaluator3" usr_email_address="evaluator3@edubois.org" usr_adr_id="3" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+
+    <T_USER usr_id="4" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="mickael" usr_lastname="dubois" usr_username="baloo" usr_password="baloo" usr_email_address="mickael@edubois.org" usr_adr_id="4" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="5" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="francis" usr_lastname="huyng" usr_username="3615" usr_password="3612" usr_email_address="francis@edubois.org" usr_adr_id="5" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="6" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="thierry" usr_lastname="luu huu" usr_username="titi" usr_password="titi" usr_email_address="thierry@edubois.org" usr_adr_id="6" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+
+    <T_USER usr_id="7" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="mickael7" usr_lastname="dubois" usr_username="baloo7" usr_password="baloo" usr_email_address="mickael@edubois.org" usr_adr_id="7" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="8" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="francis8" usr_lastname="huyng" usr_username="36158" usr_password="3612" usr_email_address="francis@edubois.org" usr_adr_id="8" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="9" usr_creation_date="2012-01-01 00:00:00.0" usr_firstname="thierry9" usr_lastname="luu huu" usr_username="titi9" usr_password="titi" usr_email_address="thierry@edubois.org" usr_adr_id="9" usr_last_connexion="2012-01-01 00:00:00.0" usr_rur_id="1" usr_rus_id="2"/>
+
+
+    <T_PROFIL prf_id="1" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="1" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="2" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="2" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="3" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="3" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="4" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="5" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="6" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="6" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="7" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="7" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="8" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="8" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="9" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="9" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_GARDEN grd_id="1" grd_name="Main garden" grd_description="Evaluator1 garden" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="1" grd_sts_id="2"/>
+    <T_GARDEN grd_id="2" grd_name="Main garden" grd_description="Evaluator2 garden" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="2" grd_sts_id="3"/>
+    <T_GARDEN grd_id="3" grd_name="Main garden" grd_description="Evaluator3 garden" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="3" grd_sts_id="4"/>
+
+    <!-- Garden of user 4 -->
+    <T_GARDEN grd_id="4" grd_name="Main garden" grd_description="Mickael first garden" grd_img_filename="" grd_adr_id="4" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="4" grd_sts_id="1"/>
+    <T_GARDEN grd_id="8" grd_name="Main garden" grd_description="Mickael second garden" grd_img_filename="" grd_adr_id="4" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="4" grd_sts_id="1"/>
+
+    <!-- Garden of user 5 -->
+    <T_GARDEN grd_id="5" grd_name="Main garden" grd_description="Francis first garden" grd_img_filename="" grd_adr_id="5" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="5" grd_sts_id="1"/>
+
+    <!-- Garden of user 6 -->
+    <T_GARDEN grd_id="6" grd_name="Main garden" grd_description="Thierry first garden" grd_img_filename="" grd_adr_id="6" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="6" grd_sts_id="1"/>
+    <T_GARDEN grd_id="7" grd_name="Second main garden" grd_description="Thierry second garden" grd_img_filename="" grd_adr_id="7" grd_home_adr="false" grd_creation_date="2012-01-01 00:00:00.0" grd_usr_id="6" grd_sts_id="1"/>
+
+    <!-- Prouct of user 4 in garden 4 and 8 -->
+    <T_PRODUCT prd_id="1" prd_grd_id="4" prd_name="Les tomates de miky" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="2" prd_grd_id="4" prd_name="Les lettues de miky" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="3" prd_grd_id="8" prd_name="Les Pepper de miky" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="4" prd_grd_id="8" prd_name="Les Raddish de miky" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="17" prd_grd_id="8" prd_name="Les Raddish de miky" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="18" prd_grd_id="8" prd_name="Les Raddish de miky" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="2"/>
+
+    <!-- Product of user 5 in garden 5 -->
+    <T_PRODUCT prd_id="5" prd_grd_id="5" prd_name="Les tomates de francis" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="6" prd_grd_id="5" prd_name="Les lettues de francis" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="7" prd_grd_id="5" prd_name="Les Pepper de francis" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="8" prd_grd_id="5" prd_name="Les Raddish de francis" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+
+    <!-- Product of user 6 in garden 6 -->
+    <T_PRODUCT prd_id="9" prd_grd_id="6" prd_name="Les tomates de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="10" prd_grd_id="6" prd_name="Les lettues de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="11" prd_grd_id="6" prd_name="Les Pepper de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="12" prd_grd_id="6" prd_name="Les Raddish de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="2"/>
+
+    <!-- Product of user 6 in garden 7 -->
+    <T_PRODUCT prd_id="13" prd_grd_id="7" prd_name="Les tomates de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="14" prd_grd_id="7" prd_name="Les lettues de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="15" prd_grd_id="7" prd_name="Les Pepper de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="16" prd_grd_id="7" prd_name="Les Raddish de thierry" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+
+    <!-- Comment of user 1 on product of user 4 -->
+    <T_COMMENT_PRODUCT cpr_id="1" cpr_comment="Pas mal du tout." cpr_usr_id="1" cpr_prd_id="1" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="4"/>
+    <T_COMMENT_PRODUCT cpr_id="2" cpr_comment="Pas mal du tout." cpr_usr_id="1" cpr_prd_id="2" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="3"/>
+    <T_COMMENT_PRODUCT cpr_id="3" cpr_comment="Pas mal du tout." cpr_usr_id="1" cpr_prd_id="3" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="2"/>
+    <T_COMMENT_PRODUCT cpr_id="4" cpr_comment="Pas mal du tout." cpr_usr_id="1" cpr_prd_id="4" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="5"/>
+
+    <!-- Comment of user 2 on product of user 4 -->
+    <T_COMMENT_PRODUCT cpr_id="5" cpr_comment="Pas mal du tout." cpr_usr_id="2" cpr_prd_id="1" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="5"/>
+    <T_COMMENT_PRODUCT cpr_id="6" cpr_comment="Pas mal du tout." cpr_usr_id="2" cpr_prd_id="2" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="4"/>
+    <T_COMMENT_PRODUCT cpr_id="7" cpr_comment="Pas mal du tout." cpr_usr_id="2" cpr_prd_id="3" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="3"/>
+
+    <!-- Comment of user 3 on product of user 6 in garden 6-->
+    <T_COMMENT_PRODUCT cpr_id="8" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="9" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="5"/>
+    <T_COMMENT_PRODUCT cpr_id="9" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="10" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="4"/>
+    <T_COMMENT_PRODUCT cpr_id="10" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="11" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="3"/>
+    <T_COMMENT_PRODUCT cpr_id="11" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="12" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="5"/>
+
+    <!-- Comment of user 3 on product of user 6 in garden 7-->
+    <T_COMMENT_PRODUCT cpr_id="12" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="13" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="1"/>
+    <T_COMMENT_PRODUCT cpr_id="13" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="14" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="2"/>
+    <T_COMMENT_PRODUCT cpr_id="14" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="15" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="1"/>
+    <T_COMMENT_PRODUCT cpr_id="15" cpr_comment="Pas mal du tout." cpr_usr_id="3" cpr_prd_id="16" cpr_res_id="1" cpr_creation_date="2012-01-01 00:00:00.0" cpr_ren_id="2"/>
+
+    <!-- Request on product of user 4 -->
+    <T_REQUEST_PRODUCT rqt_id="1" rqt_prd_id="1" rqt_usr_id="1" rqt_quantity="1.1111111" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="2" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:00.1"/>
+    <T_REQUEST_PRODUCT rqt_id="4" rqt_prd_id="1" rqt_usr_id="5" rqt_quantity="2.22222222" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:02.0"/>
+    <T_REQUEST_PRODUCT rqt_id="5" rqt_prd_id="1" rqt_usr_id="6" rqt_quantity="200.0" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:04.0"/>
+
+    <T_REQUEST_PRODUCT rqt_id="2" rqt_prd_id="2" rqt_usr_id="2" rqt_quantity="2.3333333" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:04.0"/>
+    <T_REQUEST_PRODUCT rqt_id="3" rqt_prd_id="3" rqt_usr_id="3" rqt_quantity="0.64444" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:05.0"/>
+    <T_REQUEST_PRODUCT rqt_id="6" rqt_prd_id="4" rqt_usr_id="7" rqt_quantity="1.5555555" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:06.0"/>
+    <T_REQUEST_PRODUCT rqt_id="7" rqt_prd_id="4" rqt_usr_id="8" rqt_quantity="6.0764785" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="4" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:00.7"/>
+    <T_REQUEST_PRODUCT rqt_id="21" rqt_prd_id="18" rqt_usr_id="8" rqt_quantity="6.0764785" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="4" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:00.8"/>
+    <T_REQUEST_PRODUCT rqt_id="22" rqt_prd_id="1" rqt_usr_id="8" rqt_quantity="1" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="3012-01-01 00:00:00.9"/>
+
+    <!-- request on product of user 5 (city 5) -->
+    <T_REQUEST_PRODUCT rqt_id="8" rqt_prd_id="5" rqt_usr_id="9" rqt_quantity="0.156776" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:00.0"/>
+    <T_REQUEST_PRODUCT rqt_id="9" rqt_prd_id="5" rqt_usr_id="9" rqt_quantity="1" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:01.0"/>
+    <T_REQUEST_PRODUCT rqt_id="10" rqt_prd_id="7" rqt_usr_id="9" rqt_quantity="1" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:02.0"/>
+    <T_REQUEST_PRODUCT rqt_id="11" rqt_prd_id="8" rqt_usr_id="9" rqt_quantity="2.78" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:03.0"/>
+    <T_REQUEST_PRODUCT rqt_id="12" rqt_prd_id="7" rqt_usr_id="9" rqt_quantity="1112.78" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="1" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:01:02.0"/>
+    <T_REQUEST_PRODUCT rqt_id="13" rqt_prd_id="5" rqt_usr_id="9" rqt_quantity="122" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="4" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:01:00.0"/>
+
+    <!-- request on product of user 6 (city 5) -->
+    <T_REQUEST_PRODUCT rqt_id="14" rqt_prd_id="9" rqt_usr_id="9" rqt_quantity="0.5" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:10:00.0"/>
+    <T_REQUEST_PRODUCT rqt_id="15" rqt_prd_id="9" rqt_usr_id="1" rqt_quantity="2" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 10:00:00.0"/>
+    <T_REQUEST_PRODUCT rqt_id="16" rqt_prd_id="10" rqt_usr_id="2" rqt_quantity="1" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-01-01 00:00:00.0"/>
+    <T_REQUEST_PRODUCT rqt_id="17" rqt_prd_id="11" rqt_usr_id="9" rqt_quantity="2.78" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-02-01 00:00:00.0"/>
+    <T_REQUEST_PRODUCT rqt_id="18" rqt_prd_id="12" rqt_usr_id="9" rqt_quantity="122" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-03-01 00:00:00.0"/>
+    <T_REQUEST_PRODUCT rqt_id="19" rqt_prd_id="12" rqt_usr_id="9" rqt_quantity="122" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="2" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-04-01 00:00:00.0"/>
+    <T_REQUEST_PRODUCT rqt_id="20" rqt_prd_id="12" rqt_usr_id="9" rqt_quantity="122" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="4" rqt_creation_date="2012-01-01 00:00:00.0" rqt_answer_date="2012-01-01 00:00:00.0" rqt_picking_date="2012-05-01 00:00:00.0"/>
+
+</dataset>

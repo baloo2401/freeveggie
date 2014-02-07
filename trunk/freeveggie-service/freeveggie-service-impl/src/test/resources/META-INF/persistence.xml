@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="FREEVEGGIE_PU_TEST" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>org.mdubois.freeveggie.bo.AddressBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenLikeBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductLikeBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductRequestBO</class>
+        <class>org.mdubois.freeveggie.bo.ProfileBO</class>
+        <class>org.mdubois.freeveggie.bo.RefCityBO</class>
+        <class>org.mdubois.freeveggie.bo.RefCountryBO</class>
+        <class>org.mdubois.freeveggie.bo.RefMonthBO</class>
+        <class>org.mdubois.freeveggie.bo.RefProductBO</class>
+        <class>org.mdubois.freeveggie.bo.RefRegionBO</class>
+        <class>org.mdubois.freeveggie.bo.RefStateBO</class>
+        <class>org.mdubois.freeveggie.bo.RelationShipBO</class>
+        <class>org.mdubois.freeveggie.bo.SubscriptionBO</class>
+        <class>org.mdubois.freeveggie.bo.UserBO</class>
+        <class>org.mdubois.freeveggie.bo.PartialUserBO</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:unit-testing-jpa"/>
+            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
+            <!--property name="hibernate.connection.driver_class" value="com.p6spy.engine.spy.P6SpyDriver"/-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+            <property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.connection.password" value=""/>
+            <!-- EhCache -->
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_structured_cache" value="true"/>
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="FREEVEGGIE_PU_TEST_STAT" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>org.mdubois.freeveggie.bo.AddressBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenLikeBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductLikeBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductRequestBO</class>
+        <class>org.mdubois.freeveggie.bo.ProfileBO</class>
+        <class>org.mdubois.freeveggie.bo.RefCityBO</class>
+        <class>org.mdubois.freeveggie.bo.RefCountryBO</class>
+        <class>org.mdubois.freeveggie.bo.RefMonthBO</class>
+        <class>org.mdubois.freeveggie.bo.RefProductBO</class>
+        <class>org.mdubois.freeveggie.bo.RefRegionBO</class>
+        <class>org.mdubois.freeveggie.bo.RefStateBO</class>
+        <class>org.mdubois.freeveggie.bo.RelationShipBO</class>
+        <class>org.mdubois.freeveggie.bo.SubscriptionBO</class>
+        <class>org.mdubois.freeveggie.bo.UserBO</class>
+        <class>org.mdubois.freeveggie.bo.PartialUserBO</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:unit-testing-jpa-stat"/>
+            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
+            <!--property name="hibernate.connection.driver_class" value="com.p6spy.engine.spy.P6SpyDriver"/-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+            <property name="hibernate.connection.username" value="sa"/>
+            <property name="hibernate.connection.password" value=""/>
+            <!-- EhCache -->
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_structured_cache" value="true"/>
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="FREEVEGGIE_PU_NOSQL" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>jdbc/freeveggie</jta-data-source>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties/>
+    </persistence-unit>
+    <!--<persistence-unit name="FREEVEGGIE_PU_NOSQL" transaction-type="RESOURCE_LOCAL">
+        <class>model.Order</class>
+        <class>model.OrderLine</class>
+        <class>model.Address</class>
+        <class>model.Customer</class>
+        <properties>
+            <property name="eclipselink.target-database" value="org.eclipse.persistence.nosql.adapters.mongo.MongoPlatform"/>
+            <property name="eclipselink.nosql.connection-spec" value="org.eclipse.persistence.nosql.adapters.mongo.MongoConnectionSpec"/>
+            <property name="eclipselink.nosql.property.mongo.port" value="27017"/>
+            <property name="eclipselink.nosql.property.mongo.host" value="localhost"/>
+            <property name="eclipselink.nosql.property.mongo.db" value="freeveggie"/>
+            <property name="eclipselink.logging.level" value="FINEST"/>
+        </properties>
+    </persistence-unit>-->
+</persistence>

@@ -1,0 +1,108 @@
+<h2>Profile</h2>
+<div class="row-fluid">
+	<div class="span9">
+		<form id="updateProfil" method="post" action="/home/profil" class="form-vertical">
+			<div class="row-fluid">
+				<fieldset>
+					<div id="errorPanel" class="alert alert-error" style="display:none">
+						<!-- button type="button" class="close" data-dismiss="alert">&times;</button -->
+						<span id="errorMessage"></span>
+					</div>
+					<div id="messagePanel" class="alert alert-success" style="display:none">
+						<!-- button type="button" class="close" data-dismiss="alert">&times;</button -->
+						<span id="message"></span>
+					</div>
+					<div class="control-group span3" style="width: 50%;">
+						<label class="control-label" style="width: 160px;"
+							for="personalDescription">D&eacute;scription personnelle :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="personalDescription" rows="5"
+								name="personalDescription"  style="width: 100%;">{{personalDescription}}</textarea>
+							<span class="help-inline" id="personalDescriptionErrorMessage"></span>
+						</div>
+					</div>
+					<div class="control-group span3" style="width: 50%;">
+						<label class="control-label" style="width: 160px;" for="interest">Interet
+							personnelle :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="interest" rows="5"
+								name="interest" style="width: 100%;">{{interest}}</textarea>
+							<span class="help-inline" id="interestErrorMessage"></span>
+						</div>
+					</div>
+					<div class="control-group span3" style="width: 50%;">
+						<label class="control-label" style="width: 160px;"
+							for="participation">Particiatpion :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="participation" rows="5"
+								name="participation" style="width: 100%;">{{participation}}</textarea>
+							<span class="help-inline" id="participationErrorMessage"></span>
+						</div>
+					</div>
+					<div class="control-group span3" style="width: 50%;">
+						<label class="control-label" style="width: 160px;"
+							for="philosophy">Phylosophie :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="philosophy" rows="5"
+								name="philosophy" style="width: 100%;">{{philosophy}}</textarea>
+							<span class="help-inline" id="philosophyErrorMessage"></span>
+						</div>
+					</div>
+					<div class="control-group span3" style="width: 50%;">
+						<label class="control-label" style="width: 160px;" for="experience">Exp&eacute;rience
+							de livraison :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="experience" rows="5"
+								name="experience" style="width: 100%;">{{experience}}</textarea>
+							<span class="help-inline" id="experienceErrorMessage"></span>
+						</div>
+					</div>
+					<div class="control-group span3" style="width: 50%;">
+						<label class="control-label" style="width: 160px;" for="preferedMeals">Plat
+							pr&eacute;f&eacute;r&eacute; :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="preferedMeals" rows="5"
+								name="preferedMeals" style="width: 100%;">{{preferedMeals}}</textarea>
+							<span class="help-inline" id="preferedMealsErrorMessage"></span>
+						</div>
+					</div>
+					<div class="control-group span3" style="width: 50%;">
+						<label class="control-label" style="width: 160px;" for="reason">Pourquoi
+							freeveggie :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="reason" rows="5" 
+								name="reason" style="width: 100%;">{{reason}}</textarea>
+							<span class="help-inline" id="reasonErrorMessage"></span>
+						</div>
+					</div>
+					<div class="control-group span3"  style="width: 50%;">
+						<label class="control-label" style="width: 160px;" for="other">Texte
+							libre :</label>
+						<div class="controls">
+							<textarea class="input-xlarge" id="other" rows="5" name="other" style="width: 100%;">{{other}}</textarea>
+							<span class="help-inline" id="otherErrorMessage"></span>
+						</div>
+					</div>
+					<div class="form-actions span6">
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</div>
+	<!-- div class="span3">
+		{{^userPictureFilename}}
+			<a class="thumbnail"> <img
+				src="http://placehold.it/160x120" alt="User picture">
+			</a>
+		{{/userPictureFilename}}
+		{{#userPictureFilename}}
+			<a class="thumbnail" style="width: 160px;height: 120px;"> <img
+				src="http://freeveggie.org/images/{{userPictureFilename}}" alt="User picture">
+			</a>
+		{{/userPictureFilename}}
+	</div -->
+</div>
+<script>
+	$("form#updateProfil").form();
+</script>

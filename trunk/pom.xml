@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>The freeveggie project reactor.</description>
+
+    <groupId>org.mdubois</groupId>
+    <artifactId>freeveggie</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>freeveggie-ear</module>
+        <module>freeveggie-service</module>
+        <module>freeveggie-framework</module>
+        <!--module>freeveggie-play</module-->
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javaee-api.version>6.0</javaee-api.version>
+
+        <!-- freeveggie -->
+        <freeveggie.version>${project.version}</freeveggie.version>
+
+        <!-- glassfish -->
+        <glassfish.embedded.all>3.1</glassfish.embedded.all>
+        
+        <!-- cxf pluging version -->
+        <cxf.version>2.5.1</cxf.version>
+
+        <!-- hibernate -->
+        <hibernate.core.verion>3.6.8.Final</hibernate.core.verion>
+        <org.hibernate.javax.persistence.version>1.0.1.Final</org.hibernate.javax.persistence.version>
+
+        <!-- spring -->
+        <org.springframework.version>2.5.6</org.springframework.version>
+
+        <!-- apache commons -->
+        <commons.lang.version>2.5</commons.lang.version>
+        <commons.validator.version>1.2.0</commons.validator.version>
+
+        <!-- junit -->
+        <junit.version>4.8.2</junit.version>
+
+        <!-- dbunit -->
+        <dbunit.version>2.4.8</dbunit.version>
+
+        <!-- unitils -->
+        <unitils.version>3.3</unitils.version>
+
+        <!-- hsqldb -->
+        <hsqldb.version>1.8.0.7</hsqldb.version>
+
+        <!-- jmockt -->
+        <jmockit.version>0.993</jmockit.version>
+
+        <!-- log4j -->
+        <log4j.version>1.2.14</log4j.version>
+        <slf4j.version>1.5.10</slf4j.version>
+
+        <!-- arquillian -->
+        <arquillian.version>1.0.0.CR1</arquillian.version>
+
+
+        <dom4j.version>1.6.1</dom4j.version>
+        <javassist.version>3.4.GA</javassist.version>
+        <postgresql.version>9.0-801.jdbc4</postgresql.version>
+        <ehcache.version>1.6.1</ehcache.version>
+        <commons.logging.version>1.1</commons.logging.version>
+    </properties>
+
+
+
+    <developers>
+        <developer>
+            <id>mickael</id>
+            <name>Mickael Dubois</name>
+            <email>mickael@edubois.org</email>
+        </developer>
+        <developer>
+            <id>francis</id>
+            <name>Francis Huynh</name>
+            <email>francis@edubois.org</email>
+        </developer>
+        <developer>
+            <id>thierry</id>
+            <name>Thierry Luu Huu</name>
+            <email>thierry@edubois.org</email>
+        </developer>
+    </developers>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*IT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.9</version>
+                    <configuration>
+                        <enableAssertions>true</enableAssertions>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>de.akquinet.innovation.play2</groupId>
+                    <artifactId>play2-maven-plugin</artifactId>
+                    <version>1.1.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <profile>
+            <id>integration-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*Test.java</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- to launch use : mvn package -Dci -N -->
+            <id>maestro-env-int-delivery</id>
+            <activation>
+                <property>
+                    <name>ci</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>get-released-packages</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <debug>true</debug>
+                                    <target>
+                                        <echo message="Step 1 - Stop play server"/>
+                                        <sshexec host="usine-dev.edubois.org" username="exploit" password="exploit" command="~/outils/stopServer.sh -q" trust="true" />
+
+                                        <echo message="Step 2 - Deploye last version"/>
+                                        <sshexec host="usine-dev.edubois.org" username="exploit" password="exploit" command="~/outils/uploadlastversion.sh" trust="true" />
+
+                                        <echo message="Step 3 - Start play server"/>
+                                        <sshexec host="usine-dev.edubois.org" username="exploit" password="exploit" command="~/outils/startServer.sh" trust="true" />
+
+                                        <echo message="Step 4 - Deployement successful"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.ant</groupId>
+                                <artifactId>ant-jsch</artifactId>
+                                <version>1.7.1</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <distributionManagement>
+        <!-- Publish versioned releases here -->
+        <repository>
+            <id>Edubois Release</id>
+            <name>My releases</name>
+            <url>http://usine-dev.edubois.org:8080/nexus/content/repositories/releases</url>
+        </repository>
+
+        <!-- Publish snapshots here -->
+        <snapshotRepository>
+            <id>Edubois Snapshot</id>
+            <name>My snapshots</name>
+            <url>http://usine-dev.edubois.org:8080/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

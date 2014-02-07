@@ -1,0 +1,11 @@
+<tr>
+<!-- 	<td>{{referenceProduct.type}}</td> -->
+	<td>
+		<div class="delete-product-cross" data-product="{{id}}"><i class="icon-remove"></i></div>
+		<a href="/home#editProduct?id={{id}}"  class="edit-product-cross" data-product="{{id}}"><i class="icon-edit"></i></a>
+		<div onclick="document.location = '/home#productDescription?id={{id}}';" style="cursor: pointer;" >
+		{{name}} - {{referenceProduct.name}}
+		</div>
+	</td>
+	<td onclick="document.location = '/home#product?id={{id}}';" style="cursor: pointer;" > {{quantity}} kg</a></td>
+</tr>
