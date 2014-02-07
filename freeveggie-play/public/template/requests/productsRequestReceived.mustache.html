@@ -1,0 +1,41 @@
+<h2>Demandes de produit re&ccedil;ues </h2>
+<div>
+	<table id="query-table-content"
+		class="table table-striped table-bordered table-condensed .table-striped">
+		<thead>
+			<tr>
+				<th id="producer" class="query-table-header">Producteur</th>
+				<th id="product" class="query-table-header">Produit</th>
+				<th id="quantity" class="query-table-header">Quantit&eacute;</th>
+				<th id="maj" class="query-table-header">Date d'envoie</th>
+				<th id="picking" class="query-table-header">Date d'enl&eacute;vement</th>
+				<th id="state">Etat</th>
+				<th id="exchange" class="query-table-header">Echange</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#productRequestMsg}}
+			<tr  class="product-request-line" id="{{id}}">
+				<td>{{requester.username}}</td>
+				<td>{{product.name}}</td>
+				<td>{{quantity}}</td>
+				<td class="date" data-date-format="dd/mm/yy">{{creationDate}}</td>
+				<td class="date" data-date-format="dd/mm/yy">{{pickingDate}}</td>
+				<td>{{status}}</td>
+				<td>{{product.exchangeType}}</td>
+			</tr>
+			{{/productRequestMsg}}
+		</tbody>
+	</table>
+</div>
+<!-- <div id="pagination-product" class="pagination"	style="text-align: center;"> -->
+<!-- 	<ul><li></li></ul> -->
+<!-- </div> -->
+<script>
+	$('.product-request-line').each(function() {
+		$(this).click(function() {
+			var requestId = $(this).attr("id");
+			window.location.href = '/requests#productsRequest?id=' + requestId;
+		});
+	});
+</script>

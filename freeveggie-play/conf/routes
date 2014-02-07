@@ -1,0 +1,110 @@
+
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+#Page without login
+#	Login page
+GET     /login                       							org.mdubois.freeveggie.controllers.SecurityController.blank()
+#	Create account
+GET		/createaccount											org.mdubois.freeveggie.controllers.ApplicationController.createAccount()
+POST	/createaccount											org.mdubois.freeveggie.controllers.AccountController.createAccount()
+GET		/validateaccount										org.mdubois.freeveggie.controllers.ApplicationController.validateAccountCreation()
+
+# Index page
+GET     /                           							org.mdubois.freeveggie.controllers.SecurityController.index()
+
+# Error page
+GET 	/error													org.mdubois.freeveggie.controllers.ErrorController.error()
+
+#Login Page
+POST    /connect                       							org.mdubois.freeveggie.controllers.SecurityController.connect()
+GET    	/disconnect                       						org.mdubois.freeveggie.controllers.SecurityController.disconnect()
+
+# Captcha
+GET		/captcha												org.mdubois.freeveggie.controllers.ApplicationController.captcha()
+
+# Public pages
+GET 	/public/*file											controllers.Assets.at(path="/public", file)
+
+# Home page
+GET 	/home													org.mdubois.freeveggie.controllers.ApplicationController.home()
+GET		/home/generalInformation								org.mdubois.freeveggie.controllers.UserController.getUser()
+POST	/home/generalInformation								org.mdubois.freeveggie.controllers.UserController.updateGeneralInformation()
+GET 	/home/address											org.mdubois.freeveggie.controllers.AddressController.getUserHomeAddress()
+POST 	/home/address											org.mdubois.freeveggie.controllers.AddressController.updateUserHomeAddress()
+GET		/home/credentials										org.mdubois.freeveggie.controllers.ApplicationController.blank()
+POST	/home/credentials										org.mdubois.freeveggie.controllers.SecurityController.changePassword()
+GET		/home/profil											org.mdubois.freeveggie.controllers.ProfilController.getUserProfil()
+POST	/home/profil											org.mdubois.freeveggie.controllers.ProfilController.updateUserProfil()
+#GET	/home/relationships									org.mdubois.freeveggie.controllers.ApplicationController.getRelationships()
+GET		/home/garden											org.mdubois.freeveggie.controllers.GardenController.getGardenById(id: Long)
+GET		/home/createGarden										org.mdubois.freeveggie.controllers.ApplicationController.blank()
+GET		/home/createProduct										org.mdubois.freeveggie.controllers.ApplicationController.blank()
+GET		/home/productDescription								org.mdubois.freeveggie.controllers.ProductController.getProductById(id: Long)
+
+# Search
+GET		/search													org.mdubois.freeveggie.controllers.ApplicationController.search()
+GET		/search/garden/:ltUp/:ltDown/:lgUp/:lgDown/:refId		org.mdubois.freeveggie.controllers.SearchController.searchGardens(ltUp : Double, ltDown : Double, lgUp : Double, lgDown : Double, refId : Integer )
+GET		/search/gardenDescription								org.mdubois.freeveggie.controllers.GardenController.getGardenById(id: Long)
+GET		/search/productDescription								org.mdubois.freeveggie.controllers.ProductController.getProductById(id: Long)
+
+# Request page
+GET		/requests          										org.mdubois.freeveggie.controllers.ApplicationController.requests()
+GET		/requests/productsRequestReceived						org.mdubois.freeveggie.controllers.ProductRequestController.getProductsRequestReceived(restriction: String ?= "", order: String ?= "default", way: String ?= "default", page: Integer ?=1)
+GET		/requests/productsRequestSend							org.mdubois.freeveggie.controllers.ProductRequestController.getProductsRequestSend(restriction: String ?= "", order: String ?= "default", way: String ?= "default", page: Integer ?=1)
+GET		/requests/productsRequest								org.mdubois.freeveggie.controllers.ProductRequestController.getProductRequestById()
+GET		/productrequest/garden/:id								org.mdubois.freeveggie.controllers.ProductRequestController.getProductsRequestByGarden(id: Long)
+POST	/productrequest/:id/answer								org.mdubois.freeveggie.controllers.ProductRequestController.anwserRequest(id : Long)
+
+
+# Reference
+GET		/reference/product										org.mdubois.freeveggie.controllers.ReferenceController.getRefProduct()
+GET		/reference/country										org.mdubois.freeveggie.controllers.ReferenceController.getRefCountry()
+GET		/reference/city											org.mdubois.freeveggie.controllers.ReferenceController.getRefCity()
+GET		/reference/zipcode										org.mdubois.freeveggie.controllers.ReferenceController.getRefCityByZipCode()
+
+# Garden
+POST	/garden													org.mdubois.freeveggie.controllers.GardenController.addGarden()
+GET		/garden/:id												org.mdubois.freeveggie.controllers.GardenController.getGardenById(id: Long)
+DELETE	/garden/:id												org.mdubois.freeveggie.controllers.GardenController.deleteGarden(id: Long)
+GET		/garden/user/:id										org.mdubois.freeveggie.controllers.GardenController.getGardenByUser(id: Long)
+
+# Garden comment
+GET		/gardencomment/garden/:id								org.mdubois.freeveggie.controllers.GardenCommentController.getGardenCommentByGarden(id: Long)
+
+# Garden like
+GET		/gardenlike/garden/:id									org.mdubois.freeveggie.controllers.GardenLikeController.getGardenLikeByGarden(id: Long)
+
+# Product comment
+GET		/productcomment/product/:id								org.mdubois.freeveggie.controllers.ProductCommentController.getProductCommentByProduct(id: Long)
+POST	/productcomment/product/:id								org.mdubois.freeveggie.controllers.ProductCommentController.postProductCommentByProduct(id: Long)
+DELETE	/productcomment/product/:id								org.mdubois.freeveggie.controllers.ProductCommentController.deleteProductCommentByProduct(id: Long)
+
+
+# Product like
+GET		/productlike/product/:id								org.mdubois.freeveggie.controllers.ProductLikeController.getProductLikeByProduct(id: Long)
+POST	/productlike/product/:id								org.mdubois.freeveggie.controllers.ProductLikeController.postProductLikeByProduct(id: Long)
+DELETE	/productlike/product/:id								org.mdubois.freeveggie.controllers.ProductLikeController.deleteProductLikeByProduct(id: Long)
+
+# Product
+GET		/product/garden/:id										org.mdubois.freeveggie.controllers.ProductController.getProductByGarden(id: Long)
+PUT 	/product/garden/:id										org.mdubois.freeveggie.controllers.ProductController.addProductToGarden(id: Long)
+GET		/product/:id											org.mdubois.freeveggie.controllers.ProductController.getProductById(id: Long)
+POST	/product/:id											org.mdubois.freeveggie.controllers.ProductController.updateProductById(id: Long)
+DELETE	/product/:id											org.mdubois.freeveggie.controllers.ProductController.deleteProduct(id: Long)
+GET		/home/editProduct										org.mdubois.freeveggie.controllers.ProductController.getProduct()
+# User
+# Validate user account
+GET		/confirmaccount											org.mdubois.freeveggie.controllers.AccountController.confirmAccount(id: String)
+
+# ABout
+GET		/about													org.mdubois.freeveggie.controllers.ApplicationController.about()
+
+#Upload
+POST /upload/garden/:id											org.mdubois.freeveggie.controllers.UplaodController.uploadGardenPicture(id: Long)
+POST /upload/product/:id										org.mdubois.freeveggie.controllers.UplaodController.uploadGardenPicture(id: Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /public/*file               							controllers.Assets.at(path="/public", file)
+#GET     /assets/*file               							controllers.Assets.at(path="/public", file)

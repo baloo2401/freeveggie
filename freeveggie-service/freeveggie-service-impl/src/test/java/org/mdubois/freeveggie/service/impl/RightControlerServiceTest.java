@@ -1,0 +1,727 @@
+package org.mdubois.freeveggie.service.impl;
+
+// <editor-fold defaultstate="collapsed" desc="Imports">
+import junit.framework.Assert;
+import mockit.Deencapsulation;
+import mockit.Expectations;
+import mockit.Mocked;
+import mockit.integration.junit4.JMockit;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.dao.api.*;
+import org.mdubois.freeveggie.framework.exception.BusinessException;
+import org.mdubois.freeveggie.framework.exception.TechnicalException;
+import org.mdubois.freeveggie.framework.msg.converter.Converter;
+import org.mdubois.freeveggie.framework.security.EncryptionUtils;
+import org.mdubois.freeveggie.framework.security.UserRole;
+import org.mdubois.freeveggie.framework.utils.UserUtils;
+import org.mdubois.freeveggie.service.api.IRightControlerService;
+import org.mdubois.freeveggie.service.api.ISecurityService;
+import org.mdubois.freeveggie.service.msg.AuthenticationMsg;
+import org.mdubois.freeveggie.service.msg.UserMsg;
+// </editor-fold>
+
+/**
+ *
+ * @author Mickael Dubois
+ */
+@RunWith(JMockit.class)
+public class RightControlerServiceTest {
+
+    @Test(expected = BusinessException.class)
+    public void testIsUserInRoleUnknowUser() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+
+        new Expectations() {
+
+            @Mocked
+            private IUserPartialDAO userPartialDAO;
+
+            {
+                Deencapsulation.setField(rightControlerService, userPartialDAO);
+
+                userPartialDAO.get(userId);
+                returns(null);
+            }
+        };
+
+        rightControlerService.isUserInRole(userId, UserRole.USER);
+    }
+
+    @Test
+    public void testIsUserInRoleNotAdmin() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IUserPartialDAO userPartialDAO;
+            @Mocked
+            private UserUtils userUtils;
+            {
+                Deencapsulation.setField(rightControlerService, userPartialDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setRole(UserRole.USER);
+
+                userPartialDAO.get(userId);
+                returns(userBO);
+
+                UserUtils.isUserInRole(UserRole.USER, UserRole.ADMIN);
+                returns(false);
+            }
+        };
+
+        Assert.assertFalse(rightControlerService.isUserInRole(userId, UserRole.ADMIN));
+    }
+
+    @Test
+    public void testIsUserInRole() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IUserPartialDAO userPartialDAO;
+            @Mocked
+            private UserUtils userUtils;
+            {
+                Deencapsulation.setField(rightControlerService, userPartialDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setRole(UserRole.SUPERADMIN);
+
+                userPartialDAO.get(userId);
+                returns(userBO);
+
+                UserUtils.isUserInRole(UserRole.SUPERADMIN, UserRole.USER);
+                returns(true);
+            }
+        };
+
+        Assert.assertTrue(rightControlerService.isUserInRole(userId, UserRole.USER));
+    }
+
+    @Test
+    public void testIsUserOwnerProductNoProduct() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductDAO productDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productDAO);
+
+                productDAO.get(productId);
+                returns(null);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProduct(userId, productId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProductNotOwner() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductDAO productDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(1L);
+
+                GardenBO gardenBO = new GardenBO();
+                gardenBO.setOwner(userBO);
+
+                ProductBO productBO = new ProductBO();
+                productBO.setGarden(gardenBO);
+
+                productDAO.get(productId);
+                returns(productBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProduct(userId, productId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProduct() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductDAO productDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(userId);
+
+                GardenBO gardenBO = new GardenBO();
+                gardenBO.setOwner(userBO);
+
+                ProductBO productBO = new ProductBO();
+                productBO.setGarden(gardenBO);
+
+                productDAO.get(productId);
+                returns(productBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProduct(userId, productId);
+        Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProductCommentNoComment() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productCommentId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductCommentDAO productCommentDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productCommentDAO);
+
+                productCommentDAO.get(productCommentId);
+                returns(null);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProductComment(userId, productCommentId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProductCommentNotOwner() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productCommentId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductCommentDAO productCommentDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productCommentDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(1L);
+
+                ProductCommentBO productCommentBO = new ProductCommentBO();
+                productCommentBO.setWriter(userBO);
+
+                productCommentDAO.get(productCommentId);
+                returns(productCommentBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProductComment(userId, productCommentId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProductComment() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productCommentId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductCommentDAO productCommentDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productCommentDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(userId);
+
+                ProductCommentBO productCommentBO = new ProductCommentBO();
+                productCommentBO.setWriter(userBO);
+
+                productCommentDAO.get(productCommentId);
+                returns(productCommentBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProductComment(userId, productCommentId);
+        Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProductLikeNoLike() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productLikeId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductLikeDAO productLikeDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productLikeDAO);
+
+                productLikeDAO.get(productLikeId);
+                returns(null);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProductLike(userId, productLikeId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProductLikeNotOwner() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productLikeId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductLikeDAO productLikeDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productLikeDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(1L);
+
+                ProductLikeBO productLikeBO = new ProductLikeBO();
+                productLikeBO.setWriter(userBO);
+
+                productLikeDAO.get(productLikeId);
+                returns(productLikeBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProductLike(userId, productLikeId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerProductLike() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long productLikeId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IProductLikeDAO productLikeDAO;
+            {
+                Deencapsulation.setField(rightControlerService, productLikeDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(userId);
+
+                ProductLikeBO productLikeBO = new ProductLikeBO();
+                productLikeBO.setWriter(userBO);
+
+                productLikeDAO.get(productLikeId);
+                returns(productLikeBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerProductLike(userId, productLikeId);
+        Assert.assertEquals(true, result);
+    }
+
+
+
+    @Test
+    public void testIsUserOwnerGardenNoGarden() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenDAO gardenDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenDAO);
+
+                gardenDAO.get(gardenId);
+                returns(null);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGarden(userId, gardenId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerGardenNotOwner() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenDAO gardenDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(1L);
+
+                GardenBO gardenBO = new GardenBO();
+                gardenBO.setOwner(userBO);
+
+                gardenDAO.get(gardenId);
+                returns(gardenBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGarden(userId, gardenId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerGarden() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenDAO gardenDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(userId);
+
+                GardenBO gardenBO = new GardenBO();
+                gardenBO.setOwner(userBO);
+
+                gardenDAO.get(gardenId);
+                returns(gardenBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGarden(userId, gardenId);
+        Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void testIsUserOwnerGardenCommentNoComment() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenCommentId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenCommentDAO gardenCommentDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenCommentDAO);
+
+                gardenCommentDAO.get(gardenCommentId);
+                returns(null);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGardenComment(userId, gardenCommentId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerGardenCommentNotOwner() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenCommentId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenCommentDAO gardenCommentDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenCommentDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(1L);
+
+                GardenCommentBO gardenCommentBO = new GardenCommentBO();
+                gardenCommentBO.setWriter(userBO);
+
+                gardenCommentDAO.get(gardenCommentId);
+                returns(gardenCommentBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGardenComment(userId, gardenCommentId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerGardenComment() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenCommentId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenCommentDAO gardenCommentDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenCommentDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(userId);
+
+                GardenCommentBO gardenCommentBO = new GardenCommentBO();
+                gardenCommentBO.setWriter(userBO);
+
+                gardenCommentDAO.get(gardenCommentId);
+                returns(gardenCommentBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGardenComment(userId, gardenCommentId);
+        Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void testIsUserOwnerGardenLikeNoLike() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenLikeId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenLikeDAO gardenLikeDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenLikeDAO);
+
+                gardenLikeDAO.get(gardenLikeId);
+                returns(null);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGardenLike(userId, gardenLikeId);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsUserOwnerGardenLikeNotOwner() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenLikeId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenLikeDAO gardenLikeDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenLikeDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(1L);
+
+                GardenLikeBO gardenLikeBO = new GardenLikeBO();
+                gardenLikeBO.setWriter(userBO);
+
+                gardenLikeDAO.get(gardenLikeId);
+                returns(gardenLikeBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGardenLike(userId, gardenLikeId);
+        Assert.assertEquals(false, result);
+    }
+
+
+
+    @Test
+    public void testIsUserOwnerGardenLike() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long userId = 123L;
+        final Long gardenLikeId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IGardenLikeDAO gardenLikeDAO;
+            {
+                Deencapsulation.setField(rightControlerService, gardenLikeDAO);
+
+                PartialUserBO userBO = new PartialUserBO();
+                userBO.setId(userId);
+
+                GardenLikeBO gardenLikeBO = new GardenLikeBO();
+                gardenLikeBO.setWriter(userBO);
+
+                gardenLikeDAO.get(gardenLikeId);
+                returns(gardenLikeBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerGardenLike(userId, gardenLikeId);
+        Assert.assertEquals(true, result);
+    }
+    
+
+
+    @Test
+    public void testIsUserOwnerRelationship() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long pUserId = 123L;
+        final Long pRelationShipId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IRelationShipDAO  relationShipDAO;
+            {
+                Deencapsulation.setField(rightControlerService, relationShipDAO);
+
+                RelationShipBO  relationShipBO  = new RelationShipBO();
+                relationShipBO.setId(pRelationShipId);
+                PartialUserBO partiUserBO = new PartialUserBO();
+                partiUserBO.setId(pUserId);
+                
+				relationShipBO.setRecipient(partiUserBO );
+
+                relationShipDAO.get(pRelationShipId);
+                returns(relationShipBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationShipId);
+        Assert.assertEquals(true, result);
+    }
+    
+
+    
+
+
+    @Test
+    public void testIsUserOwnerRelationship2() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long pUserId = 123L;
+        final Long pRelationShipId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IRelationShipDAO  relationShipDAO;
+            {
+                Deencapsulation.setField(rightControlerService, relationShipDAO);
+
+                RelationShipBO  relationShipBO  = new RelationShipBO();
+                relationShipBO.setId(pRelationShipId);
+                PartialUserBO partiUserBO = new PartialUserBO();
+                partiUserBO.setId(1234L);
+                
+				relationShipBO.setRecipient(partiUserBO );
+
+                relationShipDAO.get(pRelationShipId);
+                returns(relationShipBO);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationShipId);
+        Assert.assertEquals(false, result);
+    }
+
+    
+
+    
+
+
+    @Test
+    public void testIsUserOwnerRelationship3() throws BusinessException {
+        final IRightControlerService rightControlerService = new RightControlerService();
+
+        final Long pUserId = 123L;
+        final Long pRelationShipId = 1233L;
+
+
+        new Expectations() {
+
+            @Mocked
+            private IRelationShipDAO  relationShipDAO;
+            {
+                Deencapsulation.setField(rightControlerService, relationShipDAO);
+
+                relationShipDAO.get(pRelationShipId);
+                returns(null);
+            }
+        };
+
+        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationShipId);
+        Assert.assertEquals(false, result);
+    }
+
+}

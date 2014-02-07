@@ -1,0 +1,30 @@
+
+<div class="modal-body">
+	<form class="form-horizontal">
+		<input type="hidden" id="id" /> 
+		<p>
+			Vous avez re&ccedil;u une demande de la part de <b>{{requester.name}}</b>
+		</p>
+		<p>
+			{{requester.name}} aimerais recevoir <b>{{quantity}}</b> Kg. de vos <b>{{product.name}}</b>
+			de votre garden <b>{{product.garden.name}}</b> le <b id="creationDate" class="date" data-date-format="dd/mm/yy">{{creationDate}}</b>.
+		</p>
+		<p>{{requester.name}} vous &agrave; laissez le message suivant :
+		</p>
+		<p><i>{{message}}</i></p>
+		
+		
+		<fieldset>
+			<div class="control-group">
+				<label class="control-label" for="textarea">Vous avez r&eacute;pondu da mani&egrave;re <span id="status" class="{{status}}"></span> avec le message suivant : </label>
+				<div class="controls">
+					<textarea class="input-xlarge" id="textarea" rows="5">{{answer}}</textarea>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div class="modal-footer">
+	<a href="#" class="btn btn-primary" data-dismiss="modal">Accepter</a>
+	<a href="#"	class="btn btn-danger">Refuser</a>
+</div>

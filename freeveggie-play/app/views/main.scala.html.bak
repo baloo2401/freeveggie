@@ -1,0 +1,149 @@
+@(page: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>Freeveggie</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="@routes.Assets.at("stylesheets/bootstrap/bootstrap.css")" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+</style>
+<link href="@routes.Assets.at("stylesheets/bootstrap/bootstrap-responsive.css")" rel="stylesheet">
+<link href="@routes.Assets.at("stylesheets/fancy-captcha/captcha.css")" rel="stylesheet">
+<link href="@routes.Assets.at("stylesheets/bootstrap/docs.css")" rel="stylesheet">
+<link href="@routes.Assets.at("stylesheets/custom/custom.css")" rel="stylesheet">
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+
+<!-- Le fav and touch icons -->
+<!--link rel="shortcut icon" href="bootstrap/ico/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114 href="bootstrap/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="bootstrap/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" Href="bootstrap/ico/apple-touch-icon-57-precomposed.png"-->
+</head>
+<body>
+	<div class="alert alert-error" id="messagePanel">
+		<span id="message"></span>
+	</div>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
+				<div class="nav-collapse">
+					<form class="navbar-search pull-right form-inline"
+						action="/disconnect">
+						<button type="submit" class="btn" style="margin-top: 0px;">Deconnexion</button>
+					</form>
+					<p class="navbar-text pull-right">
+						Logged in as <a href="#">@session.get("connectedName")&nbsp;</a>
+					</p>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<header class="jumbotron subhead" id="overview">
+			<h1>Freeveggie</h1>
+			<p class="lead">Find and share real home made products.</p>
+			<div class="subnav">
+				<ul class="nav nav-pills">
+					@if(page == "home") {
+						<li class="active"><a href="home">My account</a></li> 
+					} else {
+						<li class=""><a href="home">My account</a></li> 
+					} @if(page == "search") {
+						<li class="active"><a href="search">Share/Search</a></li> 
+					} else {
+						<li class=""><a href="search">Share/Search</a></li> }
+
+					<!-- li class=""><a href="comunities">Community</a></li -->
+
+					@if(page == "requests") {
+					<li class="active"><a href="requests">Requests</a></li> } else {
+					<li class=""><a href="requests">Requests</a></li> }
+
+					<!--li class=""><a href="messages">Messages</a></li-->
+
+					@if(page == "about") {
+					<li class="active"><a href="about">About</a></li> } else {
+					<li class=""><a href="about">About</a></li> }
+				</ul>
+			</div>
+		</header>
+		@content
+		<footer class="footer">
+			<div class="container">
+				<p>Last connexion @session.get("lastConnexion")</p>
+			</div>
+		</footer>
+		<!--/.fluid-container-->
+	</div>
+	<!-- /.container-->
+</body>
+<!-- Le javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+<!-- <script -->
+<!-- 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script> -->
+
+<script src="@routes.Assets.at("javascripts/custom/custom-jquery.js")"></script>
+<script src="@routes.Assets.at("javascripts/custom/form.js")"></script>
+<script src="@routes.Assets.at("javascripts/custom/requests-plugin.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-transition.js")"></script>
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-alert.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-modal.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-dropdown.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-scrollspy.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-tab.js")"></script> -->
+<script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-tooltip.js")"></script>
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-popover.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-button.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-collapse.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-carousel.js")"></script> -->
+<script src="@routes.Assets.at("javascripts/bootstrap/bootstrap-typeahead.js")"></script>
+<!-- <script src="@routes.Assets.at("javascripts/bootstrap/application.js")"></script> -->
+<!-- <script src="@routes.Assets.at("javascripts/fancy-captcha/jquery.captcha.js")"></script> -->
+<script src="@routes.Assets.at("javascripts/mustache/mustache.js")"></script>
+<script>
+	var userId = @session.get("connected");
+	var userName = "@session.get("connectedName")";
+	var userLastconnexion = "@session.get("lastConnexion")";
+</script>
+
+@if(page == "home") {
+	<script src="@routes.Assets.at("javascripts/page/home.js")"></script>
+} @if(page == "search") {
+	<script src="@routes.Assets.at("javascripts/page/search.js")"></script>
+} @if(page == "community") {
+	<script src="@routes.Assets.at("javascripts/page/community.js")"></script>
+} @if(page == "requests") {
+	<script src="@routes.Assets.at("javascripts/page/requests.js")"></script>
+} @if(page == "message") {
+	<script src="@routes.Assets.at("javascripts/page/message.js")"></script>
+} @if(page == "about") {
+	<script src="@routes.Assets.at("javascripts/page/about.js")"></script>
+}
+</html>

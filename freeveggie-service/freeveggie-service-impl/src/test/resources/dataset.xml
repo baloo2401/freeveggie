@@ -1,0 +1,501 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <!--
+
+    This is just for reference table. But for those one we created java enums.
+    <T_REF_CULTURE_MODE rcm_id="1" rcm_libelle="GARDEN" />
+    <T_REF_CULTURE_MODE rcm_id="2" rcm_libelle="BALCONY" />
+    <T_REF_CULTURE_MODE rcm_id="3" rcm_libelle="TERRACE" />
+
+    <T_REF_CULTURE_TYPE rct_id="1" rct_libelle="REGULAR" />
+    <T_REF_CULTURE_TYPE rct_id="2" rct_libelle="BIO" />
+    <T_REF_CULTURE_TYPE rct_id="3" rct_libelle="GMO" />
+
+    <T_REF_EXCHANGE_TYPE chg_id="1" chg_libelle="SHARES" />
+    <T_REF_EXCHANGE_TYPE chg_id="2" chg_libelle="GIVES" />
+    <T_REF_EXCHANGE_TYPE chg_id="3" chg_libelle="SELLS" />
+
+    <T_REF_PRODUCT_TYPE rpt_id="1" rpt_libelle="FRUIT" />
+    <T_REF_PRODUCT_TYPE rpt_id="2" rpt_libelle="VEGETABLE" />
+
+    <T_REF_EVALUATION_NOTE ren_id="1" ren_libelle="VERYBAD" />
+    <T_REF_EVALUATION_NOTE ren_id="2" ren_libelle="BAD" />
+    <T_REF_EVALUATION_NOTE ren_id="3" ren_libelle="NORMAL" />
+    <T_REF_EVALUATION_NOTE ren_id="4" ren_libelle="GOOD" />
+    <T_REF_EVALUATION_NOTE ren_id="5" ren_libelle="VERYGOOD" />
+
+    <T_REF_EVALUATION_STATUS res_id="1" res_libelle="SETTED" />
+    <T_REF_EVALUATION_STATUS res_id="2" res_libelle="REMOVED" />
+    <T_REF_EVALUATION_STATUS res_id="3" res_libelle="ARCHIVED" />
+    -->
+
+    <T_REF_MONTH rmn_id="1" rmn_name="january"/>
+    <T_REF_MONTH rmn_id="2" rmn_name="february"/>
+    <T_REF_MONTH rmn_id="3" rmn_name="march"/>
+    <T_REF_MONTH rmn_id="4" rmn_name="april"/>
+    <T_REF_MONTH rmn_id="5" rmn_name="may"/>
+    <T_REF_MONTH rmn_id="6" rmn_name="juny"/>
+    <T_REF_MONTH rmn_id="7" rmn_name="july"/>
+    <T_REF_MONTH rmn_id="8" rmn_name="august"/>
+    <T_REF_MONTH rmn_id="9" rmn_name="september"/>
+    <T_REF_MONTH rmn_id="10" rmn_name="october"/>
+    <T_REF_MONTH rmn_id="11" rmn_name="november"/>
+    <T_REF_MONTH rmn_id="12" rmn_name="december"/>
+
+    <T_REF_COUNTRY rcn_id="1" rcn_country_name="AFGHANISTAN" rcn_code_iso_a2="AF" rcn_code_iso_a3="AFG" rcn_code_iso_number="4" />
+    <T_REF_COUNTRY rcn_id="2" rcn_country_name="ALAND ISLANDS" rcn_code_iso_a2="AX" rcn_code_iso_a3="ALA" rcn_code_iso_number="248" />
+    <T_REF_COUNTRY rcn_id="3" rcn_country_name="ALBANIA" rcn_code_iso_a2="AL" rcn_code_iso_a3="ALB" rcn_code_iso_number="8" />
+    <T_REF_COUNTRY rcn_id="4" rcn_country_name="ALGERIA" rcn_code_iso_a2="DZ" rcn_code_iso_a3="DZA" rcn_code_iso_number="12" />
+    <T_REF_COUNTRY rcn_id="5" rcn_country_name="AMERICAN SAMOA" rcn_code_iso_a2="AS" rcn_code_iso_a3="ASM" rcn_code_iso_number="16" />
+    <T_REF_COUNTRY rcn_id="6" rcn_country_name="ANDORRA" rcn_code_iso_a2="AD" rcn_code_iso_a3="AND" rcn_code_iso_number="20" />
+    <T_REF_COUNTRY rcn_id="7" rcn_country_name="ANGOLA" rcn_code_iso_a2="AO" rcn_code_iso_a3="AGO" rcn_code_iso_number="24" />
+    <T_REF_COUNTRY rcn_id="8" rcn_country_name="ANGUILLA" rcn_code_iso_a2="AI" rcn_code_iso_a3="AIA" rcn_code_iso_number="660" />
+    <T_REF_COUNTRY rcn_id="9" rcn_country_name="ANTARCTICA" rcn_code_iso_a2="AQ" rcn_code_iso_a3="ATA" rcn_code_iso_number="10" />
+    <T_REF_COUNTRY rcn_id="10" rcn_country_name="ANTIGUA AND BARBUDA" rcn_code_iso_a2="AG" rcn_code_iso_a3="ATG" rcn_code_iso_number="28" />
+    <T_REF_COUNTRY rcn_id="11" rcn_country_name="ARGENTINA" rcn_code_iso_a2="AR" rcn_code_iso_a3="ARG" rcn_code_iso_number="32" />
+    <T_REF_COUNTRY rcn_id="12" rcn_country_name="ARMENIA" rcn_code_iso_a2="AM" rcn_code_iso_a3="ARM" rcn_code_iso_number="51" />
+    <T_REF_COUNTRY rcn_id="13" rcn_country_name="ARUBA" rcn_code_iso_a2="AW" rcn_code_iso_a3="ABW" rcn_code_iso_number="533" />
+    <T_REF_COUNTRY rcn_id="14" rcn_country_name="AUSTRALIA" rcn_code_iso_a2="AU" rcn_code_iso_a3="AUS" rcn_code_iso_number="36" />
+    <T_REF_COUNTRY rcn_id="15" rcn_country_name="AUSTRIA" rcn_code_iso_a2="AT" rcn_code_iso_a3="AUT" rcn_code_iso_number="40" />
+    <T_REF_COUNTRY rcn_id="16" rcn_country_name="AZERBAIJAN" rcn_code_iso_a2="AZ" rcn_code_iso_a3="AZE" rcn_code_iso_number="31" />
+    <T_REF_COUNTRY rcn_id="17" rcn_country_name="BAHAMAS" rcn_code_iso_a2="BS" rcn_code_iso_a3="BHS" rcn_code_iso_number="44" />
+    <T_REF_COUNTRY rcn_id="18" rcn_country_name="BAHRAIN" rcn_code_iso_a2="BH" rcn_code_iso_a3="BHR" rcn_code_iso_number="48" />
+    <T_REF_COUNTRY rcn_id="19" rcn_country_name="BANGLADESH" rcn_code_iso_a2="BD" rcn_code_iso_a3="BGD" rcn_code_iso_number="50" />
+    <T_REF_COUNTRY rcn_id="20" rcn_country_name="BARBADOS" rcn_code_iso_a2="BB" rcn_code_iso_a3="BRB" rcn_code_iso_number="52" />
+    <T_REF_COUNTRY rcn_id="21" rcn_country_name="BELARUS" rcn_code_iso_a2="BY" rcn_code_iso_a3="BLR" rcn_code_iso_number="112" />
+    <T_REF_COUNTRY rcn_id="22" rcn_country_name="BELGIUM" rcn_code_iso_a2="BE" rcn_code_iso_a3="BEL" rcn_code_iso_number="56" />
+    <T_REF_COUNTRY rcn_id="23" rcn_country_name="BELIZE" rcn_code_iso_a2="BZ" rcn_code_iso_a3="BLZ" rcn_code_iso_number="84" />
+    <T_REF_COUNTRY rcn_id="24" rcn_country_name="BENIN" rcn_code_iso_a2="BJ" rcn_code_iso_a3="BEN" rcn_code_iso_number="204" />
+    <T_REF_COUNTRY rcn_id="25" rcn_country_name="BERMUDA" rcn_code_iso_a2="BM" rcn_code_iso_a3="BMU" rcn_code_iso_number="60" />
+    <T_REF_COUNTRY rcn_id="26" rcn_country_name="BHUTAN" rcn_code_iso_a2="BT" rcn_code_iso_a3="BTN" rcn_code_iso_number="64" />
+    <T_REF_COUNTRY rcn_id="27" rcn_country_name="BOLIVIA, PLURINATIONAL STATE OF" rcn_code_iso_a2="BO" rcn_code_iso_a3="BOL" rcn_code_iso_number="68" />
+    <T_REF_COUNTRY rcn_id="28" rcn_country_name="BONAIRE, SINT EUSTATIUS AND SABA" rcn_code_iso_a2="BQ" rcn_code_iso_a3="BES" rcn_code_iso_number="535" />
+    <T_REF_COUNTRY rcn_id="29" rcn_country_name="BOSNIA AND HERZEGOVINA" rcn_code_iso_a2="BA" rcn_code_iso_a3="BIH" rcn_code_iso_number="70" />
+    <T_REF_COUNTRY rcn_id="30" rcn_country_name="BOTSWANA" rcn_code_iso_a2="BW" rcn_code_iso_a3="BWA" rcn_code_iso_number="72" />
+    <T_REF_COUNTRY rcn_id="31" rcn_country_name="BOUVET ISLAND" rcn_code_iso_a2="BV" rcn_code_iso_a3="BVT" rcn_code_iso_number="74" />
+    <T_REF_COUNTRY rcn_id="32" rcn_country_name="BRAZIL" rcn_code_iso_a2="BR" rcn_code_iso_a3="BRA" rcn_code_iso_number="76" />
+    <T_REF_COUNTRY rcn_id="33" rcn_country_name="BRITISH INDIAN OCEAN TERRITORY" rcn_code_iso_a2="IO" rcn_code_iso_a3="IOT" rcn_code_iso_number="86" />
+    <T_REF_COUNTRY rcn_id="34" rcn_country_name="BRUNEI DARUSSALAM" rcn_code_iso_a2="BN" rcn_code_iso_a3="BRN" rcn_code_iso_number="96" />
+    <T_REF_COUNTRY rcn_id="35" rcn_country_name="BULGARIA" rcn_code_iso_a2="BG" rcn_code_iso_a3="BGR" rcn_code_iso_number="100" />
+    <T_REF_COUNTRY rcn_id="36" rcn_country_name="BURKINA FASO" rcn_code_iso_a2="BF" rcn_code_iso_a3="BFA" rcn_code_iso_number="854" />
+    <T_REF_COUNTRY rcn_id="37" rcn_country_name="BURUNDI" rcn_code_iso_a2="BI" rcn_code_iso_a3="BDI" rcn_code_iso_number="108" />
+    <T_REF_COUNTRY rcn_id="38" rcn_country_name="CAMBODIA" rcn_code_iso_a2="KH" rcn_code_iso_a3="KHM" rcn_code_iso_number="116" />
+    <T_REF_COUNTRY rcn_id="39" rcn_country_name="CAMEROON" rcn_code_iso_a2="CM" rcn_code_iso_a3="CMR" rcn_code_iso_number="120" />
+    <T_REF_COUNTRY rcn_id="40" rcn_country_name="CANADA" rcn_code_iso_a2="CA" rcn_code_iso_a3="CAN" rcn_code_iso_number="124" />
+    <T_REF_COUNTRY rcn_id="41" rcn_country_name="CAPE VERDE" rcn_code_iso_a2="CV" rcn_code_iso_a3="CPV" rcn_code_iso_number="132" />
+    <T_REF_COUNTRY rcn_id="42" rcn_country_name="CAYMAN ISLANDS" rcn_code_iso_a2="KY" rcn_code_iso_a3="CYM" rcn_code_iso_number="136" />
+    <T_REF_COUNTRY rcn_id="43" rcn_country_name="CENTRAL AFRICAN REPUBLIC" rcn_code_iso_a2="CF" rcn_code_iso_a3="CAF" rcn_code_iso_number="140" />
+    <T_REF_COUNTRY rcn_id="44" rcn_country_name="CHAD" rcn_code_iso_a2="TD" rcn_code_iso_a3="TCD" rcn_code_iso_number="148" />
+    <T_REF_COUNTRY rcn_id="45" rcn_country_name="CHILE" rcn_code_iso_a2="CL" rcn_code_iso_a3="CHL" rcn_code_iso_number="152" />
+    <T_REF_COUNTRY rcn_id="46" rcn_country_name="CHINA" rcn_code_iso_a2="CN" rcn_code_iso_a3="CHN" rcn_code_iso_number="156" />
+    <T_REF_COUNTRY rcn_id="47" rcn_country_name="CHRISTMAS ISLAND" rcn_code_iso_a2="CX" rcn_code_iso_a3="CXR" rcn_code_iso_number="162" />
+    <T_REF_COUNTRY rcn_id="48" rcn_country_name="COCOS (KEELING) ISLANDS" rcn_code_iso_a2="CC" rcn_code_iso_a3="CCK" rcn_code_iso_number="166" />
+    <T_REF_COUNTRY rcn_id="49" rcn_country_name="COLOMBIA" rcn_code_iso_a2="CO" rcn_code_iso_a3="COL" rcn_code_iso_number="170" />
+    <T_REF_COUNTRY rcn_id="50" rcn_country_name="COMOROS" rcn_code_iso_a2="KM" rcn_code_iso_a3="COM" rcn_code_iso_number="174" />
+    <T_REF_COUNTRY rcn_id="51" rcn_country_name="CONGO" rcn_code_iso_a2="CG" rcn_code_iso_a3="COG" rcn_code_iso_number="178" />
+    <T_REF_COUNTRY rcn_id="52" rcn_country_name="CONGO, THE DEMOCRATIC REPUBLIC OF THE" rcn_code_iso_a2="CD" rcn_code_iso_a3="COD" rcn_code_iso_number="180" />
+    <T_REF_COUNTRY rcn_id="53" rcn_country_name="COOK ISLANDS" rcn_code_iso_a2="CK" rcn_code_iso_a3="COK" rcn_code_iso_number="184" />
+    <T_REF_COUNTRY rcn_id="54" rcn_country_name="COSTA RICA" rcn_code_iso_a2="CR" rcn_code_iso_a3="CRI" rcn_code_iso_number="188" />
+    <T_REF_COUNTRY rcn_id="55" rcn_country_name="COTE D'IVOIRE" rcn_code_iso_a2="CI" rcn_code_iso_a3="CIV" rcn_code_iso_number="384" />
+    <T_REF_COUNTRY rcn_id="56" rcn_country_name="CROATIA" rcn_code_iso_a2="HR" rcn_code_iso_a3="HRV" rcn_code_iso_number="191" />
+    <T_REF_COUNTRY rcn_id="57" rcn_country_name="CUBA" rcn_code_iso_a2="CU" rcn_code_iso_a3="CUB" rcn_code_iso_number="192" />
+    <T_REF_COUNTRY rcn_id="58" rcn_country_name="CURACAO" rcn_code_iso_a2="CW" rcn_code_iso_a3="CUW" rcn_code_iso_number="531" />
+    <T_REF_COUNTRY rcn_id="59" rcn_country_name="CYPRUS" rcn_code_iso_a2="CY" rcn_code_iso_a3="CYP" rcn_code_iso_number="196" />
+    <T_REF_COUNTRY rcn_id="60" rcn_country_name="CZECH REPUBLIC" rcn_code_iso_a2="CZ" rcn_code_iso_a3="CZE" rcn_code_iso_number="203" />
+    <T_REF_COUNTRY rcn_id="61" rcn_country_name="DENMARK" rcn_code_iso_a2="DK" rcn_code_iso_a3="DNK" rcn_code_iso_number="208" />
+    <T_REF_COUNTRY rcn_id="62" rcn_country_name="DJIBOUTI" rcn_code_iso_a2="DJ" rcn_code_iso_a3="DJI" rcn_code_iso_number="262" />
+    <T_REF_COUNTRY rcn_id="63" rcn_country_name="DOMINICA" rcn_code_iso_a2="DM" rcn_code_iso_a3="DMA" rcn_code_iso_number="212" />
+    <T_REF_COUNTRY rcn_id="64" rcn_country_name="DOMINICAN REPUBLIC" rcn_code_iso_a2="DO" rcn_code_iso_a3="DOM" rcn_code_iso_number="214" />
+    <T_REF_COUNTRY rcn_id="65" rcn_country_name="ECUADOR" rcn_code_iso_a2="EC" rcn_code_iso_a3="ECU" rcn_code_iso_number="218" />
+    <T_REF_COUNTRY rcn_id="66" rcn_country_name="EGYPT" rcn_code_iso_a2="EG" rcn_code_iso_a3="EGY" rcn_code_iso_number="818" />
+    <T_REF_COUNTRY rcn_id="67" rcn_country_name="EL SALVADOR" rcn_code_iso_a2="SV" rcn_code_iso_a3="SLV" rcn_code_iso_number="222" />
+    <T_REF_COUNTRY rcn_id="68" rcn_country_name="EQUATORIAL GUINEA" rcn_code_iso_a2="GQ" rcn_code_iso_a3="GNQ" rcn_code_iso_number="226" />
+    <T_REF_COUNTRY rcn_id="69" rcn_country_name="ERITREA" rcn_code_iso_a2="ER" rcn_code_iso_a3="ERI" rcn_code_iso_number="232" />
+    <T_REF_COUNTRY rcn_id="70" rcn_country_name="ESTONIA" rcn_code_iso_a2="EE" rcn_code_iso_a3="EST" rcn_code_iso_number="233" />
+    <T_REF_COUNTRY rcn_id="71" rcn_country_name="ETHIOPIA" rcn_code_iso_a2="ET" rcn_code_iso_a3="ETH" rcn_code_iso_number="231" />
+    <T_REF_COUNTRY rcn_id="72" rcn_country_name="FALKLAND ISLANDS (MALVINAS)" rcn_code_iso_a2="FK" rcn_code_iso_a3="FLK" rcn_code_iso_number="238" />
+    <T_REF_COUNTRY rcn_id="73" rcn_country_name="FAROE ISLANDS" rcn_code_iso_a2="FO" rcn_code_iso_a3="FRO" rcn_code_iso_number="234" />
+    <T_REF_COUNTRY rcn_id="74" rcn_country_name="FIJI" rcn_code_iso_a2="FJ" rcn_code_iso_a3="FJI" rcn_code_iso_number="242" />
+    <T_REF_COUNTRY rcn_id="75" rcn_country_name="FINLAND" rcn_code_iso_a2="FI" rcn_code_iso_a3="FIN" rcn_code_iso_number="246" />
+    <T_REF_COUNTRY rcn_id="76" rcn_country_name="FRANCE" rcn_code_iso_a2="FR" rcn_code_iso_a3="FRA" rcn_code_iso_number="250" />
+    <T_REF_COUNTRY rcn_id="77" rcn_country_name="FRENCH GUIANA" rcn_code_iso_a2="GF" rcn_code_iso_a3="GUF" rcn_code_iso_number="254" />
+    <T_REF_COUNTRY rcn_id="78" rcn_country_name="FRENCH POLYNESIA" rcn_code_iso_a2="PF" rcn_code_iso_a3="PYF" rcn_code_iso_number="258" />
+    <T_REF_COUNTRY rcn_id="79" rcn_country_name="FRENCH SOUTHERN TERRITORIES" rcn_code_iso_a2="TF" rcn_code_iso_a3="ATF" rcn_code_iso_number="260" />
+    <T_REF_COUNTRY rcn_id="80" rcn_country_name="GABON" rcn_code_iso_a2="GA" rcn_code_iso_a3="GAB" rcn_code_iso_number="266" />
+    <T_REF_COUNTRY rcn_id="81" rcn_country_name="GAMBIA" rcn_code_iso_a2="GM" rcn_code_iso_a3="GMB" rcn_code_iso_number="270" />
+    <T_REF_COUNTRY rcn_id="82" rcn_country_name="GEORGIA" rcn_code_iso_a2="GE" rcn_code_iso_a3="GEO" rcn_code_iso_number="268" />
+    <T_REF_COUNTRY rcn_id="83" rcn_country_name="GERMANY" rcn_code_iso_a2="DE" rcn_code_iso_a3="DEU" rcn_code_iso_number="276" />
+    <T_REF_COUNTRY rcn_id="84" rcn_country_name="GHANA" rcn_code_iso_a2="GH" rcn_code_iso_a3="GHA" rcn_code_iso_number="288" />
+    <T_REF_COUNTRY rcn_id="85" rcn_country_name="GIBRALTAR" rcn_code_iso_a2="GI" rcn_code_iso_a3="GIB" rcn_code_iso_number="292" />
+    <T_REF_COUNTRY rcn_id="86" rcn_country_name="GREECE" rcn_code_iso_a2="GR" rcn_code_iso_a3="GRC" rcn_code_iso_number="300" />
+    <T_REF_COUNTRY rcn_id="87" rcn_country_name="GREENLAND" rcn_code_iso_a2="GL" rcn_code_iso_a3="GRL" rcn_code_iso_number="304" />
+    <T_REF_COUNTRY rcn_id="88" rcn_country_name="GRENADA" rcn_code_iso_a2="GD" rcn_code_iso_a3="GRD" rcn_code_iso_number="308" />
+    <T_REF_COUNTRY rcn_id="89" rcn_country_name="GUADELOUPE" rcn_code_iso_a2="GP" rcn_code_iso_a3="GLP" rcn_code_iso_number="312" />
+    <T_REF_COUNTRY rcn_id="90" rcn_country_name="GUAM" rcn_code_iso_a2="GU" rcn_code_iso_a3="GUM" rcn_code_iso_number="316" />
+    <T_REF_COUNTRY rcn_id="91" rcn_country_name="GUATEMALA" rcn_code_iso_a2="GT" rcn_code_iso_a3="GTM" rcn_code_iso_number="320" />
+    <T_REF_COUNTRY rcn_id="92" rcn_country_name="GUERNSEY" rcn_code_iso_a2="GG" rcn_code_iso_a3="GGY" rcn_code_iso_number="831" />
+    <T_REF_COUNTRY rcn_id="93" rcn_country_name="GUINEA" rcn_code_iso_a2="GN" rcn_code_iso_a3="GIN" rcn_code_iso_number="324" />
+    <T_REF_COUNTRY rcn_id="94" rcn_country_name="GUINEA-BISSAU" rcn_code_iso_a2="GW" rcn_code_iso_a3="GNB" rcn_code_iso_number="624" />
+    <T_REF_COUNTRY rcn_id="95" rcn_country_name="GUYANA" rcn_code_iso_a2="GY" rcn_code_iso_a3="GUY" rcn_code_iso_number="328" />
+    <T_REF_COUNTRY rcn_id="96" rcn_country_name="HAITI" rcn_code_iso_a2="HT" rcn_code_iso_a3="HTI" rcn_code_iso_number="332" />
+    <T_REF_COUNTRY rcn_id="97" rcn_country_name="HEARD ISLAND AND MCDONALD ISLANDS" rcn_code_iso_a2="HM" rcn_code_iso_a3="HMD" rcn_code_iso_number="334" />
+    <T_REF_COUNTRY rcn_id="98" rcn_country_name="HOLY SEE (VATICAN CITY STATE)" rcn_code_iso_a2="VA" rcn_code_iso_a3="VAT" rcn_code_iso_number="336" />
+    <T_REF_COUNTRY rcn_id="99" rcn_country_name="HONDURAS" rcn_code_iso_a2="HN" rcn_code_iso_a3="HND" rcn_code_iso_number="340" />
+    <T_REF_COUNTRY rcn_id="100" rcn_country_name="HONG KONG" rcn_code_iso_a2="HK" rcn_code_iso_a3="HKG" rcn_code_iso_number="344" />
+    <T_REF_COUNTRY rcn_id="101" rcn_country_name="HUNGARY" rcn_code_iso_a2="HU" rcn_code_iso_a3="HUN" rcn_code_iso_number="348" />
+    <T_REF_COUNTRY rcn_id="102" rcn_country_name="ICELAND" rcn_code_iso_a2="IS" rcn_code_iso_a3="ISL" rcn_code_iso_number="352" />
+    <T_REF_COUNTRY rcn_id="103" rcn_country_name="INDIA" rcn_code_iso_a2="IN" rcn_code_iso_a3="IND" rcn_code_iso_number="356" />
+    <T_REF_COUNTRY rcn_id="104" rcn_country_name="INDONESIA" rcn_code_iso_a2="ID" rcn_code_iso_a3="IDN" rcn_code_iso_number="360" />
+    <T_REF_COUNTRY rcn_id="105" rcn_country_name="IRAN (ISLAMIC REPUBLIC OF)" rcn_code_iso_a2="IR" rcn_code_iso_a3="IRN" rcn_code_iso_number="364" />
+    <T_REF_COUNTRY rcn_id="106" rcn_country_name="IRAQ" rcn_code_iso_a2="IQ" rcn_code_iso_a3="IRQ" rcn_code_iso_number="368" />
+    <T_REF_COUNTRY rcn_id="107" rcn_country_name="IRELAND" rcn_code_iso_a2="IE" rcn_code_iso_a3="IRL" rcn_code_iso_number="372" />
+    <T_REF_COUNTRY rcn_id="108" rcn_country_name="ISLE OF MAN" rcn_code_iso_a2="IM" rcn_code_iso_a3="IMM" rcn_code_iso_number="833" />
+    <T_REF_COUNTRY rcn_id="109" rcn_country_name="ISRAEL" rcn_code_iso_a2="IL" rcn_code_iso_a3="ISR" rcn_code_iso_number="376" />
+    <T_REF_COUNTRY rcn_id="110" rcn_country_name="ITALY" rcn_code_iso_a2="IT" rcn_code_iso_a3="ITA" rcn_code_iso_number="380" />
+    <T_REF_COUNTRY rcn_id="111" rcn_country_name="JAMAICA" rcn_code_iso_a2="JM" rcn_code_iso_a3="JAM" rcn_code_iso_number="388" />
+    <T_REF_COUNTRY rcn_id="112" rcn_country_name="JAPAN" rcn_code_iso_a2="JP" rcn_code_iso_a3="JPN" rcn_code_iso_number="392" />
+    <T_REF_COUNTRY rcn_id="113" rcn_country_name="JERSEY" rcn_code_iso_a2="JE" rcn_code_iso_a3="JEY" rcn_code_iso_number="832" />
+    <T_REF_COUNTRY rcn_id="114" rcn_country_name="JORDAN" rcn_code_iso_a2="JO" rcn_code_iso_a3="JOR" rcn_code_iso_number="400" />
+    <T_REF_COUNTRY rcn_id="115" rcn_country_name="KAZAKHSTAN" rcn_code_iso_a2="KZ" rcn_code_iso_a3="KAZ" rcn_code_iso_number="398" />
+    <T_REF_COUNTRY rcn_id="116" rcn_country_name="KENYA" rcn_code_iso_a2="KE" rcn_code_iso_a3="KEN" rcn_code_iso_number="404" />
+    <T_REF_COUNTRY rcn_id="117" rcn_country_name="KIRIBATI" rcn_code_iso_a2="KI" rcn_code_iso_a3="KIR" rcn_code_iso_number="296" />
+    <T_REF_COUNTRY rcn_id="118" rcn_country_name="KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF" rcn_code_iso_a2="KP" rcn_code_iso_a3="PRK" rcn_code_iso_number="408" />
+    <T_REF_COUNTRY rcn_id="119" rcn_country_name="KOREA, REPUBLIC OF" rcn_code_iso_a2="KR" rcn_code_iso_a3="KOR" rcn_code_iso_number="410" />
+    <T_REF_COUNTRY rcn_id="120" rcn_country_name="KUWAIT" rcn_code_iso_a2="KW" rcn_code_iso_a3="KWT" rcn_code_iso_number="414" />
+    <T_REF_COUNTRY rcn_id="121" rcn_country_name="KYRGYZSTAN" rcn_code_iso_a2="KG" rcn_code_iso_a3="KGZ" rcn_code_iso_number="417" />
+    <T_REF_COUNTRY rcn_id="122" rcn_country_name="LAO PEOPLE'S DEMOCRATIC REPUBLIC" rcn_code_iso_a2="LA" rcn_code_iso_a3="LAO" rcn_code_iso_number="418" />
+    <T_REF_COUNTRY rcn_id="123" rcn_country_name="LATVIA" rcn_code_iso_a2="LV" rcn_code_iso_a3="LVA" rcn_code_iso_number="428" />
+    <T_REF_COUNTRY rcn_id="124" rcn_country_name="LEBANON" rcn_code_iso_a2="LB" rcn_code_iso_a3="LBN" rcn_code_iso_number="422" />
+    <T_REF_COUNTRY rcn_id="125" rcn_country_name="LESOTHO" rcn_code_iso_a2="LS" rcn_code_iso_a3="LSO" rcn_code_iso_number="426" />
+    <T_REF_COUNTRY rcn_id="126" rcn_country_name="LIBERIA" rcn_code_iso_a2="LR" rcn_code_iso_a3="LBR" rcn_code_iso_number="430" />
+    <T_REF_COUNTRY rcn_id="127" rcn_country_name="LIBYA" rcn_code_iso_a2="LY" rcn_code_iso_a3="LBY" rcn_code_iso_number="434" />
+    <T_REF_COUNTRY rcn_id="128" rcn_country_name="LIECHTENSTEIN" rcn_code_iso_a2="LI" rcn_code_iso_a3="LIE" rcn_code_iso_number="438" />
+    <T_REF_COUNTRY rcn_id="129" rcn_country_name="LITHUANIA" rcn_code_iso_a2="LT" rcn_code_iso_a3="LTU" rcn_code_iso_number="440" />
+    <T_REF_COUNTRY rcn_id="130" rcn_country_name="LUXEMBOURG" rcn_code_iso_a2="LU" rcn_code_iso_a3="LUX" rcn_code_iso_number="442" />
+    <T_REF_COUNTRY rcn_id="131" rcn_country_name="MACAO" rcn_code_iso_a2="MO" rcn_code_iso_a3="MAC" rcn_code_iso_number="446" />
+    <T_REF_COUNTRY rcn_id="132" rcn_country_name="MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF" rcn_code_iso_a2="MK" rcn_code_iso_a3="MKD" rcn_code_iso_number="807" />
+    <T_REF_COUNTRY rcn_id="133" rcn_country_name="MADAGASCAR" rcn_code_iso_a2="MG" rcn_code_iso_a3="MDG" rcn_code_iso_number="450" />
+    <T_REF_COUNTRY rcn_id="134" rcn_country_name="MALAWI" rcn_code_iso_a2="MW" rcn_code_iso_a3="MWI" rcn_code_iso_number="454" />
+    <T_REF_COUNTRY rcn_id="135" rcn_country_name="MALAYSIA" rcn_code_iso_a2="MY" rcn_code_iso_a3="MYS" rcn_code_iso_number="458" />
+    <T_REF_COUNTRY rcn_id="136" rcn_country_name="MALDIVES" rcn_code_iso_a2="MV" rcn_code_iso_a3="MDV" rcn_code_iso_number="462" />
+    <T_REF_COUNTRY rcn_id="137" rcn_country_name="MALI" rcn_code_iso_a2="ML" rcn_code_iso_a3="MLI" rcn_code_iso_number="466" />
+    <T_REF_COUNTRY rcn_id="138" rcn_country_name="MALTA" rcn_code_iso_a2="MT" rcn_code_iso_a3="MLT" rcn_code_iso_number="470" />
+    <T_REF_COUNTRY rcn_id="139" rcn_country_name="MARSHALL ISLANDS" rcn_code_iso_a2="MH" rcn_code_iso_a3="MHL" rcn_code_iso_number="584" />
+    <T_REF_COUNTRY rcn_id="140" rcn_country_name="MARTINIQUE" rcn_code_iso_a2="MQ" rcn_code_iso_a3="MTQ" rcn_code_iso_number="474" />
+    <T_REF_COUNTRY rcn_id="141" rcn_country_name="MAURITANIA" rcn_code_iso_a2="MR" rcn_code_iso_a3="MRT" rcn_code_iso_number="478" />
+    <T_REF_COUNTRY rcn_id="142" rcn_country_name="MAURITIUS" rcn_code_iso_a2="MU" rcn_code_iso_a3="MUS" rcn_code_iso_number="480" />
+    <T_REF_COUNTRY rcn_id="143" rcn_country_name="MAYOTTE" rcn_code_iso_a2="YT" rcn_code_iso_a3="MYT" rcn_code_iso_number="175" />
+    <T_REF_COUNTRY rcn_id="144" rcn_country_name="MEXICO" rcn_code_iso_a2="MX" rcn_code_iso_a3="MEX" rcn_code_iso_number="484" />
+    <T_REF_COUNTRY rcn_id="145" rcn_country_name="MICRONESIA, FEDERATED STATES OF" rcn_code_iso_a2="FM" rcn_code_iso_a3="FSM" rcn_code_iso_number="583" />
+    <T_REF_COUNTRY rcn_id="146" rcn_country_name="MOLDOVA, REPUBLIC OF" rcn_code_iso_a2="MD" rcn_code_iso_a3="MDA" rcn_code_iso_number="498" />
+    <T_REF_COUNTRY rcn_id="147" rcn_country_name="MONACO" rcn_code_iso_a2="MC" rcn_code_iso_a3="MCO" rcn_code_iso_number="492" />
+    <T_REF_COUNTRY rcn_id="148" rcn_country_name="MONGOLIA" rcn_code_iso_a2="MN" rcn_code_iso_a3="MNG" rcn_code_iso_number="496" />
+    <T_REF_COUNTRY rcn_id="149" rcn_country_name="MONTENEGRO" rcn_code_iso_a2="ME" rcn_code_iso_a3="MNE" rcn_code_iso_number="499" />
+    <T_REF_COUNTRY rcn_id="150" rcn_country_name="MONTSERRAT" rcn_code_iso_a2="MS" rcn_code_iso_a3="MSR" rcn_code_iso_number="500" />
+    <T_REF_COUNTRY rcn_id="151" rcn_country_name="MOROCCO" rcn_code_iso_a2="MA" rcn_code_iso_a3="MAR" rcn_code_iso_number="504" />
+    <T_REF_COUNTRY rcn_id="152" rcn_country_name="MOZAMBIQUE" rcn_code_iso_a2="MZ" rcn_code_iso_a3="MOZ" rcn_code_iso_number="508" />
+    <T_REF_COUNTRY rcn_id="153" rcn_country_name="MYANMAR" rcn_code_iso_a2="MM" rcn_code_iso_a3="MMR" rcn_code_iso_number="104" />
+    <T_REF_COUNTRY rcn_id="154" rcn_country_name="NAMIBIA" rcn_code_iso_a2="NA" rcn_code_iso_a3="NAM" rcn_code_iso_number="516" />
+    <T_REF_COUNTRY rcn_id="155" rcn_country_name="NAURU" rcn_code_iso_a2="NR" rcn_code_iso_a3="NRU" rcn_code_iso_number="520" />
+    <T_REF_COUNTRY rcn_id="156" rcn_country_name="NEPAL" rcn_code_iso_a2="NP" rcn_code_iso_a3="NPL" rcn_code_iso_number="524" />
+    <T_REF_COUNTRY rcn_id="157" rcn_country_name="NETHERLANDS" rcn_code_iso_a2="NL" rcn_code_iso_a3="NLD" rcn_code_iso_number="528" />
+    <T_REF_COUNTRY rcn_id="158" rcn_country_name="NEW CALEDONIA" rcn_code_iso_a2="NC" rcn_code_iso_a3="NCL" rcn_code_iso_number="540" />
+    <T_REF_COUNTRY rcn_id="159" rcn_country_name="NEW ZEALAND" rcn_code_iso_a2="NZ" rcn_code_iso_a3="NZL" rcn_code_iso_number="554" />
+    <T_REF_COUNTRY rcn_id="160" rcn_country_name="NICARAGUA" rcn_code_iso_a2="NI" rcn_code_iso_a3="NIC" rcn_code_iso_number="558" />
+    <T_REF_COUNTRY rcn_id="161" rcn_country_name="NIGER" rcn_code_iso_a2="NE" rcn_code_iso_a3="NER" rcn_code_iso_number="562" />
+    <T_REF_COUNTRY rcn_id="162" rcn_country_name="NIGERIA" rcn_code_iso_a2="NG" rcn_code_iso_a3="NGA" rcn_code_iso_number="566" />
+    <T_REF_COUNTRY rcn_id="163" rcn_country_name="NIUE" rcn_code_iso_a2="NU" rcn_code_iso_a3="NIU" rcn_code_iso_number="570" />
+    <T_REF_COUNTRY rcn_id="164" rcn_country_name="NORFOLK ISLAND" rcn_code_iso_a2="NF" rcn_code_iso_a3="NFK" rcn_code_iso_number="574" />
+    <T_REF_COUNTRY rcn_id="165" rcn_country_name="NORTHERN MARIANA ISLANDS" rcn_code_iso_a2="MP" rcn_code_iso_a3="MNP" rcn_code_iso_number="580" />
+    <T_REF_COUNTRY rcn_id="166" rcn_country_name="NORWAY" rcn_code_iso_a2="NO" rcn_code_iso_a3="NOR" rcn_code_iso_number="578" />
+    <T_REF_COUNTRY rcn_id="167" rcn_country_name="OMAN" rcn_code_iso_a2="OM" rcn_code_iso_a3="OMN" rcn_code_iso_number="512" />
+    <T_REF_COUNTRY rcn_id="168" rcn_country_name="PAKISTAN" rcn_code_iso_a2="PK" rcn_code_iso_a3="PAK" rcn_code_iso_number="586" />
+    <T_REF_COUNTRY rcn_id="169" rcn_country_name="PALAU" rcn_code_iso_a2="PW" rcn_code_iso_a3="PLW" rcn_code_iso_number="585" />
+    <T_REF_COUNTRY rcn_id="170" rcn_country_name="PALESTINIAN TERRITORY, OCCUPIED" rcn_code_iso_a2="PS" rcn_code_iso_a3="PSE" rcn_code_iso_number="275" />
+    <T_REF_COUNTRY rcn_id="171" rcn_country_name="PANAMA" rcn_code_iso_a2="PA" rcn_code_iso_a3="PAN" rcn_code_iso_number="591" />
+    <T_REF_COUNTRY rcn_id="172" rcn_country_name="PAPUA NEW GUINEA" rcn_code_iso_a2="PG" rcn_code_iso_a3="PNG" rcn_code_iso_number="598" />
+    <T_REF_COUNTRY rcn_id="173" rcn_country_name="PARAGUAY" rcn_code_iso_a2="PY" rcn_code_iso_a3="PRY" rcn_code_iso_number="600" />
+    <T_REF_COUNTRY rcn_id="174" rcn_country_name="PERU" rcn_code_iso_a2="PE" rcn_code_iso_a3="PER" rcn_code_iso_number="604" />
+    <T_REF_COUNTRY rcn_id="175" rcn_country_name="PHILIPPINES" rcn_code_iso_a2="PH" rcn_code_iso_a3="PHL" rcn_code_iso_number="608" />
+    <T_REF_COUNTRY rcn_id="176" rcn_country_name="PITCAIRN" rcn_code_iso_a2="PN" rcn_code_iso_a3="PCN" rcn_code_iso_number="612" />
+    <T_REF_COUNTRY rcn_id="177" rcn_country_name="POLAND" rcn_code_iso_a2="PL" rcn_code_iso_a3="POL" rcn_code_iso_number="616" />
+    <T_REF_COUNTRY rcn_id="178" rcn_country_name="PORTUGAL" rcn_code_iso_a2="PT" rcn_code_iso_a3="PRT" rcn_code_iso_number="620" />
+    <T_REF_COUNTRY rcn_id="179" rcn_country_name="PUERTO RICO" rcn_code_iso_a2="PR" rcn_code_iso_a3="PRI" rcn_code_iso_number="630" />
+    <T_REF_COUNTRY rcn_id="180" rcn_country_name="QATAR" rcn_code_iso_a2="QA" rcn_code_iso_a3="QAT" rcn_code_iso_number="634" />
+    <T_REF_COUNTRY rcn_id="181" rcn_country_name="REUNION" rcn_code_iso_a2="RE" rcn_code_iso_a3="REU" rcn_code_iso_number="638" />
+    <T_REF_COUNTRY rcn_id="182" rcn_country_name="ROMANIA" rcn_code_iso_a2="RO" rcn_code_iso_a3="ROU" rcn_code_iso_number="642" />
+    <T_REF_COUNTRY rcn_id="183" rcn_country_name="RUSSIAN FEDERATION" rcn_code_iso_a2="RU" rcn_code_iso_a3="RUS" rcn_code_iso_number="643" />
+    <T_REF_COUNTRY rcn_id="184" rcn_country_name="RWANDA" rcn_code_iso_a2="RW" rcn_code_iso_a3="RWA" rcn_code_iso_number="646" />
+    <T_REF_COUNTRY rcn_id="185" rcn_country_name="SAINT BARTHELEMY" rcn_code_iso_a2="BL" rcn_code_iso_a3="BLM" rcn_code_iso_number="652" />
+    <T_REF_COUNTRY rcn_id="186" rcn_country_name="SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA" rcn_code_iso_a2="SH" rcn_code_iso_a3="SHN" rcn_code_iso_number="654" />
+    <T_REF_COUNTRY rcn_id="187" rcn_country_name="SAINT KITTS AND NEVIS" rcn_code_iso_a2="KN" rcn_code_iso_a3="KNA" rcn_code_iso_number="659" />
+    <T_REF_COUNTRY rcn_id="188" rcn_country_name="SAINT LUCIA" rcn_code_iso_a2="LC" rcn_code_iso_a3="LCA" rcn_code_iso_number="662" />
+    <T_REF_COUNTRY rcn_id="189" rcn_country_name="SAINT MARTIN (FRENCH PART)" rcn_code_iso_a2="MT" rcn_code_iso_a3="MAF" rcn_code_iso_number="663" />
+    <T_REF_COUNTRY rcn_id="190" rcn_country_name="SAINT PIERRE AND MIQUELON" rcn_code_iso_a2="PM" rcn_code_iso_a3="SPM" rcn_code_iso_number="666" />
+    <T_REF_COUNTRY rcn_id="191" rcn_country_name="SAINT VINCENT AND THE GRENADINES" rcn_code_iso_a2="VC" rcn_code_iso_a3="VCT" rcn_code_iso_number="670" />
+    <T_REF_COUNTRY rcn_id="192" rcn_country_name="SAMOA" rcn_code_iso_a2="WS" rcn_code_iso_a3="WSM" rcn_code_iso_number="882" />
+    <T_REF_COUNTRY rcn_id="193" rcn_country_name="SAN MARINO" rcn_code_iso_a2="SM" rcn_code_iso_a3="SMR" rcn_code_iso_number="674" />
+    <T_REF_COUNTRY rcn_id="194" rcn_country_name="SAO TOME AND PRINCIPE" rcn_code_iso_a2="ST" rcn_code_iso_a3="STP" rcn_code_iso_number="678" />
+    <T_REF_COUNTRY rcn_id="195" rcn_country_name="SAUDI ARABIA" rcn_code_iso_a2="SA" rcn_code_iso_a3="SAU" rcn_code_iso_number="682" />
+    <T_REF_COUNTRY rcn_id="196" rcn_country_name="SENEGAL" rcn_code_iso_a2="SN" rcn_code_iso_a3="SEN" rcn_code_iso_number="686" />
+    <T_REF_COUNTRY rcn_id="197" rcn_country_name="SERBIA" rcn_code_iso_a2="RS" rcn_code_iso_a3="SRB" rcn_code_iso_number="688" />
+    <T_REF_COUNTRY rcn_id="198" rcn_country_name="SEYCHELLES" rcn_code_iso_a2="SC" rcn_code_iso_a3="SYC" rcn_code_iso_number="690" />
+    <T_REF_COUNTRY rcn_id="199" rcn_country_name="SIERRA LEONE" rcn_code_iso_a2="SL" rcn_code_iso_a3="SLE" rcn_code_iso_number="694" />
+    <T_REF_COUNTRY rcn_id="200" rcn_country_name="SINGAPORE" rcn_code_iso_a2="SG" rcn_code_iso_a3="SGP" rcn_code_iso_number="702" />
+    <T_REF_COUNTRY rcn_id="201" rcn_country_name="SINT MAARTEN (DUTCH PART)" rcn_code_iso_a2="SX" rcn_code_iso_a3="SXM" rcn_code_iso_number="534" />
+    <T_REF_COUNTRY rcn_id="202" rcn_country_name="SLOVAKIA" rcn_code_iso_a2="SK" rcn_code_iso_a3="SVK" rcn_code_iso_number="703" />
+    <T_REF_COUNTRY rcn_id="203" rcn_country_name="SLOVENIA" rcn_code_iso_a2="SI" rcn_code_iso_a3="SVN" rcn_code_iso_number="705" />
+    <T_REF_COUNTRY rcn_id="204" rcn_country_name="SOLOMON ISLANDS" rcn_code_iso_a2="SB" rcn_code_iso_a3="SLB" rcn_code_iso_number="90" />
+    <T_REF_COUNTRY rcn_id="205" rcn_country_name="SOMALIA" rcn_code_iso_a2="SO" rcn_code_iso_a3="SOM" rcn_code_iso_number="706" />
+    <T_REF_COUNTRY rcn_id="206" rcn_country_name="SOUTH AFRICA" rcn_code_iso_a2="ZA" rcn_code_iso_a3="ZAF" rcn_code_iso_number="710" />
+    <T_REF_COUNTRY rcn_id="207" rcn_country_name="SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS" rcn_code_iso_a2="GS" rcn_code_iso_a3="SGS" rcn_code_iso_number="239" />
+    <T_REF_COUNTRY rcn_id="208" rcn_country_name="SOUTH SUDAN" rcn_code_iso_a2="SS" rcn_code_iso_a3="SSD" rcn_code_iso_number="728" />
+    <T_REF_COUNTRY rcn_id="209" rcn_country_name="SPAIN" rcn_code_iso_a2="ES" rcn_code_iso_a3="ESP" rcn_code_iso_number="724" />
+    <T_REF_COUNTRY rcn_id="210" rcn_country_name="SRI LANKA" rcn_code_iso_a2="LK" rcn_code_iso_a3="LKA" rcn_code_iso_number="144" />
+    <T_REF_COUNTRY rcn_id="211" rcn_country_name="SUDAN" rcn_code_iso_a2="SD" rcn_code_iso_a3="SDN" rcn_code_iso_number="729" />
+    <T_REF_COUNTRY rcn_id="212" rcn_country_name="SURINAME" rcn_code_iso_a2="SR" rcn_code_iso_a3="SUR" rcn_code_iso_number="740" />
+    <T_REF_COUNTRY rcn_id="213" rcn_country_name="SVALBARD AND JAN MAYEN" rcn_code_iso_a2="SJ" rcn_code_iso_a3="SJM" rcn_code_iso_number="744" />
+    <T_REF_COUNTRY rcn_id="214" rcn_country_name="SWAZILAND" rcn_code_iso_a2="SZ" rcn_code_iso_a3="SWZ" rcn_code_iso_number="748" />
+    <T_REF_COUNTRY rcn_id="215" rcn_country_name="SWEDEN" rcn_code_iso_a2="SE" rcn_code_iso_a3="SWE" rcn_code_iso_number="752" />
+    <T_REF_COUNTRY rcn_id="216" rcn_country_name="SWITZERLAND" rcn_code_iso_a2="CH" rcn_code_iso_a3="CHE" rcn_code_iso_number="756" />
+    <T_REF_COUNTRY rcn_id="217" rcn_country_name="SYRIAN ARAB REPUBLIC" rcn_code_iso_a2="SY" rcn_code_iso_a3="SYR" rcn_code_iso_number="760" />
+    <T_REF_COUNTRY rcn_id="218" rcn_country_name="TAIWAN, PROVINCE OF CHINA" rcn_code_iso_a2="TW" rcn_code_iso_a3="TWN" rcn_code_iso_number="158" />
+    <T_REF_COUNTRY rcn_id="219" rcn_country_name="TAJIKISTAN" rcn_code_iso_a2="TJ" rcn_code_iso_a3="TJK" rcn_code_iso_number="762" />
+    <T_REF_COUNTRY rcn_id="220" rcn_country_name="TANZANIA, UNITED REPUBLIC OF" rcn_code_iso_a2="TZ" rcn_code_iso_a3="TZA" rcn_code_iso_number="834" />
+    <T_REF_COUNTRY rcn_id="221" rcn_country_name="THAILAND" rcn_code_iso_a2="TH" rcn_code_iso_a3="THA" rcn_code_iso_number="764" />
+    <T_REF_COUNTRY rcn_id="222" rcn_country_name="TIMOR-LESTE" rcn_code_iso_a2="TL" rcn_code_iso_a3="TLS" rcn_code_iso_number="626" />
+    <T_REF_COUNTRY rcn_id="223" rcn_country_name="TOGO" rcn_code_iso_a2="TG" rcn_code_iso_a3="TGO" rcn_code_iso_number="768" />
+    <T_REF_COUNTRY rcn_id="224" rcn_country_name="TOKELAU" rcn_code_iso_a2="TK" rcn_code_iso_a3="TKL" rcn_code_iso_number="772" />
+    <T_REF_COUNTRY rcn_id="225" rcn_country_name="TONGA" rcn_code_iso_a2="TO" rcn_code_iso_a3="TON" rcn_code_iso_number="776" />
+    <T_REF_COUNTRY rcn_id="226" rcn_country_name="TRINIDAD AND TOBAGO" rcn_code_iso_a2="TT" rcn_code_iso_a3="TTO" rcn_code_iso_number="780" />
+    <T_REF_COUNTRY rcn_id="227" rcn_country_name="TUNISIA" rcn_code_iso_a2="TN" rcn_code_iso_a3="TUN" rcn_code_iso_number="788" />
+    <T_REF_COUNTRY rcn_id="228" rcn_country_name="TURKEY" rcn_code_iso_a2="TR" rcn_code_iso_a3="TUR" rcn_code_iso_number="792" />
+    <T_REF_COUNTRY rcn_id="229" rcn_country_name="TURKMENISTAN" rcn_code_iso_a2="TM" rcn_code_iso_a3="TKM" rcn_code_iso_number="795" />
+    <T_REF_COUNTRY rcn_id="230" rcn_country_name="TURKS AND CAICOS ISLANDS" rcn_code_iso_a2="TC" rcn_code_iso_a3="TCA" rcn_code_iso_number="796" />
+    <T_REF_COUNTRY rcn_id="231" rcn_country_name="TUVALU" rcn_code_iso_a2="TV" rcn_code_iso_a3="TUV" rcn_code_iso_number="798" />
+    <T_REF_COUNTRY rcn_id="232" rcn_country_name="UGANDA" rcn_code_iso_a2="UG" rcn_code_iso_a3="UGA" rcn_code_iso_number="800" />
+    <T_REF_COUNTRY rcn_id="233" rcn_country_name="UKRAINE" rcn_code_iso_a2="UA" rcn_code_iso_a3="UKR" rcn_code_iso_number="804" />
+    <T_REF_COUNTRY rcn_id="234" rcn_country_name="UNITED ARAB EMIRATES" rcn_code_iso_a2="AE" rcn_code_iso_a3="ARE" rcn_code_iso_number="784" />
+    <T_REF_COUNTRY rcn_id="235" rcn_country_name="UNITED KINGDOM" rcn_code_iso_a2="GB" rcn_code_iso_a3="GBR" rcn_code_iso_number="826" />
+    <T_REF_COUNTRY rcn_id="236" rcn_country_name="UNITED STATES" rcn_code_iso_a2="US" rcn_code_iso_a3="USA" rcn_code_iso_number="840" />
+    <T_REF_COUNTRY rcn_id="237" rcn_country_name="UNITED STATES MINOR OUTLYING ISLANDS" rcn_code_iso_a2="UM" rcn_code_iso_a3="UMI" rcn_code_iso_number="581" />
+    <T_REF_COUNTRY rcn_id="238" rcn_country_name="URUGUAY" rcn_code_iso_a2="UY" rcn_code_iso_a3="URY" rcn_code_iso_number="858" />
+    <T_REF_COUNTRY rcn_id="239" rcn_country_name="UZBEKISTAN" rcn_code_iso_a2="UZ" rcn_code_iso_a3="UZB" rcn_code_iso_number="860" />
+    <T_REF_COUNTRY rcn_id="240" rcn_country_name="VANUATU" rcn_code_iso_a2="VU" rcn_code_iso_a3="VUT" rcn_code_iso_number="548" />
+    <T_REF_COUNTRY rcn_id="241" rcn_country_name="VATICAN CITY STATE (HOLY SEE)" rcn_code_iso_a2="VA" rcn_code_iso_a3="VAT" rcn_code_iso_number="336" />
+    <T_REF_COUNTRY rcn_id="242" rcn_country_name="VENEZUELA, BOLIVARIAN REPUBLIC OF" rcn_code_iso_a2="VE" rcn_code_iso_a3="VEN" rcn_code_iso_number="862" />
+    <T_REF_COUNTRY rcn_id="243" rcn_country_name="VIET NAM" rcn_code_iso_a2="VN" rcn_code_iso_a3="VNM" rcn_code_iso_number="704" />
+    <T_REF_COUNTRY rcn_id="244" rcn_country_name="VIRGIN ISLANDS (BRITISH)" rcn_code_iso_a2="VG" rcn_code_iso_a3="VGB" rcn_code_iso_number="92" />
+    <T_REF_COUNTRY rcn_id="245" rcn_country_name="VIRGIN ISLANDS (U.S.)" rcn_code_iso_a2="VI" rcn_code_iso_a3="VIR" rcn_code_iso_number="850" />
+    <T_REF_COUNTRY rcn_id="246" rcn_country_name="WALLIS AND FUTUNA" rcn_code_iso_a2="WF" rcn_code_iso_a3="WLF" rcn_code_iso_number="876" />
+    <T_REF_COUNTRY rcn_id="247" rcn_country_name="WESTERN SAHARA" rcn_code_iso_a2="EH" rcn_code_iso_a3="ESH" rcn_code_iso_number="732" />
+    <T_REF_COUNTRY rcn_id="248" rcn_country_name="YEMEN" rcn_code_iso_a2="YE" rcn_code_iso_a3="YEM" rcn_code_iso_number="887" />
+    <T_REF_COUNTRY rcn_id="249" rcn_country_name="YUGOSLAVIA" rcn_code_iso_a2="YU" rcn_code_iso_a3="YUG" rcn_code_iso_number="891" />
+    <T_REF_COUNTRY rcn_id="250" rcn_country_name="ZAMBIA" rcn_code_iso_a2="ZM" rcn_code_iso_a3="ZMB" rcn_code_iso_number="894" />
+    <T_REF_COUNTRY rcn_id="251" rcn_country_name="ZIMBABWE" rcn_code_iso_a2="ZW" rcn_code_iso_a3="ZWE" rcn_code_iso_number="716" />
+
+    <!-- Some state  -->
+    <T_REF_STATE rst_id="1" rst_name="ILE DE FRANCE" rst_rcn_id="76"/>
+    <T_REF_STATE rst_id="2" rst_name="FRANCHE COMPTE" rst_rcn_id="76"/>
+    <T_REF_STATE rst_id="3" rst_name="CENTRE" rst_rcn_id="76"/>
+
+    <!-- Région ile de france -->
+    <T_REF_REGION rre_id="1" rre_name="PARIS" rre_rst_id="1" />
+    <T_REF_REGION rre_id="2" rre_name="SEINE ET MARNE" rre_rst_id="1" />
+    <T_REF_REGION rre_id="3" rre_name="YVELINES" rre_rst_id="1" />
+    <T_REF_REGION rre_id="4" rre_name="ESSONNE" rre_rst_id="1" />
+    <T_REF_REGION rre_id="5" rre_name="HAUTS DE SEINE" rre_rst_id="1" />
+    <T_REF_REGION rre_id="6" rre_name="SEINE SAINT DENIS" rre_rst_id="1" />
+    <T_REF_REGION rre_id="7" rre_name="VAL DE MARNE" rre_rst_id="1" />
+    <T_REF_REGION rre_id="8" rre_name="VAL D OISE" rre_rst_id="1" />
+
+    <!-- Région franche compte -->
+    <T_REF_REGION rre_id="9" rre_name="DOUBS" rre_rst_id="2" />
+    <T_REF_REGION rre_id="10" rre_name="JURA" rre_rst_id="2" />
+    <T_REF_REGION rre_id="11" rre_name="HAUTE SAONE" rre_rst_id="2" />
+    <T_REF_REGION rre_id="12" rre_name="TERRITOIRE DE BELFORT" rre_rst_id="2" />
+
+    <!-- City in PARIS -->
+    <T_REF_CITY rci_id="1" rci_name="PARIS" rci_zip_code="75000" rci_rre_id="1" />
+
+
+    <!-- City in HAUTS DE SEINE -->
+    <T_REF_CITY rci_id="2" rci_name="BOIS COLOMBES" rci_zip_code="92270" rci_rre_id="5" />
+    <T_REF_CITY rci_id="3" rci_name="LA GARENNE COLOMBES" rci_zip_code="92280" rci_rre_id="5" />
+    <T_REF_CITY rci_id="4" rci_name="COURBEVOIE" rci_zip_code="92200" rci_rre_id="5" />
+    <T_REF_CITY rci_id="5" rci_name="NANTERRE" rci_zip_code="92000" rci_rre_id="5" />
+
+
+    <!-- City in DOUBS -->
+    <T_REF_CITY rci_id="6" rci_name="BESANCON" rci_zip_code="25000" rci_rre_id="9" />
+    <T_REF_CITY rci_id="7" rci_name="SAINT VITE" rci_zip_code="25200" rci_rre_id="9" />
+    <T_REF_CITY rci_id="8" rci_name="VELOTTE" rci_zip_code="25300" rci_rre_id="9" />
+    <T_REF_CITY rci_id="9" rci_name="VELOTTE2" rci_zip_code="25400" rci_rre_id="9" />
+
+
+    <!-- Some Ref Product (vegetable)-->
+    <T_REF_PRODUCT rpc_id="1" rpc_name="TOMATO" rpc_rpt_id="1" rpc_carbohydrate="1" rpc_lipid="0.3" rpc_protein="3.2" rpc_img_filename="/ref/product/tomato.jpg" />
+    <T_REF_PRODUCT rpc_id="2" rpc_name="LETUCE" rpc_rpt_id="1" rpc_carbohydrate="1.3" rpc_lipid="0.9" rpc_protein="3" rpc_img_filename="/ref/product/letuce.jpg" />
+    <T_REF_PRODUCT rpc_id="3" rpc_name="PEPPER" rpc_rpt_id="1" rpc_carbohydrate="1.9" rpc_lipid="1.3" rpc_protein="3.9" rpc_img_filename="/ref/product/pepper.jpg" />
+    <T_REF_PRODUCT rpc_id="4" rpc_name="RADDISH" rpc_rpt_id="1" rpc_carbohydrate="3" rpc_lipid="2.3" rpc_protein="4.5" rpc_img_filename="/ref/product/raddish.jpg" />
+    <T_REF_PRODUCT rpc_id="5" rpc_name="PUMPKINS" rpc_rpt_id="1" rpc_carbohydrate="2" rpc_lipid="3.3" rpc_protein="1" rpc_img_filename="/ref/product/pumkins.jpg" />
+    <T_REF_PRODUCT rpc_id="6" rpc_name="OIGNON" rpc_rpt_id="1" rpc_carbohydrate="0" rpc_lipid="0.3" rpc_protein="2" rpc_img_filename="/ref/product/oignon.jpg" />
+
+    <!-- Some Ref Product (fruit)-->
+    <T_REF_PRODUCT rpc_id="7" rpc_name="CHERRY" rpc_rpt_id="2" rpc_carbohydrate="1.6" rpc_lipid="9.3" rpc_protein="3.0" rpc_img_filename="/ref/product/cherry.jpg" />
+    <T_REF_PRODUCT rpc_id="8" rpc_name="APPLE" rpc_rpt_id="2" rpc_carbohydrate="1.9" rpc_lipid="2.3" rpc_protein="3.8" rpc_img_filename="/ref/product/apple.jpg" />
+    <T_REF_PRODUCT rpc_id="9" rpc_name="LEMON" rpc_rpt_id="2" rpc_carbohydrate="10" rpc_lipid="5.3" rpc_protein="2" rpc_img_filename="/ref/product/lemon.jpg" />
+    <T_REF_PRODUCT rpc_id="10" rpc_name="LIME" rpc_rpt_id="2" rpc_carbohydrate="1" rpc_lipid="0.3" rpc_protein="1" rpc_img_filename="/ref/product/lime.jpg" />
+    <T_REF_PRODUCT rpc_id="11" rpc_name="AVOCADO" rpc_rpt_id="1" rpc_carbohydrate="0" rpc_lipid="0.3" rpc_protein="2" rpc_img_filename="/ref/product/avocado.jpg" />
+
+    <!-- Some reap month -->
+    <TJ_REAP_CALENDAR rpc_id="1" rmn_id="1" />
+    <TJ_REAP_CALENDAR rpc_id="1" rmn_id="2" />
+    <TJ_REAP_CALENDAR rpc_id="1" rmn_id="3" />
+    <TJ_REAP_CALENDAR rpc_id="2" rmn_id="2" />
+    <TJ_REAP_CALENDAR rpc_id="2" rmn_id="3" />
+    <TJ_REAP_CALENDAR rpc_id="2" rmn_id="4" />
+    <TJ_REAP_CALENDAR rpc_id="3" rmn_id="7" />
+    <TJ_REAP_CALENDAR rpc_id="3" rmn_id="8" />
+    <TJ_REAP_CALENDAR rpc_id="4" rmn_id="9" />
+    <TJ_REAP_CALENDAR rpc_id="5" rmn_id="10" />
+    <TJ_REAP_CALENDAR rpc_id="6" rmn_id="1" />
+    <TJ_REAP_CALENDAR rpc_id="7" rmn_id="12" />
+    <TJ_REAP_CALENDAR rpc_id="8" rmn_id="12" />
+    <TJ_REAP_CALENDAR rpc_id="9" rmn_id="12" />
+    <TJ_REAP_CALENDAR rpc_id="10" rmn_id="12" />
+
+    <!-- Some seed month -->
+    <TJ_SEED_CALENDAR rpc_id="1" rmn_id="10" />
+    <TJ_SEED_CALENDAR rpc_id="1" rmn_id="12" />
+    <TJ_SEED_CALENDAR rpc_id="1" rmn_id="9" />
+    <TJ_SEED_CALENDAR rpc_id="2" rmn_id="8" />
+    <TJ_SEED_CALENDAR rpc_id="2" rmn_id="7" />
+    <TJ_SEED_CALENDAR rpc_id="2" rmn_id="6" />
+    <TJ_SEED_CALENDAR rpc_id="3" rmn_id="1" />
+    <TJ_SEED_CALENDAR rpc_id="3" rmn_id="2" />
+    <TJ_SEED_CALENDAR rpc_id="4" rmn_id="1" />
+    <TJ_SEED_CALENDAR rpc_id="5" rmn_id="2" />
+    <TJ_SEED_CALENDAR rpc_id="6" rmn_id="3" />
+    <TJ_SEED_CALENDAR rpc_id="7" rmn_id="3" />
+    <TJ_SEED_CALENDAR rpc_id="8" rmn_id="4" />
+    <TJ_SEED_CALENDAR rpc_id="9" rmn_id="5" />
+    <TJ_SEED_CALENDAR rpc_id="10" rmn_id="6" />
+
+
+    <!-- Some address -->
+    <T_ADDRESS adr_id="1" adr_name="Mickael home" adr_street_number="6" adr_street_name="RUE CHARLES DUPORT" adr_rci_id="2" adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code="" />
+    <T_ADDRESS adr_id="2" adr_name="Thierry home" adr_street_number="7" adr_street_name="RUE DU LUXEMBOURG" adr_rci_id="6" adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="3" adr_name="Francis home" adr_street_number="1" adr_street_name="RUE DES CHAMPS ELYSEES" adr_rci_id="1" adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="4" adr_name="Mickael home bis" adr_street_number="1" adr_street_name="RUE DES CHAMPS ELYSEES" adr_rci_id="1" adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+    <T_ADDRESS adr_id="5" adr_name="Mickael home ter" adr_street_number="6" adr_street_name="RUE CHARLES DUPORT" adr_rci_id="2" adr_latitude="0" adr_longitude="0" adr_locality="" adr_adm_area_l2="" adr_adm_area_l1="" adr_country="" adr_postal_code=""/>
+
+    <!--   password = motdepassedetest123 -> 53816aaa291e19dc6c4e07208995078f -->
+    <T_USER usr_id="1" usr_creation_date="2012-01-01 00:00:00.000000000" usr_firstname="mickael" usr_lastname="dubois" usr_username="baloo" usr_password="53816aaa291e19dc6c4e07208995078f" usr_temp_password="123" usr_email_address="mickael@edubois.org" usr_adr_id="1" usr_last_connexion="2012-01-01 00:00:00.001000000" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="2" usr_creation_date="2012-01-02 00:00:00.003000000" usr_firstname="francis" usr_lastname="huyng" usr_username="3615" usr_password="53816aaa291e19dc6c4e07208995078f" usr_temp_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="francis@edubois.org" usr_adr_id="3" usr_last_connexion="2012-01-02 00:00:00.000002000" usr_rur_id="2" usr_rus_id="2"/>
+    <T_USER usr_id="3" usr_creation_date="2012-02-01 00:00:00.100000000" usr_firstname="thierry" usr_lastname="luu huu" usr_username="titi" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="thierry@edubois.org" usr_adr_id="2" usr_last_connexion="2012-02-01 00:00:00.000000000" usr_rur_id="3" usr_rus_id="5"/>
+    <T_USER usr_id="4" usr_creation_date="2012-02-01 00:00:00.020000000" usr_firstname="mickael_bis" usr_lastname="dubois_bis" usr_username="baloo_bis" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael_bis@edubois.org" usr_adr_id="4" usr_last_connexion="2012-02-01 00:00:00.003000000" usr_rur_id="4" usr_rus_id="4"/>
+    <T_USER usr_id="5" usr_creation_date="2011-01-01 00:00:00.000010000" usr_firstname="mickael_ter" usr_lastname="dubois_ter" usr_username="baloo_ter" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael_ter@edubois.org" usr_adr_id="5" usr_last_connexion="2011-01-01 00:00:00.040000000" usr_rur_id="1" usr_rus_id="3"/>
+    <T_USER usr_id="6" usr_creation_date="2011-01-01 00:00:00.000020000" usr_firstname="user0001" usr_lastname="user0001" usr_username="user0001" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael2@edubois.org" usr_adr_id="1" usr_last_connexion="2011-01-01 00:00:01.000000000" usr_rur_id="1" usr_rus_id="2"/>
+    <T_USER usr_id="7" usr_creation_date="2012-01-01 01:00:00.000000000" usr_firstname="user0002" usr_lastname="user0002" usr_username="user0002" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael3@edubois.org" usr_adr_id="1" usr_last_connexion="2012-01-01 01:00:00.000000000" usr_rur_id="1" usr_rus_id="1"/>
+    <T_USER usr_id="8" usr_creation_date="2012-01-01 00:01:00.000000000" usr_firstname="user0003" usr_lastname="user0003" usr_username="user0003" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael4@edubois.org" usr_adr_id="1" usr_last_connexion="2012-01-01 02:00:00.000000000" usr_rur_id="1" usr_rus_id="5"/>
+    <T_USER usr_id="9" usr_creation_date="2012-01-01 00:00:01.000000000" usr_firstname="user0004" usr_lastname="user0004" usr_username="user0004" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael5@edubois.org" usr_adr_id="1" usr_last_connexion="2012-01-01 00:01:00.000000000" usr_rur_id="1" usr_rus_id="4"/>
+    <T_USER usr_id="10" usr_creation_date="2012-01-01 02:00:00.000000000" usr_firstname="user0005" usr_lastname="user0005" usr_username="user0005" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael6@edubois.org" usr_adr_id="1" usr_last_connexion="2012-01-01 00:02:00.000000000" usr_rur_id="1" usr_rus_id="3"/>
+    <T_USER usr_id="11" usr_creation_date="2012-01-01 00:02:00.000000000" usr_firstname="user0006" usr_lastname="user0006" usr_username="user0006" usr_password="53816aaa291e19dc6c4e07208995078f" usr_email_address="mickael7@edubois.org" usr_adr_id="1" usr_last_connexion="2012-01-01 00:00:01.000000000" usr_rur_id="1" usr_rus_id="1"/>
+
+    <T_PROFIL prf_id="1" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="1" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="2" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="2" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+    <T_PROFIL prf_id="3" prf_img_filename="" prf_description="" prf_participation="" prf_experience="" prf_interest="" prf_philosophy="" prf_other="" prf_meals="" prf_reason="" />
+    <T_SUBSCRIPTION sbr_id="3" sbr_freeveggie_agreement="1" sbr_newsletter="1" sbr_share_personal="1" sbr_share_garden="1" />
+
+
+    <T_GARDEN grd_id="1" grd_name="Main garden" grd_description="Mickael first garden" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:00:00.000000000" grd_usr_id="1" grd_sts_id="1"/>
+    <T_GARDEN grd_id="2" grd_name="Main garden" grd_description="Francis first garden" grd_img_filename="" grd_adr_id="2" grd_creation_date="2012-01-02 00:00:00.000000000" grd_usr_id="2" grd_sts_id="1"/>
+    <T_GARDEN grd_id="3" grd_name="Main garden" grd_description="Thierry first garden" grd_img_filename="" grd_adr_id="3" grd_creation_date="2012-03-01 00:00:00.000000000" grd_usr_id="3" grd_sts_id="1"/>
+    <T_GARDEN grd_id="4" grd_name="Second main garden" grd_description="Thierry second garden" grd_img_filename="" grd_adr_id="4" grd_creation_date="2012-03-01 00:00:00.000000000" grd_usr_id="3" grd_sts_id="1"/>
+    <T_GARDEN grd_id="5" grd_name="Main garden" grd_description="Mickael first garden bis" grd_img_filename="" grd_adr_id="5" grd_creation_date="2011-01-01 00:00:00.000000000" grd_usr_id="3" grd_sts_id="1"/>
+    <T_GARDEN grd_id="6" grd_name="Main garden 4" grd_description="Mickael first garden 4" grd_img_filename="" grd_adr_id="1" grd_creation_date="2011-01-01 01:00:00.000000000" grd_usr_id="4" grd_sts_id="2"/>
+    <T_GARDEN grd_id="7" grd_name="Main garden 5" grd_description="Mickael first garden 5" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:01:00.000000000" grd_usr_id="5" grd_sts_id="2"/>
+    <T_GARDEN grd_id="8" grd_name="Main garden 6" grd_description="Mickael first garden 6" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:00:01.000000000" grd_usr_id="6" grd_sts_id="2"/>
+    <T_GARDEN grd_id="9" grd_name="Main garden 7" grd_description="Mickael first garden 7" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:00:01.000000000" grd_usr_id="7" grd_sts_id="3"/>
+    <T_GARDEN grd_id="10" grd_name="Main garden 8" grd_description="Mickael first garden 8" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:00:02.000000000" grd_usr_id="8" grd_sts_id="3"/>
+    <T_GARDEN grd_id="11" grd_name="Main garden 9" grd_description="Mickael first garden 9" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:02:00.000000000" grd_usr_id="9" grd_sts_id="1"/>
+    <T_GARDEN grd_id="12" grd_name="Main garden 10" grd_description="Mickael first garden 10" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 00:02:00.000000000" grd_usr_id="10" grd_sts_id="1"/>
+    <T_GARDEN grd_id="13" grd_name="Main garden 11" grd_description="Mickael first garden 11" grd_img_filename="" grd_adr_id="1" grd_creation_date="2012-01-01 10:00:00.000000000" grd_usr_id="11" grd_sts_id="1"/>
+
+    <T_PRODUCT prd_id="1" prd_grd_id="1" prd_name="Les tomates de miky" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="2" prd_grd_id="2" prd_name="Les lettues de francis" prd_rpc_id="3" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="3" prd_grd_id="3" prd_name="Les Pepper de thierry" prd_rpc_id="3" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="4" prd_grd_id="4" prd_name="Les Raddish de thierry" prd_rpc_id="4" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="5" prd_grd_id="1" prd_name="first product" prd_img_filename="/ref/product/tomato.jpg" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="2.3" prd_description="grape tomatoes" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="6" prd_grd_id="4" prd_name="Les Pepper de thierry" prd_rpc_id="3" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.0" prd_description="Les meilleurs du monde" prd_sts_id="2"/>
+    <T_PRODUCT prd_id="7" prd_grd_id="6" prd_name="Les tomates de miky 6" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.1" prd_description="Les meilleurs du monde" prd_sts_id="2"/>
+    <T_PRODUCT prd_id="8" prd_grd_id="7" prd_name="Les tomates de miky 7" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.2" prd_description="Les meilleurs du monde" prd_sts_id="2"/>
+    <T_PRODUCT prd_id="9" prd_grd_id="8" prd_name="Les tomates de miky 8" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.3" prd_description="Les meilleurs du monde" prd_sts_id="3"/>
+    <T_PRODUCT prd_id="10" prd_grd_id="9" prd_name="Les tomates de miky 9" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.4" prd_description="Les meilleurs du monde" prd_sts_id="3"/>
+    <T_PRODUCT prd_id="11" prd_grd_id="10" prd_name="Les tomates de miky 10" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.6" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="12" prd_grd_id="11" prd_name="Les tomates de miky 11" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.6" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="13" prd_grd_id="12" prd_name="Les tomates de miky 12" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.61" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+    <T_PRODUCT prd_id="14" prd_grd_id="13" prd_name="Les tomates de miky 13" prd_rpc_id="1" prd_chg_id="1" prd_rcm_id="1" prd_rct_id="1" prd_quantity="1.41" prd_description="Les meilleurs du monde" prd_sts_id="1"/>
+
+    <T_COMMENT_GARDEN cgr_id="1" cgr_comment="very tasty tomatoes 1" cgr_usr_id="1" cgr_grd_id="1" cgr_res_id="1" cgr_creation_date="2012-02-18 00:00:00.000000000" cgr_ren_id="1" />
+    <T_COMMENT_GARDEN cgr_id="2" cgr_comment="very tasty tomatoes 2" cgr_usr_id="2" cgr_grd_id="2" cgr_res_id="2" cgr_creation_date="2012-03-18 00:00:00.000000000" cgr_ren_id="2" />
+    <T_COMMENT_GARDEN cgr_id="3" cgr_comment="very tasty tomatoes 3" cgr_usr_id="3" cgr_grd_id="5" cgr_res_id="3" cgr_creation_date="2012-04-18 00:00:00.000000000" cgr_ren_id="3" />
+    <T_COMMENT_GARDEN cgr_id="4" cgr_comment="very tasty tomatoes 3" cgr_usr_id="4" cgr_grd_id="4" cgr_res_id="1" cgr_creation_date="2012-02-19 00:00:00.000000000" cgr_ren_id="4" />
+    <T_COMMENT_GARDEN cgr_id="5" cgr_comment="very tasty tomatoes 4" cgr_usr_id="1" cgr_grd_id="5" cgr_res_id="1" cgr_creation_date="2012-02-18 01:00:00.000000000" cgr_ren_id="5" />
+    <T_COMMENT_GARDEN cgr_id="6" cgr_comment="very tasty tomatoes 5" cgr_usr_id="2" cgr_grd_id="1" cgr_res_id="1" cgr_creation_date="2012-02-18 00:01:00.000000000" cgr_ren_id="1" />
+    <T_COMMENT_GARDEN cgr_id="7" cgr_comment="very tasty tomatoes 6" cgr_usr_id="3" cgr_grd_id="1" cgr_res_id="1" cgr_creation_date="2012-02-18 00:00:01.000000000" cgr_ren_id="2" />
+    <T_COMMENT_GARDEN cgr_id="8" cgr_comment="very tasty tomatoes 7" cgr_usr_id="4" cgr_grd_id="3" cgr_res_id="1" cgr_creation_date="2012-02-18 02:00:00.000000000" cgr_ren_id="3" />
+    <T_COMMENT_GARDEN cgr_id="9" cgr_comment="very tasty tomatoes 8" cgr_usr_id="1" cgr_grd_id="2" cgr_res_id="1" cgr_creation_date="2012-02-18 00:02:00.000000000" cgr_ren_id="4" />
+    <T_COMMENT_GARDEN cgr_id="10" cgr_comment="very tasty tomatoes 9" cgr_usr_id="2" cgr_grd_id="4" cgr_res_id="1" cgr_creation_date="2012-02-20 00:00:00.000000000" cgr_ren_id="5" />
+    <T_COMMENT_GARDEN cgr_id="11" cgr_comment="very tasty tomatoes 10" cgr_usr_id="3" cgr_grd_id="2" cgr_res_id="1" cgr_creation_date="2011-02-18 00:00:00.000000000" cgr_ren_id="4" />
+
+
+    <T_COMMENT_PRODUCT cpr_id="1" cpr_comment="very tasty tomatoes" cpr_usr_id="1" cpr_prd_id="1" cpr_res_id="1" cpr_creation_date="2012-02-18 00:00:00.000000000" cpr_ren_id="4" />
+    <T_COMMENT_PRODUCT cpr_id="2" cpr_comment="very tasty tomatoes" cpr_usr_id="2" cpr_prd_id="1" cpr_res_id="1" cpr_creation_date="2012-02-18 00:00:00.000000000" cpr_ren_id="4" />
+    <T_COMMENT_PRODUCT cpr_id="3" cpr_comment="very tasty tomatoes" cpr_usr_id="1" cpr_prd_id="2" cpr_res_id="2" cpr_creation_date="2012-03-18 00:00:00.000000000" cpr_ren_id="5" />
+
+
+    <T_LIKE_GARDEN lgr_id="1" lgr_usr_id="2" lgr_grd_id="3" lgr_res_id="1" lgr_creation_date="2012-02-26 00:00:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="2" lgr_usr_id="1" lgr_grd_id="2" lgr_res_id="2" lgr_creation_date="2012-02-27 00:00:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="3" lgr_usr_id="3" lgr_grd_id="1" lgr_res_id="3" lgr_creation_date="2012-02-27 00:00:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="4" lgr_usr_id="4" lgr_grd_id="4" lgr_res_id="1" lgr_creation_date="2012-03-27 00:00:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="5" lgr_usr_id="5" lgr_grd_id="5" lgr_res_id="1" lgr_creation_date="2011-02-27 01:00:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="6" lgr_usr_id="2" lgr_grd_id="1" lgr_res_id="1" lgr_creation_date="2011-02-27 00:01:01.000000000" />
+    <T_LIKE_GARDEN lgr_id="7" lgr_usr_id="1" lgr_grd_id="3" lgr_res_id="1" lgr_creation_date="2012-02-27 02:00:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="8" lgr_usr_id="2" lgr_grd_id="5" lgr_res_id="1" lgr_creation_date="2012-02-27 00:02:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="9" lgr_usr_id="3" lgr_grd_id="1" lgr_res_id="1" lgr_creation_date="2012-02-27 00:00:02.000000000" />
+    <T_LIKE_GARDEN lgr_id="10" lgr_usr_id="4" lgr_grd_id="2" lgr_res_id="1" lgr_creation_date="2012-02-27 00:00:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="11" lgr_usr_id="5" lgr_grd_id="4" lgr_res_id="1" lgr_creation_date="2012-02-27 01:01:00.000000000" />
+    <T_LIKE_GARDEN lgr_id="12" lgr_usr_id="1" lgr_grd_id="5" lgr_res_id="1" lgr_creation_date="2012-02-27 00:01:01.000000000" />
+
+    <T_LIKE_PRODUCT lpr_id="1" lpr_usr_id="3" lpr_prd_id="2" lpr_res_id="1" lpr_creation_date="2012-03-17 00:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="2" lpr_usr_id="1" lpr_prd_id="3" lpr_res_id="2" lpr_creation_date="2012-03-18 00:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="3" lpr_usr_id="2" lpr_prd_id="1" lpr_res_id="3" lpr_creation_date="2012-03-18 00:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="4" lpr_usr_id="1" lpr_prd_id="6" lpr_res_id="3" lpr_creation_date="2012-04-17 00:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="5" lpr_usr_id="2" lpr_prd_id="4" lpr_res_id="1" lpr_creation_date="2012-04-17 00:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="6" lpr_usr_id="3" lpr_prd_id="1" lpr_res_id="2" lpr_creation_date="2011-03-17 00:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="7" lpr_usr_id="4" lpr_prd_id="5" lpr_res_id="1" lpr_creation_date="2011-03-17 00:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="8" lpr_usr_id="5" lpr_prd_id="2" lpr_res_id="1" lpr_creation_date="2012-03-17 01:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="9" lpr_usr_id="1" lpr_prd_id="5" lpr_res_id="1" lpr_creation_date="2012-03-17 02:00:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="10" lpr_usr_id="2" lpr_prd_id="3" lpr_res_id="1" lpr_creation_date="2012-03-17 00:01:00.000000000" />
+    <T_LIKE_PRODUCT lpr_id="11" lpr_usr_id="3" lpr_prd_id="6" lpr_res_id="1" lpr_creation_date="2012-03-17 00:02:00.000000000" />
+
+    <T_REQUEST_PRODUCT rqt_id="1" rqt_prd_id="1" rqt_usr_id="1" rqt_quantity="0.5" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-02-27 00:00:00.000000000" rqt_answer_date="2012-02-28 00:00:00.000000000" rqt_picking_date="2012-02-29 00:00:00.000000000"/>
+    <T_REQUEST_PRODUCT rqt_id="2" rqt_prd_id="1" rqt_usr_id="3" rqt_quantity="0.5" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-02-27 00:00:00.000000000" rqt_answer_date="2012-02-28 00:00:00.000000000" rqt_picking_date="2012-02-29 00:00:00.000000000"/>
+    <T_REQUEST_PRODUCT rqt_id="3" rqt_prd_id="5" rqt_usr_id="3" rqt_quantity="0.5" rqt_msg="Please" rqt_answer_msg="No" rqt_rpr_id="4" rqt_creation_date="2012-02-27 00:00:00.000000000" rqt_answer_date="2012-02-28 00:00:00.000000000" rqt_picking_date="2012-02-29 00:00:00.000000000"/>
+    <T_REQUEST_PRODUCT rqt_id="4" rqt_prd_id="1" rqt_usr_id="1" rqt_quantity="0.1" rqt_msg="Please" rqt_answer_msg="Yes" rqt_rpr_id="3" rqt_creation_date="2012-02-31 00:00:00.000000000" rqt_answer_date="2012-02-31 00:00:00.000000000" rqt_picking_date="2012-02-31 00:00:00.000000000"/>
+
+    <T_RELATIONSHIP rlt_id="1" rlt_usr_id_sender="6" rlt_usr_id_recipient="7" rlt_rrt_id="1" rlt_rrs_id="2" rlt_creation_date="2012-03-17 00:00:00.000000000" rlt_answer="Test" rlt_request="Test" />
+    <T_RELATIONSHIP rlt_id="2" rlt_usr_id_sender="7" rlt_usr_id_recipient="7" rlt_rrt_id="2" rlt_rrs_id="2" rlt_creation_date="2012-02-17 00:00:00.000000000" rlt_answer="Test" rlt_request="Test" />
+    <T_RELATIONSHIP rlt_id="3" rlt_usr_id_sender="8" rlt_usr_id_recipient="7" rlt_rrt_id="3" rlt_rrs_id="3" rlt_creation_date="2011-03-17 00:00:00.000000000" rlt_answer="Test" rlt_request="Test" />
+    <T_RELATIONSHIP rlt_id="4" rlt_usr_id_sender="9" rlt_usr_id_recipient="7" rlt_rrt_id="1" rlt_rrs_id="4" rlt_creation_date="2012-03-17 01:00:00.000000000" rlt_answer="Test" rlt_request="Test" />
+    <T_RELATIONSHIP rlt_id="6" rlt_usr_id_sender="11" rlt_usr_id_recipient="8" rlt_rrt_id="3" rlt_rrs_id="2" rlt_creation_date="2012-03-17 01:01:01.000000000" rlt_answer="Test" rlt_request="Test" />
+    <T_RELATIONSHIP rlt_id="7" rlt_usr_id_sender="6" rlt_usr_id_recipient="8" rlt_rrt_id="1" rlt_rrs_id="2" rlt_creation_date="2012-03-17 01:02:00.000000000" rlt_answer="Test" rlt_request="Test" />
+    <T_RELATIONSHIP rlt_id="8" rlt_usr_id_sender="7" rlt_usr_id_recipient="8" rlt_rrt_id="1" rlt_rrs_id="2" rlt_creation_date="2012-03-17 00:03:00.000000000" rlt_answer="Test" rlt_request="Test" />
+
+</dataset>

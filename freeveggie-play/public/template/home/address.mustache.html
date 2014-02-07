@@ -1,0 +1,133 @@
+<h2>Address</h2>
+<form id="updateAddress" action="/home/address" class="form-horizontal"
+	method="POST">
+	<fieldset>
+		<div id="messagePanel" class="alert" style="display: none">
+			<span id="message"></span>
+		</div>
+		<input type="hidden" name="addressId" id="addressId" value="{{id}}">
+		<div id="addressField" class="control-group">
+			<label class="control-label" for="address"> Address :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="address" id="address"
+					style="width: 270px;"
+					value="{{streetNumber}} {{streetName}}, {{postalCode}} {{locality}}, {{country}}">
+				<span class="help-inline" id="addressErrorMessage"></span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="streetNumber"> Street
+				Number :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="streetNumber"
+					value="{{streetNumber}}" id="streetNumber" readonly>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="street"> Street :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="street" id="street"
+					value="{{streetName}}" readonly>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="locality"> Locality :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="locality"
+					id="locality" value="{{locality}}" readonly>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="administrativeAreaLevel2">
+				District :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge"
+					name="administrativeAreaLevel2" id="administrativeAreaLevel2"
+					value="{{administrativeAreaLevel2}}" readonly>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="administrativeAreaLevel1">
+				State/Province :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge"
+					name="administrativeAreaLevel1" id="administrativeAreaLevel1"
+					value="{{administrativeAreaLevel1}}" readonly>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="country"> Country :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="country" id="country"
+					value="{{country}}" readonly>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="postalCode"> Postal Code :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="postalCode"
+					id="postalCode" value="{{postalCode}}" readonly>
+			</div>
+		</div>
+		<div class="control-group" style="display: none">
+			<label class="control-label" for="lat"> Lat :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="latitude"
+					id="latitude" value="{{latitude}}" readonly>
+			</div>
+		</div>
+		<div class="control-group" style="display: none">
+			<label class="control-label" for="lng"> Lng :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="longitude"
+					id="longitude" value="{{longitude}}">
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Save changes</button>
+			<!-- 			<button class="btn">Cancel</button> -->
+		</div>
+	</fieldset>
+</form>
+<div style="margin-top: -450px; margin-left: 500px;" id="map"></div>
+
+<script>
+	function initialize() {
+		var mapOptions = {
+			zoom: 12,
+			panControl : false,
+			scaleControl: false,
+			streetViewControl: false,
+			mapTypeControl : false,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		var pos = new google.maps.LatLng($('#latitude').val(),$('#longitude').val());
+		map.setCenter(pos);
+		   
+		var marker = new google.maps.Marker();
+		marker.setPosition(pos);
+		marker.setMap(map);  
+		
+		
+	}
+	$("#address").addressPicker({
+	    boundElements: {
+	    	'#latitude' : 'lat' ,
+			'#longitude' : 'lng',
+			'#streetNumber' : 'street_number',
+			'#street' : 'route',
+			'#locality' : 'locality',
+			'#administrativeAreaLevel2' : 'administrative_area_level_2',
+			'#administrativeAreaLevel1' : 'administrative_area_level_1',
+			'#country' : 'country',
+			'#postalCode' : 'postal_code',
+			'#type' : 'type',
+	        '#event_foo': function (data) {
+	        	initialize();
+	        }
+	    }
+	});
+	initialize();
+	$("form#updateAddress").form();
+</script>

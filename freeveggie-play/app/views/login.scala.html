@@ -1,0 +1,95 @@
+@mainnologin("Freeveggie") {
+
+<div class="container">
+	<div class="row-fluid">
+		<div class="span2">&nbsp;</div>
+		<div class="span4">
+			<form id="connection" action="/connect" method="POST"
+				class="form-horizontal">
+				<fieldset>
+					<legend>Loggin In</legend>
+					<div id="errorPanel" class="alert alert-error"
+						style="display: none">
+						<!-- button type="button" class="close" data-dismiss="alert">&times;</button -->
+						<span id="errorMessage"></span>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="username">Login</label>
+						<div class="controls">
+							<input type="text" name="username" id="username"
+								placeholder="Login">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">Password</label>
+						<div class="controls">
+							<input type="password" name="password" id="password"
+								placeholder="Password">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<label class="checkbox"> <input type="checkbox">
+								Remember me
+							</label>
+							<button type="submit" class="btn">Sign in</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="span4">
+			<form id="connection" action="/createaccount" method="GET"
+				class="form-horizontal">
+				<fieldset>
+					<legend>Create a new account</legend>
+					<p>You grow you own fruits and vegetable on your garden but you make too much ouf of it,
+					why not swaping the left over ? That why freeveggie.org is for. It will help you to give or share.<br /><br />
+					So if you didn't made it already create an account imediatly in only one step.
+					</p>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn">Create an account</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+		<div class="span2">&nbsp;</div>
+	</div>
+	<div class="row-fluid">
+		<hr>
+		<div class="span12">
+			<footer>
+				<p>&copy; Edubois 2012</p>
+			</footer>
+		</div>
+
+	</div>
+	<!--/.fluid-container-->
+</div>
+<!-- Le javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="@routes.Assets.at("javascripts/jquery-1.7.2.min.js")"></script>
+<script>
+	$('#connection').submit(function() {
+
+		$.ajax({
+			type : $('#connection').attr("method"),
+			url : $('#connection').attr("action"),
+			data : $('#connection').serialize(),
+			success : function(data, textStatus, jqXHR) {
+				window.location.href = "/search";
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				$("#errorMessage").html(jqXHR.responseText);
+				$("#errorPanel").fadeIn();
+			}
+		});
+		return false;
+	});
+	;
+</script>
+}

@@ -1,0 +1,142 @@
+  <h2>Add a product</h2>
+  <form id="createProduct" method="PUT" action="/product/garden" class="form-horizontal">
+	<fieldset>
+		<input type="hidden" name="refProductId" id="refProductId" value="-1"/>
+		<div id="refProductIdField" class="control-group">
+			<label class="control-label" for="product">Product :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="product" name="product">
+				<span class="help-inline error-msg" id="refProductIdErrorMessage"></span>
+			</div>
+		</div>
+		<div id="nameField" class="control-group">
+			<label class="control-label" for="name">Name :</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="name" name="name">
+				<span class="help-inline error-msg" id="nameErrorMessage"></span>
+			</div>
+		</div>
+		<div id="cultureModeField" class="control-group">
+			<label class="control-label" for="cultureMode">Culture Mode :</label>
+			<div class="controls">
+				<label class="radio inline" style="width:60px">
+				  <input type="radio" name="cultureMode" id="cultureMode1" value="GARDEN" checked>Garden
+				</label>
+				<label class="radio inline" style="width:60px">
+				  <input type="radio" name="cultureMode" id="cultureMode2" value="BALCONY">Balcony
+				</label>
+				<label class="radio inline" style="width:60px">
+				  <input type="radio" name="cultureMode" id="cultureMode3" value="TERRACE">Terrace
+				</label>
+				<span class="help-inline error-msg" id="cultureModeErrorMessage"></span>
+			</div>
+		</div>
+		<div id="cultureTypeField" class="control-group">
+			<label class="control-label" for="cultureType">Culture Type :</label>
+			<div class="controls">
+				<label class="radio inline" style="width:60px">
+				  <input type="radio" name="cultureType" id="cultureType1" value="REGULAR" checked>Regular
+				</label>
+				<label class="radio inline" style="width:60px">
+				  <input type="radio" name="cultureType" id="cultureType2" value="BIO">Bio
+				</label>
+				<span class="help-inline error-msg" id="cultureTypeErrorMessage"></span>
+			</div>
+		</div>
+		<div id="exchangeTypeField" class="control-group">
+			<label class="control-label" for="exchangeType">Exchange Type :</label>
+			<div class="controls">
+				<label class="radio inline" style="width:60px">
+				  <input type="radio" name="exchangeType" id="exchangeType1" value="GIVES" checked>Gives
+				</label>
+				<label class="radio inline" style="width:60px">
+				  <input type="radio" name="exchangeType" id="exchangeType2" value="SHARES">Swap
+				</label>
+				<span class="help-inline error-msg" id="exchangeTypeErrorMessage"></span>
+			</div>
+		</div>
+		<div id="quantityField" class="control-group">
+			<label class="control-label" for="quantity">Quantity (en kg) :</label>
+			<div class="controls">
+				<input type="number" step="any" class="input-xlarge" id="quantity" name="quantity" />
+				<span class="help-inline error-msg" id="quantityErrorMessage"></span>
+			</div>
+		</div>
+		<div id="descriptionField" class="control-group">
+			<label class="control-label" for="description">Description</label>
+			<div class="controls">
+				<textarea class="input-xlarge" id="description" name="description" rows="5"></textarea>
+				<span class="help-inline error-msg" id="descriptionErrorMessage"></span>
+			</div>
+		</div>
+		<div class="form-actions">
+			<input type="submit" class="btn btn-primary" value="Add" />
+			<input type="reset" class="btn btn-danger" value="Cancel" />
+		</div>
+	</fieldset>
+</form>
+
+<script>
+	//Get the garden id
+	var gardenId = $.address.parameter("gardenId");
+	//List of all the ref products
+	var product;
+	var postAddress = $('form#createProduct').attr("action") + "/" + gardenId
+	//Set the form
+	$('form#createProduct').form({
+		action : postAddress,
+		successAddress : '/home#garden?id=' + gardenId
+	});
+	
+	$('#product').change(function() {
+		data = product;
+		for (i=0;i<data.refProductMsg.length;i++){
+			var productName = data.refProductMsg[i].name;
+			if(productName == $("#product").attr('value')){
+				//If we find a coresponding value we set it and exit
+				$("#refProductId").attr('value',data.refProductMsg[i].id);
+				return;
+			}
+		}
+    	//If we dont find any we set -1
+    	$("#refProductId").attr('value','-1');
+	});
+	
+	//Set the referenced products typeahead
+	$.get("/reference/product", function(pData){
+		var productNames = new Array();
+		var data = jQuery.parseJSON(pData)
+		product = data;
+		for (i=0;i<data.refProductMsg.length;i++){
+			var productName = data.refProductMsg[i].name;
+			productNames[i] = productName;
+		}
+		
+		$('#product').typeahead({
+		    source: function (typeahead, query) {
+		    	return productNames;
+		   	},
+
+		    // typeahead calls this function when a object is selected, and
+		    // passes an object or string depending on what you processed, in this case a string
+		    onselect: function (obj) {		    
+				for (i=0;i<data.refProductMsg.length;i++){
+					var productName = data.refProductMsg[i].name;
+					if(productName == obj){
+						//If we find a coresponding value we set it and exit
+						$("#refProductId").attr('value',data.refProductMsg[i].id);
+						return;
+					}
+				}
+		    	//If we dont find any we set -1
+		    	$("#refProductId").attr('value','-1');
+		    }
+		})
+	});
+	
+	//Set the cancel button action
+	$('input[type="reset"]').click(function(){
+		window.location.href = "/home#garden?id=" + gardenId;
+		return false;
+	})
+</script>

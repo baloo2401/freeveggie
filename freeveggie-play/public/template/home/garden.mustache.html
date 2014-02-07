@@ -1,0 +1,149 @@
+<div class="row-fluid">
+	<div class="span6">
+		<div>
+			<table
+				class="table table-striped table-bordered table-condensed .table-striped">
+				<thead>
+					<tr>
+<!-- 						<th>Type</th> -->
+						<th>Name</th>
+						<th style="width: 60px;">Q.</th>
+<!-- 						<th>Etat</th> -->
+<!-- 						<th>Action</th> -->
+					</tr>
+				</thead>
+				<tbody id="productTab">
+				</tbody>
+			</table>
+			<a href="#createProduct?gardenId={{id}}" class="btn">Add a product</a>
+		</div>
+	</div>
+	<div class="span6">
+		<div class="row-fluid">
+			<div class="span8" style="margin-left: 0px">
+				<address>
+					<strong>{{address.name}}</strong> <br>{{address.streetNumber}} {{address.streetName}}
+					<br>{{address.postalCode}} {{address.locality}}, {{address.country}}<br>
+				</address>
+			</div>
+			<div class="span4"
+				style="margin-left: 0px; margin-bottom: 20px; float: right">
+				<a href="#" class="thumbnail"> <img
+					src="http://placehold.it/160x120" alt="">
+				</a>
+				<i class="icon-download-alt"></i>
+			</div>
+			<table
+				class="table table-striped table-bordered table-condensed .table-striped">
+				<thead>
+					<tr>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{description}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<table
+				class="table table-striped table-bordered table-condensed .table-striped">
+				<thead>
+					<tr>
+						<th>Comments</th>
+					</tr>
+					<tr>
+						<th style="width: 60px;">Date</th>
+						<th>Comment</th>
+					</tr>
+				</thead>
+				<tbody id="gardenCommentTab">
+				</tbody>
+			</table>
+			<table
+				class="table table-striped table-bordered table-condensed .table-striped">
+				<thead>
+					<tr>
+						<th colspan="2">Likes</th>
+					</tr>
+					<tr>
+						<th style="width: 60px;">Date</th>
+						<th>User</th>
+					</tr>
+				</thead>
+				<tbody id="gardenLikeTab">
+				</tbody>
+			</table>
+			<table
+				class="table table-striped table-bordered table-condensed .table-striped">
+				<thead>
+					<tr>
+						<th colspan="3">Last exchange</th>
+					</tr>
+				</thead>
+				<thead>
+					<tr>
+						<th>User</th>
+						<th>Product</th>
+						<th style="width: 60px;">Q.</th>
+					</tr>
+				</thead>
+				<tbody id="productRequestTab">
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	//Get the garden id
+	var gardenId = $.address.parameter("id");
+	//Display produt table
+	$('#productTab').loadTableTemplate({
+		templateAddress : "/home/productTab.mustache.html",  
+		dataAddress : "/product/garden/"+gardenId, 
+		callbackFnk : function(){
+			//On call back we set the action on delete buttons
+			$.each($('.delete-product-cross'), function(index, value) {
+				  $(value).click(function() {
+					  $.ajax({
+							type : "DELETE",
+							url : "/product/" + $(value).attr('data-product'),
+							success : function(data, textStatus, jqXHR) {
+								$.displaySuccess('Update successfull');
+								//We remove the ligne from the liste
+								//TODO : Should we reload the page since this element is delete last echange list might 
+								//be diferent or maybe just reload this list.
+								$('div[data-product="'+$(value).attr('data-product')+'"]').parent().parent().remove();
+							},
+							error : function(jqXHR, textStatus, errorThrown) {
+								$.displaySuccess('Update failed');
+							}
+						});
+					  
+					});
+			});
+		}
+	});
+	
+	//Display garden comment
+	$('#gardenCommentTab').loadTableTemplate({
+		templateAddress : "/home/gardenCommentTab.mustache.html", 
+		dataAddress : "/gardencomment/garden/"+gardenId, 
+		callbackFnk : $.fn.makeDateReadable
+	});
+	
+	
+	//Display garden comment
+	$('#gardenLikeTab').loadTableTemplate({
+		templateAddress : "/home/gardenLikeTab.mustache.html",
+		dataAddress :"/gardenlike/garden/"+gardenId,
+		callbackFnk :$.fn.makeDateReadable
+	});
+	
+	
+	//Display garden comment
+	$('#productRequestTab').loadTableTemplate({
+		templateAddress : "/home/productRequestTab.mustache.html",  
+		dataAddress : "/productrequest/garden/"+gardenId
+	});
+</script>
