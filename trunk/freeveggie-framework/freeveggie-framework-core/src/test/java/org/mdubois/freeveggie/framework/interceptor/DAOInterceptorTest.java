@@ -31,19 +31,68 @@ public class DAOInterceptorTest {
         Mockit.restoreAllOriginalDefinitions();
     }
 
+
+    /**
+     * Test of validate method, of class MessageValidatorInterceptor.
+     *
+     * @throws Exception
+     */
+    @Test(expected = TechnicalException.class)
+    public void testWrapRuntimeException() throws Exception {
+        final DAOInterceptor instance = new DAOInterceptor();
+        new Expectations() {
+
+            @Mocked
+            private Log LOGGER;
+
+            {
+                mockContext.proceed();
+                throwsException(new RuntimeException());
+            }
+        };
+
+        instance.manageException(mockContext);
+
+    }
+
+
+    /**
+     * Test of validate method, of class MessageValidatorInterceptor.
+     *
+     * @throws Exception
+     */
+    @Test(expected = CheckedException.class)
+    public void testNotWrapCheckedException() throws Exception {
+        final DAOInterceptor instance = new DAOInterceptor();
+        new Expectations() {
+
+            @Mocked
+            private Log LOGGER;
+
+            {
+                mockContext.proceed();
+                throwsException(new CheckedException());
+            }
+        };
+
+        instance.manageException(mockContext);
+
+    }
+
+
+
     /**
      * Test of validate method, of class MessageValidatorInterceptor.
      *
      * @throws Exception
      */
     @Test
-    public void testValidateDedebugDisabled() throws Exception {
+    public void testNoException() throws Exception {
         final DAOInterceptor instance = new DAOInterceptor();
         final Object expectedResult = new Integer(-1);
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, "isDebugEnable", Boolean.FALSE);
                 mockContext.proceed();
                 returns(expectedResult);
                 repeats(1);
@@ -54,138 +103,7 @@ public class DAOInterceptorTest {
         Assert.assertEquals(expectedResult, result);
 
     }
-
-    /**
-     * Test of validate method, of class MessageValidatorInterceptor.
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testValidateDedebugEnable() throws Exception {
-        final DAOInterceptor instance = new DAOInterceptor();
-        final Object expectedResult = new Integer(-1);
-        new Expectations() {
-
-            {
-                Deencapsulation.setField(instance, "isDebugEnable", Boolean.TRUE);
-                mockContext.proceed();
-                returns(expectedResult);
-                repeats(1);
-            }
-        };
-
-        Object result = instance.manageException(mockContext);
-        Assert.assertEquals(expectedResult, result);
-
-    }
-
-    /**
-     * Test of validate method, of class MessageValidatorInterceptor.
-     *
-     * @throws Exception
-     */
-    @Test(expected = TechnicalException.class)
-    public void testValidateDedebugDisabledThrows() throws Exception {
-        final DAOInterceptor instance = new DAOInterceptor();
-        new Expectations() {
-
-            @Mocked
-            private Log LOGGER;
-
-            {
-                Deencapsulation.setField(instance, "isDebugEnable", Boolean.FALSE);
-                mockContext.proceed();
-                throwsException(new RuntimeException());
-            }
-        };
-
-        instance.manageException(mockContext);
-
-    }
-
-    /**
-     * Test of validate method, of class MessageValidatorInterceptor.
-     *
-     * @throws Exception
-     */
-    @Test(expected = TechnicalException.class)
-    public void testValidateDedebugEnableThrows() throws Exception {
-        final DAOInterceptor instance = new DAOInterceptor();
-        new Expectations() {
-
-            @Mocked
-            private Log LOGGER;
-            {
-                Deencapsulation.setField(instance, "isDebugEnable", Boolean.TRUE);
-                mockContext.proceed();
-                throwsException(new RuntimeException());
-
-                LOGGER.error(any, (TechnicalException)any);
-            }
-        };
-
-        instance.manageException(mockContext);
-
-    }
-
-    /**
-     * Test of validate method, of class MessageValidatorInterceptor.
-     *
-     * @throws Exception
-     */
-//    @Test
-//    public void testValidateDedebugEnableThrows_controle_value() throws Exception {
-//        final DAOInterceptor instance = new DAOInterceptor();
-//        new Expectations() {
-//
-//            @Mocked
-//            private Log LOGGER;
-//            {
-//                Deencapsulation.setField(instance, "isDebugEnable", Boolean.TRUE);
-//                mockContext.proceed();
-//                throwsException(new RuntimeException("argh!!! exception"));
-//
-//                LOGGER.error(any, (TechnicalException)any);
-//            }
-//        };
-//
-//        try {
-//            instance.manageException(mockContext);
-//        } catch(TechnicalException te){
-//            Assert.assertEquals("argh!!! exception", te.getCause().getMessage());
-//        }
-//
-//    }
-
-    /**
-     * Test of validate method, of class MessageValidatorInterceptor.
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testValidateDedebugEnableThrowsNonRuntime() throws Exception {
-        final DAOInterceptor instance = new DAOInterceptor();
-        new Expectations() {
-
-            {
-                Deencapsulation.setField(instance, "isDebugEnable", Boolean.TRUE);
-                mockContext.proceed();
-                throwsException(new FileNotFoundException("argh!!! exception"));
-
-            }
-        };
-
-
-        boolean thrown = false;
-
-        try {
-            instance.manageException(mockContext);
-        } catch(FileNotFoundException te){
-            thrown = true;
-        }
-
-        if(!thrown){
-            Assert.fail("An exception should have occur.");
-        }
-    }
+}
+class CheckedException extends Exception {
+    
 }
