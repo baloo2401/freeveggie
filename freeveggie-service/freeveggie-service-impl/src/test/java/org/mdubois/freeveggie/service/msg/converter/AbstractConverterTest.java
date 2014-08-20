@@ -34,7 +34,7 @@ public abstract class AbstractConverterTest<T, S>{
 
     @Test
     public void testConvertList(){
-        List<T> expectedMessages = new ArrayList<T>();
+        List<T> expectedMessages  = new ArrayList<T>();
         List<S> origines = new ArrayList<S>();
 
         expectedMessages.add(getExpectedMessage());
@@ -47,10 +47,10 @@ public abstract class AbstractConverterTest<T, S>{
 
         List<T> result = converter.convert(origines);
 
-        Assert.assertEquals(result.size(), 2);
+        Assert.assertEquals(2, result.size());
 
-        ReflectionAssert.assertLenientEquals(result.get(0), getExpectedMessage());
-        ReflectionAssert.assertLenientEquals(result.get(0), getExpectedMessage());
+        ReflectionAssert.assertLenientEquals(getExpectedMessage(), result.get(0));
+        ReflectionAssert.assertLenientEquals(getExpectedMessage(), result.get(1));
     }
 
 }

@@ -68,7 +68,7 @@ public interface ISecurityService {
      * Save a temporary password. Send a email to the user to inform him of a new password.
      *
      * @param pEmail - The user email address you want to save a temp password for
-     * @param pTempPassword - The temporary password to save
+     * @throws org.mdubois.freeveggie.framework.exception.BusinessException
      */
     void generateTempPassword(@Required final String pEmail) throws BusinessException;
 }

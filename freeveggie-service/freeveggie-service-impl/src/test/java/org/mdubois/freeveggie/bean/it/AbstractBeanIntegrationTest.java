@@ -16,7 +16,6 @@ import org.junit.Ignore;
  *
  * @author mdubois
  */
-@Ignore
 public abstract class AbstractBeanIntegrationTest {
 
     /**

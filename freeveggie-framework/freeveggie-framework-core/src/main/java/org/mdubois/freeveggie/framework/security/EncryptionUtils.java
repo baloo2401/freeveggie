@@ -28,60 +28,11 @@ public final class EncryptionUtils {
      */
     private static final String MD5_CRYPTOGRAPHIC_HASH_FUNCTION = "MD5";
     /**
-     * The AES cryptographic has function
-     */
-    private static final String AES_CRYPTOGRAPHIC_HASH_FUNCTION = "AES";
-    /**
-     * The Blowfish cryptographic has function
-     */
-    private static final String BLOWFISH_CRYPTOGRAPHIC_HASH_FUNCTION = "Blowfish";
-    /**
-     * The key need for EAS
-     */
-    private static final byte[] KEY_VALUE =
-            new byte[]{'2', '0', '1', '2', 'f', 'r', 'e', 'e', 'v', 'e', 'g', 'g', 'i', 'e', '^', '&'};
-    /**
      * The numeric pattern.
      */
     private static final String NUMERIC_PATTERN = ".*\\d.*";
 
     private EncryptionUtils() {
-    }
-
-    public static String encrypt(String plaintextString) {
-        try {
-            KeyGenerator keygenerator = KeyGenerator.getInstance("Blowfish");
-            SecretKey secretkey = keygenerator.generateKey();
-
-            System.out.println(plaintextString + " " + bytesToHex(plaintextString.getBytes()) + " " + Arrays.toString(plaintextString.getBytes()));
-
-            SecretKeySpec key = new SecretKeySpec(secretkey.getEncoded(), "Blowfish");
-            Cipher cipher = Cipher.getInstance("Blowfish");
-
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            byte[] encrypted = cipher.doFinal(plaintextString.getBytes());
-            return bytesToHex(encrypted);
-        } catch (Exception e) {
-            throw new TechnicalException(e);
-        }
-    }
-
-    public static String decrypt(String encryptedString) {
-        try {
-            KeyGenerator keygenerator = KeyGenerator.getInstance("Blowfish");
-            SecretKey secretkey = keygenerator.generateKey();
-
-            String plaintextString = "StackOverflow";
-            System.out.println(plaintextString + " " + bytesToHex(plaintextString.getBytes()) + " " + Arrays.toString(plaintextString.getBytes()));
-
-            SecretKeySpec key = new SecretKeySpec(secretkey.getEncoded(), "Blowfish");
-            Cipher cipher = Cipher.getInstance("Blowfish");
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decrypted = cipher.doFinal(hexToBytes(encryptedString));
-            return bytesToHex(decrypted);
-        } catch (Exception e) {
-            throw new TechnicalException(e);
-        }
     }
 
     /**
@@ -210,10 +161,5 @@ public final class EncryptionUtils {
             }
         }
         return false;
-    }
-
-    private static Key generateKey() {
-        Key key = new SecretKeySpec(KEY_VALUE, AES_CRYPTOGRAPHIC_HASH_FUNCTION);
-        return key;
     }
 }

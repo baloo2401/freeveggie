@@ -37,7 +37,7 @@
         <dependency>
             <groupId>org.mdubois</groupId>
             <artifactId>freeveggie-framework-test</artifactId>
-            <version>${freeveggie.version}</version>
+            <version>${project.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>
@@ -140,7 +140,7 @@
         <dependency>
             <groupId>org.mdubois</groupId>
             <artifactId>freeveggie-service-api</artifactId>
-            <version>${freeveggie.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <!-- No sql dependency -->
         <!--        <dependency>

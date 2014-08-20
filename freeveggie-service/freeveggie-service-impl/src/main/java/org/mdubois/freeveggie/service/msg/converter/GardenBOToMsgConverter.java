@@ -62,6 +62,7 @@ public class GardenBOToMsgConverter extends AbstractConverter<GardenMsg, GardenB
         msg.setCreationDate(pGardenBO.getCreationDate());
         msg.setStatus(pGardenBO.getStatus());
         //We do not use the product convert otherwise we have a infinit recurent loop
+        msg.setProducts(new ArrayList<ProductMsg>());
         if(pGardenBO.getProducts() != null) {
                 for (ProductBO pProductBO : pGardenBO.getProducts()) {
                         ProductMsg productMsg = new ProductMsg();

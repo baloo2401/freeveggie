@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.mdubois</groupId>
             <artifactId>freeveggie-service-impl</artifactId>
-            <version>${freeveggie.version}</version>
+            <version>${project.version}</version>
             <type>ejb</type>
         </dependency>
     </dependencies>

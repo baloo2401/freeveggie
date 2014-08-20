@@ -114,14 +114,7 @@ public class SecurityService implements ISecurityService {
      */
     @Override
     public boolean hasTempPassword(String pCode) throws BusinessException {
-        String decryptLogin;
-        try {
-            decryptLogin = EncryptionUtils.decrypt(pCode);
-        } catch (Exception ex) {
-            throw new BusinessException("Unvalid code : can not decrypt code",
-                    ex);
-        }
-        UserBO userBO = userDAO.getUserByLogin(decryptLogin);
+        UserBO userBO = userDAO.getUserByUUID(pCode);
         if (userBO == null) {
             throw new BusinessException("Unvalid code : can not find user");
         }
@@ -157,16 +150,10 @@ public class SecurityService implements ISecurityService {
         if (userBO == null) {
             throw new BusinessException("Unvalid code : can not find user");
         }
-        String code;
-        try {
-            code = EncryptionUtils.encrypt(userBO.getUsername());
-        } catch (Exception ex) {
-            throw new TechnicalException(ex);
-        }
         String generatedPassword = generatePassword();
         userBO.setTemporaryPassword(EncryptionUtils.getMD5(generatedPassword));
         userDAO.update(userBO);
-        notificationDAO.sendLostEmailNotice(userBO, code, generatedPassword);
+        notificationDAO.sendLostEmailNotice(userBO, userBO.getUuid(), generatedPassword);
     }
 
     private String generatePassword() {

@@ -25,6 +25,7 @@ uniqueConstraints =
     @NamedQuery(name = GET_USER_BY_STATE_AND_PRODUCT, query = GET_USER_BY_STATE_AND_PRODUCT_QUERY),
     @NamedQuery(name = GET_USER_BY_COUNTRY_AND_PRODUCT, query = GET_USER_BY_COUNTRY_AND_PRODUCT_QUERY),
     @NamedQuery(name = GET_USER_BY_LOGIN, query = GET_USER_BY_LOGIN_QUERY),
+    @NamedQuery(name = GET_USER_BY_UUID, query = GET_USER_BY_UUID_QUERY),
     @NamedQuery(name = GET_USER_BY_EMAIL, query = GET_USER_BY_EMAIL_QUERY)
 })
 public class UserBO extends BusinessObject<Long> implements Comparable<UserBO> {
@@ -77,6 +78,11 @@ public class UserBO extends BusinessObject<Long> implements Comparable<UserBO> {
      */
     @Column(name = "usr_username", nullable = false)
     private String username;
+    /**
+     * The user username.
+     */
+    @Column(name = "usr_uuid", nullable = false)
+    private String uuid;
     /**
      * The user password.
      */
@@ -347,7 +353,7 @@ public class UserBO extends BusinessObject<Long> implements Comparable<UserBO> {
 
     /**
      * Set the user profile
-     * @param pProfil The user profile to set
+     * @param pProfile The user profile to set
      */
     public void setProfile(ProfileBO pProfile) {
         this.profile = pProfile;
@@ -484,6 +490,24 @@ public class UserBO extends BusinessObject<Long> implements Comparable<UserBO> {
     }
 
     /**
+     * Get the user UUID.
+     * @return The user UUID
+     */
+    public String getUuid() {
+        return uuid;
+    }
+
+    /**
+     * Set the user UUID.
+     * @param pUUID - The user UUID to set
+     */
+    public void setUuid(String pUUID) {
+        this.uuid = pUUID;
+    }
+    
+    
+
+    /**
      * Call back run just after the object have been populated from the database.
      */
     @PostLoad
@@ -562,6 +586,16 @@ public class UserBO extends BusinessObject<Long> implements Comparable<UserBO> {
          */
         public static final String GET_USER_BY_LOGIN_QUERY = "SELECT DISTINCT e FROM UserBO e "
                                             + " WHERE e.username = :Username";
+
+        /*
+         * The name of getUserByLogin query.
+         */
+        public static final String GET_USER_BY_UUID = "UserBO.getUserByUUID";
+        /*
+         * The getUserByLogi query.
+         */
+        public static final String GET_USER_BY_UUID_QUERY = "SELECT DISTINCT e FROM UserBO e "
+                                            + " WHERE e.uuid = :uuid";
 
         /*
          * The name of getUserByEmail query.

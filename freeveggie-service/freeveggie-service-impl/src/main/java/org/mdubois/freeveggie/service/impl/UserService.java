@@ -162,18 +162,9 @@ public class UserService implements IUserService {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean validate(String pCode) throws BusinessException {String decryptLogin;
-        try {
-            decryptLogin = EncryptionUtils.decrypt(pCode);
-        } catch (Exception ex) {
-            throw new BusinessException("Unvalid code : can not decrypt code",
-                    ex);
-        }
-        UserBO userBO = userDAO.getUserByLogin(decryptLogin);
+        UserBO userBO = userDAO.getUserByUUID(pCode);
         if (userBO == null) {
             throw new BusinessException("Try to validated an inexisting user");
         } else {

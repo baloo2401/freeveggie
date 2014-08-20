@@ -1,5 +1,6 @@
 package org.mdubois.freeveggie.service.impl;
 
+import java.util.UUID;
 import javax.inject.Inject;
 import org.mdubois.freeveggie.UserStatus;
 import org.mdubois.freeveggie.bo.AddressBO;
@@ -82,13 +83,15 @@ public class SubscriptionService implements ISubscriptionService {
                                 userBO.setStatus(UserStatus.NEW);
                                 userBO.setSubscription(subscriptionBO);
                                 userBO.setUsername(pCreateAccountrMsg.getUsername());
+                                //TODO : User a uuid factory
+                                userBO.setUuid(UUID.randomUUID().toString());
 
                                 Long idUser = userDAO.save(userBO);
 
                                 subscriptionBO.setId(idUser);
                                 subscriptionDAO.save(subscriptionBO);
 
-                                notificationDAO.sendCreationUserNotice(userBO, EncryptionUtils.encrypt(userBO.getUsername()));
+                                notificationDAO.sendCreationUserNotice(userBO, userBO.getUuid());
                                 return idUser;
                         } else {
                                 throw new BusinessException("Duplicate email");

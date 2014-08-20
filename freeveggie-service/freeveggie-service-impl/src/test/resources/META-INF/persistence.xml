@@ -5,9 +5,11 @@
         <class>org.mdubois.freeveggie.bo.AddressBO</class>
         <class>org.mdubois.freeveggie.bo.GardenBO</class>
         <class>org.mdubois.freeveggie.bo.GardenCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenPictureBO</class>
         <class>org.mdubois.freeveggie.bo.GardenLikeBO</class>
         <class>org.mdubois.freeveggie.bo.ProductBO</class>
         <class>org.mdubois.freeveggie.bo.ProductCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductPictureBO</class>
         <class>org.mdubois.freeveggie.bo.ProductLikeBO</class>
         <class>org.mdubois.freeveggie.bo.ProductRequestBO</class>
         <class>org.mdubois.freeveggie.bo.ProfileBO</class>
@@ -41,9 +43,11 @@
         <class>org.mdubois.freeveggie.bo.AddressBO</class>
         <class>org.mdubois.freeveggie.bo.GardenBO</class>
         <class>org.mdubois.freeveggie.bo.GardenCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.GardenPictureBO</class>
         <class>org.mdubois.freeveggie.bo.GardenLikeBO</class>
         <class>org.mdubois.freeveggie.bo.ProductBO</class>
         <class>org.mdubois.freeveggie.bo.ProductCommentBO</class>
+        <class>org.mdubois.freeveggie.bo.ProductPictureBO</class>
         <class>org.mdubois.freeveggie.bo.ProductLikeBO</class>
         <class>org.mdubois.freeveggie.bo.ProductRequestBO</class>
         <class>org.mdubois.freeveggie.bo.ProfileBO</class>

@@ -455,7 +455,7 @@ public class UserServiceTest {
 
             {
                 Deencapsulation.setField(userService, "userDAO", userDAO);
-                userDAO.get(122L);
+                userDAO.getUserByUUID("122L");
                 returns(null);
 
             }
@@ -468,6 +468,7 @@ public class UserServiceTest {
 
         final IUserService userService = new UserService();
 
+        final String uuid = "Boro34r+B9yCtRCJY5rLHw==";
         new Expectations() {
 
             @Mocked
@@ -481,13 +482,13 @@ public class UserServiceTest {
                 userExc.setId(122L);
                 userExc.setRole(UserRole.ADMIN);
                 userExc.setStatus(UserStatus.NEW);
-                userDAO.getUserByLogin("popy2809101");
+                userDAO.getUserByUUID(uuid);
                 returns(userExc);
 
                 userDAO.update(with(new UserBOMatcher(userExc)));
             }
         };
-        userService.validate("Boro34r+B9yCtRCJY5rLHw==");
+        userService.validate(uuid);
     }
 
     @Test(expected=BusinessException.class)
@@ -508,7 +509,7 @@ public class UserServiceTest {
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.VALIDED);
-                userDAO.get(122L);
+                userDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }
@@ -534,7 +535,7 @@ public class UserServiceTest {
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.DELETED);
-                userDAO.get(122L);
+                userDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }
@@ -560,7 +561,7 @@ public class UserServiceTest {
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.BLACKLISTED);
-                userDAO.get(122L);
+                userDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }
@@ -586,7 +587,7 @@ public class UserServiceTest {
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.ARCHIVED);
-                userDAO.get(122L);
+                userDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }

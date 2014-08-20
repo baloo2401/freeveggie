@@ -73,10 +73,11 @@ public interface IUserService {
 
     /**
      * Validate a user.
-     * @param pUserId - The id of the user to update
+     * @param pCode - The uuid of the user to update
      * @return <code>True</code> if the update succeed, <code>False</code> otherwise
      * @throws BusinessException In case of any business issue
      */
+    //TODO replace pCode everywhere to uuid
     boolean validate(final String pCode) throws BusinessException;
 
     /**

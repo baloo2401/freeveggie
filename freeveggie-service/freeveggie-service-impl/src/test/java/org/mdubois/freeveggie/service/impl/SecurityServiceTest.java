@@ -1,6 +1,7 @@
 package org.mdubois.freeveggie.service.impl;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
+import java.util.UUID;
 import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
@@ -277,8 +278,7 @@ public class SecurityServiceTest {
     public void testHasTempPasswordNoTempPasswordNull() throws Exception {
         final ISecurityService securityService = new SecurityService();
 
-        final String login = "login";
-        final String encryptedLogin = EncryptionUtils.encrypt(login);
+        final String uuid = "login";
 
         new Expectations() {
 
@@ -291,12 +291,12 @@ public class SecurityServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setTemporaryPassword(null);
 
-                userDAO.getUserByLogin(login);
+                userDAO.getUserByUUID(uuid);
                 returns(userBO);
             }
         };
 
-        boolean exist = securityService.hasTempPassword(encryptedLogin);
+        boolean exist = securityService.hasTempPassword(uuid);
         Assert.assertEquals(false, exist);
     }
 
@@ -304,8 +304,7 @@ public class SecurityServiceTest {
     public void testHasTempPasswordNoTempPasswordEmpty() throws Exception {
         final ISecurityService securityService = new SecurityService();
 
-        final String login = "login";
-        final String encryptedLogin = EncryptionUtils.encrypt(login);
+        final String uuid = "login";
 
         new Expectations() {
 
@@ -318,46 +317,21 @@ public class SecurityServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setTemporaryPassword("");
 
-                userDAO.getUserByLogin(login);
+                userDAO.getUserByUUID(uuid);
                 returns(userBO);
             }
         };
 
-        boolean exist = securityService.hasTempPassword(encryptedLogin);
+        boolean exist = securityService.hasTempPassword(uuid);
         Assert.assertEquals(false, exist);
     }
 
-    @Test(expected = BusinessException.class)
-    public void testHasTempPasswordNotValidCode() throws Exception {
-        final ISecurityService securityService = new SecurityService();
-
-        final String login = "login";
-        final String encryptedLogin = EncryptionUtils.encrypt(login);
-
-        new Expectations() {
-
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private EncryptionUtils encryptionUtils;
-
-            {
-                Deencapsulation.setField(securityService, userDAO);
-
-                EncryptionUtils.decrypt(encryptedLogin);
-                throwsException(new RuntimeException());
-            }
-        };
-
-        securityService.hasTempPassword(encryptedLogin);
-    }
 
     @Test(expected = BusinessException.class)
     public void testHasTempPasswordNoUser() throws Exception {
         final ISecurityService securityService = new SecurityService();
 
-        final String login = "login";
-        final String encryptedLogin = EncryptionUtils.encrypt(login);
+        final String uuid = "login";
 
         new Expectations() {
 
@@ -367,20 +341,19 @@ public class SecurityServiceTest {
             {
                 Deencapsulation.setField(securityService, userDAO);
 
-                userDAO.getUserByLogin(login);
+                userDAO.getUserByUUID(uuid);
                 returns(null);
             }
         };
 
-        securityService.hasTempPassword(encryptedLogin);
+        securityService.hasTempPassword(uuid);
     }
 
     @Test
     public void testHasTempPassword() throws Exception {
         final ISecurityService securityService = new SecurityService();
 
-        final String login = "login";
-        final String encryptedLogin = EncryptionUtils.encrypt(login);
+        final String uuid = "login";
 
         new Expectations() {
 
@@ -393,12 +366,12 @@ public class SecurityServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setTemporaryPassword("temppassword");
 
-                userDAO.getUserByLogin(login);
+                userDAO.getUserByUUID(uuid);
                 returns(userBO);
             }
         };
 
-        boolean exist = securityService.hasTempPassword(encryptedLogin);
+        boolean exist = securityService.hasTempPassword(uuid);
         Assert.assertEquals(true, exist);
     }
 
@@ -407,8 +380,8 @@ public class SecurityServiceTest {
         final ISecurityService securityService = new SecurityService();
         final String email = "email";
         final String login = "login";
-        final String encryptedLogin = EncryptionUtils.encrypt(login);
-        final String encryptedPassword = EncryptionUtils.encrypt(login);
+        final String uuid = "1234-5679-0123";
+        final String encryptedPassword = "sqdfqdsf";
 
         new Expectations() {
 
@@ -417,7 +390,7 @@ public class SecurityServiceTest {
             @Mocked
             private INotificationDAO notificationDAO;
             @Mocked
-            private EncryptionUtils encryptionUtils;
+            private UUID uuid;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -430,8 +403,6 @@ public class SecurityServiceTest {
 
                 userDAO.getUserByEmail(email);
                 returns(userBO);
-                EncryptionUtils.encrypt(login);
-                returns(encryptedLogin);
 
                 EncryptionUtils.getMD5(anyString);
                 returns(encryptedPassword);
@@ -452,7 +423,6 @@ public class SecurityServiceTest {
         final ISecurityService securityService = new SecurityService();
         final String email = "email";
         final String login = "login";
-        final String encryptedLogin = EncryptionUtils.encrypt(login);
 
         new Expectations() {
 
@@ -491,7 +461,7 @@ public class SecurityServiceTest {
             @Mocked
             private INotificationDAO notificationDAO;
             @Mocked
-            private EncryptionUtils encryptionUtils;
+            private UUID uuid;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -503,8 +473,6 @@ public class SecurityServiceTest {
                 userBO.setUsername(login);
 
                 userDAO.getUserByEmail(email);
-                returns(userBO);
-                EncryptionUtils.encrypt(login);
                 throwsException(new TechnicalException(""));
             }
         };
