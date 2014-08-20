@@ -1829,6 +1829,7 @@ CREATE TABLE "T_USER" (
     usr_rus_id integer NOT NULL,
     usr_temp_password character varying(32),
     usr_username character varying(32) NOT NULL,
+    usr_uuid character varying(32) NOT NULL,
     usr_adr_id bigint NOT NULL
 );
 

@@ -4,6 +4,7 @@ package org.mdubois.freeveggie.bo.converter;
 import java.util.Date;
 import mockit.Expectations;
 import mockit.Mocked;
+import org.junit.Test;
 import org.mdubois.freeveggie.RelationshipStatus;
 import org.mdubois.freeveggie.RelationshipType;
 import org.mdubois.freeveggie.bo.RelationShipBO;
@@ -17,8 +18,7 @@ import org.mdubois.freeveggie.framework.utils.SystemTime;
  *
  * @author Mickael Dubois
  */
-public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTest<RelationShipBO,RelationShipMsg>{
-
+public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTest<RelationShipBO, RelationShipMsg> {
 
     private final RelationshipMsgToBOConverter converter = new RelationshipMsgToBOConverter();
     private final static Date NOW = new Date();
@@ -26,21 +26,26 @@ public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTes
     private PartialUserMsg recipient = new PartialUserMsg();
     private PartialUserMsg sender = new PartialUserMsg();
 
+    @Test(expected = UnsupportedOperationException.class)
+    @Override
+    public void testUpdate() {
+        super.testUpdate();
+    }
+
     @Override
     public RelationShipBO getNewBusinessObject() {
-        RelationShipBO  bo = new RelationShipBO();
+        RelationShipBO bo = new RelationShipBO();
         bo.setRequest("request");
         bo.setType(RelationshipType.FRIEND);
         bo.setCreationDate(NOW);
         bo.setStatus(RelationshipStatus.PENDING);
         return bo;
 
-
     }
 
     @Override
     public RelationShipMsg getNewMessage() {
-        RelationShipMsg  msg = new RelationShipMsg();
+        RelationShipMsg msg = new RelationShipMsg();
         msg.setRecipient(recipient);
         msg.setRequest("request");
         msg.setSender(sender);
@@ -49,22 +54,22 @@ public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTes
     }
 
     @Override
-    public BusinessObjectConverter<RelationShipBO,RelationShipMsg> getConverter() {
+    public BusinessObjectConverter<RelationShipBO, RelationShipMsg> getConverter() {
         return converter;
     }
 
     @Override
     public Expectations getConvertCallExpectaion() {
-        return new Expectations(){
+        return new Expectations() {
             @Mocked
             @SuppressWarnings("unused")
             private final SystemTime systemTime = null;
+
             {
                 SystemTime.asDate();
                 returns(NOW);
             }
         };
     }
-
 
 }

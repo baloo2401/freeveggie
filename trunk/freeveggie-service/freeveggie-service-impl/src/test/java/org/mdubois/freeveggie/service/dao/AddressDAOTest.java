@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mdubois.freeveggie.bo.AddressBO;
 import org.mdubois.freeveggie.bo.RefCityBO;
-import org.mdubois.freeveggie.bo.RefCountryBO;
 import org.mdubois.freeveggie.dao.impl.*;
 import org.mdubois.freeveggie.framework.dao.IReadWriteDAO;
 import org.mdubois.freeveggie.framework.service.Pagination;

@@ -4,6 +4,7 @@ package org.mdubois.freeveggie.bo.converter;
 import java.util.Date;
 import mockit.Expectations;
 import mockit.Mocked;
+import org.junit.Test;
 import org.mdubois.freeveggie.EvaluationNote;
 import org.mdubois.freeveggie.EvaluationStatus;
 import org.mdubois.freeveggie.Status;
@@ -19,7 +20,7 @@ import org.mdubois.freeveggie.framework.utils.SystemTime;
  *
  * @author Mickael Dubois
  */
-public class ProductLikeMsgToBOConverterTest extends BusinessObjectConverterTest<ProductLikeBO,ProductLikeMsg>{
+public class ProductLikeMsgToBOConverterTest extends BusinessObjectConverterTest<ProductLikeBO, ProductLikeMsg> {
 
     private PartialUserMsg userMsg = new PartialUserMsg();
     private ProductMsg productMsg = new ProductMsg();
@@ -28,41 +29,46 @@ public class ProductLikeMsgToBOConverterTest extends BusinessObjectConverterTest
 
     private static final Date NOW = new Date();
 
+    @Test(expected = UnsupportedOperationException.class)
+    @Override
+    public void testUpdate() {
+        super.testUpdate();
+    }
+
     @Override
     public ProductLikeBO getNewBusinessObject() {
-        ProductLikeBO  bo = new ProductLikeBO();
+        ProductLikeBO bo = new ProductLikeBO();
         bo.setCreationDate(NOW);
         bo.setStatus(EvaluationStatus.SETTED);
         return bo;
-
 
     }
 
     @Override
     public ProductLikeMsg getNewMessage() {
-        ProductLikeMsg  msg = new ProductLikeMsg();
+        ProductLikeMsg msg = new ProductLikeMsg();
         msg.setWriter(userMsg);
         msg.setProduct(productMsg);
         return msg;
     }
 
     @Override
-    public BusinessObjectConverter<ProductLikeBO,ProductLikeMsg> getConverter() {
+    public BusinessObjectConverter<ProductLikeBO, ProductLikeMsg> getConverter() {
         return converter;
     }
 
     @Override
     public Expectations getConvertCallExpectaion() {
-        return new Expectations(){
+        return new Expectations() {
             @Mocked
             @SuppressWarnings("unused")
             private final SystemTime systemTime = null;
+
             {
                 SystemTime.asDate();
                 returns(NOW);
             }
         };
     }
-
 
 }

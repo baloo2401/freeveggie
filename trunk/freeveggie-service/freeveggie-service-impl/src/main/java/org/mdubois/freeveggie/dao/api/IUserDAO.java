@@ -57,6 +57,13 @@ public interface IUserDAO extends IReadWriteDAO<UserBO, Long>{
      * @return The UserBO if a user exist, null otherwise
      */
     UserBO getUserByLogin(final String pLogin);
+    
+    /**
+     * Get the user base on the UUID.
+     * @param pUUID - The UUID to look for
+     * @return The UserBO if a user exist, null otherwise
+     */
+    UserBO getUserByUUID(final String pUUID);
 
     /**
      * Get the user base on the email.

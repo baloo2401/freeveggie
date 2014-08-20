@@ -119,8 +119,7 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
 
     @Test
     public void hasTempPassword() throws Exception {
-        String login = "archivetest";
-        String encryptLogin = EncryptionUtils.encrypt(login);
+        String uuid = "archivetest";
         String encryptPassword = EncryptionUtils.getMD5("tempPassword2");
 
         //Set the user test as a validate status
@@ -130,7 +129,7 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
         stmt.executeUpdate(sql);
         stmt.close();
 
-        boolean result = securityBean.hasTempPassword(encryptLogin);
+        boolean result = securityBean.hasTempPassword(uuid);
         Assert.assertEquals(result, true);
 
         //Set the user test as a validate status
@@ -139,7 +138,7 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
         stmt.executeUpdate(sql);
         stmt.close();
 
-        result = securityBean.hasTempPassword(encryptLogin);
+        result = securityBean.hasTempPassword(uuid);
         Assert.assertEquals(result, false);
     }
 
@@ -167,6 +166,7 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
     @Test
     public void generateTempPassword() throws Exception {
 
+        String uuid = "archivetest";
         //Set the user test as a validate status
         DataSource freeveggieDatasource = (DataSource) container.getContext().lookup("jdbc/freeveggie");
         String sql = "UPDATE t_user SET usr_temp_password = '' WHERE usr_id = 5";
@@ -177,7 +177,7 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
         final String pEmail = "deletetest@gmail.com";
         securityBean.generateTempPassword(pEmail);
 
-        boolean result = securityBean.hasTempPassword(EncryptionUtils.encrypt("deletetest"));
+        boolean result = securityBean.hasTempPassword(uuid);
         Assert.assertEquals(result, true);
 
     }

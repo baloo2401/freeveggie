@@ -13,15 +13,6 @@ public class EncryptionUtilsTest {
      * Test of getMD5 method, of class PasswordUtils.
      */
     @Test
-    public void testEncryptDecrypt() throws Exception {
-        String input = "qsrfsqdf";
-        Assert.assertEquals(input,EncryptionUtils.decrypt(EncryptionUtils.encrypt(input)));
-    }
-
-    /**
-     * Test of getMD5 method, of class PasswordUtils.
-     */
-    @Test
     public void testGetMD5() {
         String input = "are";
         Assert.assertEquals(EncryptionUtils.getMD5(input),EncryptionUtils.getMD5(input));

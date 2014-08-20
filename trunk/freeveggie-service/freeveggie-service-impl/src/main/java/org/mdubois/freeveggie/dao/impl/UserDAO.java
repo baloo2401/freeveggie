@@ -98,6 +98,14 @@ public class UserDAO extends ReadWriteDAO<UserBO, Long> implements IUserDAO {
 
 	/** {@inheritDoc} */
 	@Override
+	public UserBO getUserByUUID(String pUUID) {
+		Map<String, Object> parameters = new TreeMap<String, Object>();
+		parameters.put("uuid", pUUID);
+		return findQuery(GET_USER_BY_UUID, parameters);
+	}
+
+	/** {@inheritDoc} */
+	@Override
 	public UserBO getUserByEmail(String pEmail) {
 		Map<String, Object> parameters = new TreeMap<String, Object>();
 		parameters.put("Email", pEmail);

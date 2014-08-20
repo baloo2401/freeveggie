@@ -9,11 +9,11 @@ import org.mdubois.freeveggie.framework.bo.BusinessObject;
 
 /**
  * Comment made on a user.
+ *
  * @author Mickael Dubois
  */
 @Entity
 @Table(name = "T_PICTURE_GARDEN")
-
 @NamedQueries(value = {
     @NamedQuery(name = GET_GARDEN_PICTURE_BY_GARDEN, query = GET_GARDEN_COMMENT_BY_GARDEN_QUERY)
 })
@@ -30,30 +30,31 @@ public class GardenPictureBO extends BusinessObject<Long> {
     @Id
     @Column(name = "grp_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-    generator = "s_grp_seq")
+            generator = "s_grp_seq")
     @SequenceGenerator(name = "s_grp_seq", sequenceName = "s_grp_seq",
-    initialValue = 1)
+            initialValue = 1)
     private Long id;
 
     /**
      * The garden.
      */
-    @ManyToOne(optional = false, fetch=FetchType.LAZY)
-    @JoinColumn(name = "grp_grd_id", nullable=false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "grp_grd_id", nullable = false)
     private GardenBO garden;
     
+
     /**
      * The picture mime type.
      */
-    @Column(name = "grp_mine_type", nullable=false)
-    private String mimeType; 
-    
+    @Column(name = "grp_mine_type", nullable = false)
+    private String mimeType;
+
     /**
      * The picture
      */
     @Lob
-    @Column(name = "picture", nullable=false)
-    @Basic(fetch=FetchType.LAZY)
+    @Column(name = "picture", nullable = false)
+    @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
 
     /**
@@ -65,16 +66,17 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Set the id.
+     *
      * @param id - The id to set
      */
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
+
     /**
      * Get the id.
-     * @return the id 
+     *
+     * @return the id
      */
     @Override
     public Long getId() {
@@ -83,7 +85,8 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Get the garden the picture is for.
-     * @return -  The garden the picture is for
+     *
+     * @return - The garden the picture is for
      */
     public GardenBO getGarden() {
         return garden;
@@ -91,6 +94,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Set the garden the picture is for.
+     *
      * @param pGarden - The garden the picture is for to set
      */
     public void setGarden(GardenBO pGarden) {
@@ -99,6 +103,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Get the mime type of the picture.
+     *
      * @return - The mime type of the picture
      */
     public String getMimeType() {
@@ -107,6 +112,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Set the mime type of the picture.
+     *
      * @param pMimeType - The mime type of the picture to set
      */
     public void setMimeType(String pMimeType) {
@@ -115,6 +121,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * The picture.
+     *
      * @return - The picture
      */
     public byte[] getPicture() {
@@ -123,6 +130,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Set the picture.
+     *
      * @param pPicture - The picture to set.
      */
     public void setPicture(byte[] pPicture) {
@@ -131,6 +139,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Get the date when the picture as been saved.
+     *
      * @return - The date when the picture as been saved
      */
     public Date getCreationDate() {
@@ -143,6 +152,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
 
     /**
      * Set the date when the picture as been saved.
+     *
      * @param pCreationDate - The date when the picture as been saved to set
      */
     public void setCreationDate(Date pCreationDate) {
@@ -166,6 +176,7 @@ public class GardenPictureBO extends BusinessObject<Long> {
         /*
          * Default constructor.
          */
+
         private QueryNamedConstant() {
         }
     }

@@ -246,6 +246,7 @@ CREATE TABLE "T_USER" (
     usr_rus_id integer NOT NULL,
     usr_temp_password character varying(32),
     usr_username character varying(32) NOT NULL,
+    usr_uuid character varying(32) NOT NULL,
     usr_adr_id bigint NOT NULL,
     usr_img_filename character varying(64)
 );
@@ -255,7 +256,7 @@ CREATE TABLE "T_PICTURE_GARDEN"
    grp_id bigint, 
    grp_mine_type bigint  NOT NULL, 
    grp_grd_id bigint, 
-   picture bit varying  NOT NULL,
+   picture LONGVARBINARY NOT NULL,
    grp_creation_date timestamp NOT NULL
 ) 
 
@@ -264,7 +265,7 @@ CREATE TABLE "T_PICTURE_PRODUCT"
    prp_id bigint, 
    prp_mine_type bigint NOT NULL, 
    prp_prd_id bigint, 
-   picture bit varying NOT NULL,
+   picture LONGVARBINARY NOT NULL,
    prp_creation_date timestamp NOT NULL
 ) 
 

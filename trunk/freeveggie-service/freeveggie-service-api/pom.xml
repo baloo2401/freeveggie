@@ -33,13 +33,13 @@
         <dependency>
             <groupId>org.mdubois</groupId>
             <artifactId>freeveggie-framework-core</artifactId>
-            <version>${freeveggie.version}</version>
+            <version>${project.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.mdubois</groupId>
             <artifactId>freeveggie-framework-test</artifactId>
-            <version>${freeveggie.version}</version>
+            <version>${project.version}</version>
             <scope>test</scope>
             <type>test-jar</type>
         </dependency>

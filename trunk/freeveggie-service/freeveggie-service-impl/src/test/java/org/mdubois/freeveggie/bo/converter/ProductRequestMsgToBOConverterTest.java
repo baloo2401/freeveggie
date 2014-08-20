@@ -4,6 +4,7 @@ import java.util.Date;
 import mockit.Expectations;
 import mockit.Mocked;
 import mockit.integration.junit4.JMockit;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.RequestStatus;
 import org.mdubois.freeveggie.bo.ProductRequestBO;
@@ -21,6 +22,12 @@ public class ProductRequestMsgToBOConverterTest extends BusinessObjectConverterT
     private static final Date NOW = new Date();
     private final ProductRequestMsgToBOConverter converter = new ProductRequestMsgToBOConverter();
 
+    @Test(expected = UnsupportedOperationException.class)
+    @Override
+    public void testUpdate() {
+        super.testUpdate();
+    }
+
     @Override
     public ProductRequestBO getNewBusinessObject() {
         ProductRequestBO productRequestBO = new ProductRequestBO();
@@ -30,7 +37,6 @@ public class ProductRequestMsgToBOConverterTest extends BusinessObjectConverterT
         productRequestBO.setQuantity(1.0F);
         productRequestBO.setStatus(RequestStatus.PENDING);
         return productRequestBO;
-
 
     }
 

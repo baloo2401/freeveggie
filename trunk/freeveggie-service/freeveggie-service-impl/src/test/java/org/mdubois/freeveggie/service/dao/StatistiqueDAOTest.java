@@ -44,7 +44,7 @@ public class StatistiqueDAOTest extends StatDaoUnitTest {
 
     private Integer refRegionBO;
 
-    private Pagination pagination = new Pagination(1, 1);
+    private final Pagination pagination = new Pagination(1, 1);
 
     public StatistiqueDAOTest() {
     }
@@ -88,10 +88,10 @@ public class StatistiqueDAOTest extends StatDaoUnitTest {
         Assert.assertEquals(bestRatedProductBO.get(2).getProduct().getGarden().getOwner().getId(), userBO);
         Assert.assertEquals(bestRatedProductBO.get(3).getProduct().getGarden().getOwner().getId(), userBO);
 
-        Assert.assertEquals(bestRatedProductBO.get(0).getAverageNote(), 5.0);
-        Assert.assertEquals(bestRatedProductBO.get(1).getAverageNote(), 4.5);
-        Assert.assertEquals(bestRatedProductBO.get(2).getAverageNote(), 3.5);
-        Assert.assertEquals(bestRatedProductBO.get(3).getAverageNote(), 2.5);
+        Assert.assertEquals(5.0, bestRatedProductBO.get(0).getAverageNote());
+        Assert.assertEquals(4.5, bestRatedProductBO.get(1).getAverageNote());
+        Assert.assertEquals(3.5, bestRatedProductBO.get(2).getAverageNote());
+        Assert.assertEquals(2.5, bestRatedProductBO.get(3).getAverageNote());
 
     }
 
@@ -120,9 +120,9 @@ public class StatistiqueDAOTest extends StatDaoUnitTest {
         Assert.assertEquals(bestRatedProductBO.get(1).getProduct().getGarden().getAddress().getCity().getId(),lRefCityBO);
         Assert.assertEquals(bestRatedProductBO.get(2).getProduct().getGarden().getAddress().getCity().getId(),lRefCityBO);
 
-        Assert.assertEquals(bestRatedProductBO.get(0).getAverageNote(),new Double(5));
-        Assert.assertEquals(bestRatedProductBO.get(1).getAverageNote(),new Double(4));
-        Assert.assertEquals(bestRatedProductBO.get(2).getAverageNote(),new Double(3));
+        Assert.assertEquals((double) 5, bestRatedProductBO.get(0).getAverageNote());
+        Assert.assertEquals((double) 4, bestRatedProductBO.get(1).getAverageNote());
+        Assert.assertEquals((double) 3, bestRatedProductBO.get(2).getAverageNote());
 
     }
 
@@ -136,9 +136,9 @@ public class StatistiqueDAOTest extends StatDaoUnitTest {
         Assert.assertEquals(bestRatedProductBO.get(1).getProduct().getGarden().getAddress().getCity().getRegion().getId(),refRegionBO);
         Assert.assertEquals(bestRatedProductBO.get(2).getProduct().getGarden().getAddress().getCity().getRegion().getId(),refRegionBO);
 
-        Assert.assertEquals(bestRatedProductBO.get(0).getAverageNote(),new Double(5));
-        Assert.assertEquals(bestRatedProductBO.get(1).getAverageNote(),new Double(4));
-        Assert.assertEquals(bestRatedProductBO.get(2).getAverageNote(),new Double(3));
+        Assert.assertEquals((double) 5, bestRatedProductBO.get(0).getAverageNote());
+        Assert.assertEquals((double) 4, bestRatedProductBO.get(1).getAverageNote());
+        Assert.assertEquals((double) 3, bestRatedProductBO.get(2).getAverageNote());
 
     }
 

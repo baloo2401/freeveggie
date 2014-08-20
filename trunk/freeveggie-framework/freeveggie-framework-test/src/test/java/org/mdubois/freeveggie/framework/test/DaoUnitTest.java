@@ -42,12 +42,14 @@ public abstract class DaoUnitTest {
                 DbUnitHelper.initDatabase(connection, "./src/main/resources/init_schema.sql");
                 DbUnitHelper.initDatabase(connection, "./src/main/resources/init_reference.sql");
             } catch (Exception ex) {
+                ex.printStackTrace();
                 fail("Exception during init database.");
             }
             try {
                 emFactory = Persistence.createEntityManagerFactory("FREEVEGGIE_PU_TEST");
                 em = emFactory.createEntityManager();
             } catch (Exception ex) {
+                ex.printStackTrace();
                 fail("Exception during JPA EntityManager instanciation.");
             }
             setUpDatabase();
