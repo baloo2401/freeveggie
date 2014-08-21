@@ -40,31 +40,26 @@ public class AddressMsg extends Message {
     /**
      * The user city name.
      */
-    @Required
     private String locality;
 
     /**
      * The user administrative area level 2.
      */
-    @Required
     private String administrativeAreaLevel2;
 
     /**
      * The user administrative area level 1.
      */
-    @Required
     private String administrativeAreaLevel1;
 
     /**
      * The user country.
      */
-    @Required
     private String country;
 
     /**
      * The user postal code.
      */
-    @Required
     private String postalCode;
 
     /**
