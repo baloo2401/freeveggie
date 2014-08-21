@@ -44,9 +44,7 @@ public abstract class ReadWriteDAOTest<T extends BusinessObject<PK>, PK extends 
         if(entity!=null){
             int size = getDao().getAll(false, null).size();
             getDao().save(entity);
-            getDao().flush();
             getDao().delete(entity);
-            getDao().flush();
             Assert.assertEquals(size, getDao().getAll(false, null).size());
         }
     }
