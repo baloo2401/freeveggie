@@ -36,11 +36,13 @@ public class AddressBeanIT extends AbstractBeanIntegrationTest {
     public void testUpdate() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 1L;
+        final Long addressId = 1L;
         pContextMsg.setUser(new UserContext());
         pContextMsg.getUser().setId(userId);
         final AddressMsg pAddressMsg = new AddressMsg();
-        pAddressMsg.setId(userId);
-        pAddressMsg.setId(userId);
+        pAddressMsg.setId(addressId);
+        pAddressMsg.setLatitude(0.0);
+        pAddressMsg.setLongitude(0.0);
         pAddressMsg.setName("change address name");
         pAddressMsg.setStreetName("rue du test it");
         pAddressMsg.setStreetNumber("1");
@@ -64,11 +66,13 @@ public class AddressBeanIT extends AbstractBeanIntegrationTest {
     public void testCreate() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 1L;
+        final Long addressId = 1L;
         pContextMsg.setUser(new UserContext());
         pContextMsg.getUser().setId(userId);
         final AddressMsg pAddressMsg = new AddressMsg();
-        pAddressMsg.setId(userId);
-        pAddressMsg.setId(userId);
+        pAddressMsg.setId(addressId);
+        pAddressMsg.setLatitude(0.0);
+        pAddressMsg.setLongitude(0.0);
         pAddressMsg.setName("change address name");
         pAddressMsg.setStreetName("rue du test it");
         pAddressMsg.setStreetNumber("1");
