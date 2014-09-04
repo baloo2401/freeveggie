@@ -4,6 +4,7 @@ package org.mdubois.freeveggie.bean.it;
 import java.sql.Statement;
 import java.util.List;
 import javax.sql.DataSource;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import org.junit.Before;
@@ -54,9 +55,9 @@ public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
         pContextMsg.setUser(new UserContext());
         pContextMsg.getUser().setId(1L);
         Long pUserId = 2L;
-        List expResult = null;
         List result = relationShipBean.getRelationShip(pContextMsg, pUserId, null);
-        assertEquals(expResult, result);
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isEmpty());
     }
 
     /**
