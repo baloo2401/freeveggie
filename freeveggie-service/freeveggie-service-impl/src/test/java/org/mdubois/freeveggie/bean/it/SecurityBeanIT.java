@@ -166,7 +166,7 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
     @Test
     public void generateTempPassword() throws Exception {
 
-        String uuid = "archivetest";
+        String uuid = "deletetest";
         //Set the user test as a validate status
         DataSource freeveggieDatasource = (DataSource) container.getContext().lookup("jdbc/freeveggie");
         String sql = "UPDATE t_user SET usr_temp_password = '' WHERE usr_id = 5";
@@ -177,7 +177,7 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
         final String pEmail = "deletetest@gmail.com";
         securityBean.generateTempPassword(pEmail);
 
-        boolean result = securityBean.hasTempPassword(uuid);
+        boolean result = securityBean.hasTempPassword(pEmail);
         Assert.assertEquals(result, true);
 
     }
