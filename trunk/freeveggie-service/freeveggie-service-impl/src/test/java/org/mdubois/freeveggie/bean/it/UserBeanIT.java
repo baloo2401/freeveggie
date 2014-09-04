@@ -4,6 +4,7 @@ package org.mdubois.freeveggie.bean.it;
 import java.sql.Statement;
 import java.util.List;
 import javax.sql.DataSource;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,9 +53,9 @@ public class UserBeanIT extends AbstractBeanIntegrationTest {
     public void testGetUserByCountry2() throws Exception {
         Integer pRefCountryId = 76;
         Integer pRefProductId = 123;
-        List expResult = null;
         List result = userBean.getUserByCountry(pRefCountryId, pRefProductId, null);
-        assertEquals(expResult, result);
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isEmpty());
     }
 
     /*
