@@ -324,7 +324,8 @@ public class GardenBeanIT extends AbstractBeanIntegrationTest {
 
         gardenBean.archiveComment(pContextSystem, gardenCommentId);
         gardenBlacklist = gardenBean.getGardenComment(pContextMsg, gardenId, null);
-        Assert.assertNull(gardenBlacklist);
+        Assert.assertNotNull(gardenBlacklist);
+        Assert.assertTrue(gardenBlacklist.isEmpty());
 
         TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> toReturn = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         QueryCriteria<GardenCommentCriteriaColumn> CRITERIA_GARDEN_COMMENT_STATUS_EQUAL_ARCHIVED = new QueryCriteria<GardenCommentCriteriaColumn>(
@@ -390,7 +391,8 @@ public class GardenBeanIT extends AbstractBeanIntegrationTest {
         gardenBean.unlike(pContextMsg, gardenLikeId);
 
         gardenBlacklist = gardenBean.getGardenLike(pContextMsg, gardenId, null);
-        Assert.assertNull(gardenBlacklist);
+        Assert.assertNotNull(gardenBlacklist.isEmpty());
+        Assert.assertTrue(gardenBlacklist.isEmpty());
 
         TechnicalInformation<GardenLikeCriteriaColumn, GardenLikeOrderColumn> toReturn = new TechnicalInformation<GardenLikeCriteriaColumn, GardenLikeOrderColumn>();
         QueryCriteria<GardenLikeCriteriaColumn> CRITERIA_GARDEN_LIKE_STATUS_EQUAL_SETTED = new QueryCriteria<GardenLikeCriteriaColumn>(
