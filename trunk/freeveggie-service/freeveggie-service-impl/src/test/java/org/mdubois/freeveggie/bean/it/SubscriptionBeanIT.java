@@ -38,7 +38,7 @@ public class SubscriptionBeanIT extends AbstractBeanIntegrationTest {
     public void testCreate() throws Exception {
         //Set the product test as a validate status
         DataSource freeveggieDatasource = (DataSource) container.getContext().lookup("jdbc/freeveggie");
-        String sql = "DELETE FROM t_user WHERE usr_email_address = 'baloo2401@freeveggie.org'";
+        String sql = "DELETE FROM t_user WHERE usr_email_address = 'dubois.mickael@gmail.com'";
         Connection con = freeveggieDatasource.getConnection();
         Statement stmt = con.createStatement();
         con.setAutoCommit(false);
@@ -65,7 +65,7 @@ public class SubscriptionBeanIT extends AbstractBeanIntegrationTest {
         subscriptionMsg.setShareGardenInformation(Boolean.TRUE);
         subscriptionMsg.setSharePersonalInformation(Boolean.TRUE);
         final CreateAccountMsg pUserMsg = new CreateAccountMsg();
-        pUserMsg.setEmail("baloo2401@freeveggie.org");
+        pUserMsg.setEmail("dubois.mickael@gmail.com");
         pUserMsg.setFirstname("Mickeael");
         pUserMsg.setLastname("Dubois");
         pUserMsg.setAddressMsg(addressMsg);
