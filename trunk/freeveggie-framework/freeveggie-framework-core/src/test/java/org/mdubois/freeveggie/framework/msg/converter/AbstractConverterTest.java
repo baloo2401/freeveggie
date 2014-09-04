@@ -58,7 +58,7 @@ public class AbstractConverterTest {
 
         AbstractConverter instance = new AbstractConverterImpl();
         List result = instance.convert(pSource);
-        Assert.assertNull(result);
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -69,7 +69,7 @@ public class AbstractConverterTest {
 
         AbstractConverter instance = new AbstractConverterImpl();
         List result = instance.convert(null);
-        Assert.assertNull(result);
+        Assert.assertNotNull(result);
     }
 
     public class AbstractConverterImpl extends AbstractConverter<Target,Source> {
