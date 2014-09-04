@@ -35,7 +35,7 @@ public abstract class AbstractConverter<TARGET,SOURCE> implements Converter<TARG
             }
             return targets;
         }
-        return null;
+        return new ArrayList<TARGET>(0);
     }
 
 }
