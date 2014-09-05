@@ -81,7 +81,8 @@ public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
         pContextMsgUser2.getUser().setId(2L);
 
         List relationships = relationShipBean.getRelationShip(pContextMsg, 1L, null);
-        assertNull(relationships);
+        Assert.assertNotNull(relationships);
+        Assert.assertTrue(relationships.isEmpty());
 
         RelationShipMsg pRelationshipMsg = new RelationShipMsg();
         pRelationshipMsg.setRequest("request message");
