@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+    <action>
+        <actionName>CUSTOM-Integration Testing</actionName>
+        <displayName>Integration Testing</displayName>
+        <goals>
+            <goal>test</goal>
+        </goals>
+        <properties>
+            <GLASSFISH_HOME>C:\Program Files\glassfish-3.1.2.2\glassfish</GLASSFISH_HOME>
+            <INSTANCE_ROOT>/domains/int1</INSTANCE_ROOT>
+        </properties>
+        <activatedProfiles>
+            <activatedProfile>integration-test</activatedProfile>
+        </activatedProfiles>
+    </action>
+</actions>
