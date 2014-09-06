@@ -8,6 +8,7 @@ import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mdubois.freeveggie.RelationshipType;
 import org.mdubois.freeveggie.bean.IRelationShipBean;
@@ -64,6 +65,7 @@ public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
      * Test of getRefCitiesByCountry method, of class ReferenceBean.
      */
     @Test
+    @Ignore
     public void testCreateRefuseValidate() throws Exception {
         //Delete relationship before test
         DataSource freeveggieDatasource = (DataSource) container.getContext().lookup("jdbc/freeveggie");
