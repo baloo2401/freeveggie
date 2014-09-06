@@ -42,7 +42,8 @@ public interface ISecurityService {
     /**
      * Check if the a temporary password is setted.
      *
-     * @param pLogin - The code (representing a user) to check
+     * @param pCode
+     * @throws org.mdubois.freeveggie.framework.exception.BusinessException
      * @return TRUE if the user has generated a temporary password, FALSE
      * otherwise
      */
