@@ -109,14 +109,11 @@ public class SecurityService implements ISecurityService {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean hasTempPassword(String pCode) throws BusinessException {
         UserBO userBO = userDAO.getUserByUUID(pCode);
         if (userBO == null) {
-            throw new BusinessException("Unvalid code : can not find user");
+            throw new BusinessException(String.format("Unvalid code : %1$s", pCode));
         }
 
         return StringUtils.isNotBlank(userBO.getTemporaryPassword());
