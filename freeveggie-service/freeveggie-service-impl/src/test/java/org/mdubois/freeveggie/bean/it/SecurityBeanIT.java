@@ -170,9 +170,9 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
         //Set the user test as a validate status
         DataSource freeveggieDatasource  = (DataSource) container.getContext().lookup("jdbc/freeveggie");
         String sql = "UPDATE t_user SET usr_temp_password = '' WHERE usr_id = 5";
-        try (Statement stmt = freeveggieDatasource.getConnection().createStatement()) {
-            stmt.executeUpdate(sql);
-        }
+        Statement stmt = freeveggieDatasource.getConnection().createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
 
         final String pEmail = "deletetest@gmail.com";
         securityBean.generateTempPassword(uuid);
