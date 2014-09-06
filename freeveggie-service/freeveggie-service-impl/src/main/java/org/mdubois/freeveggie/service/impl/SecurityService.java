@@ -75,9 +75,6 @@ public class SecurityService implements ISecurityService {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UserMsg controlTempPassword(AuthenticationMsg pAuthentificationMsg) {
         return userBOToMsgConverter.convert(authenticationDAO
@@ -145,7 +142,7 @@ public class SecurityService implements ISecurityService {
             throws BusinessException {
         UserBO userBO = userDAO.getUserByEmail(pEmail);
         if (userBO == null) {
-            throw new BusinessException("Unvalid code : can not find user");
+            throw new BusinessException(String.format("Unvalid code : %1$s", pEmail));
         }
         String generatedPassword = generatePassword();
         userBO.setTemporaryPassword(EncryptionUtils.getMD5(generatedPassword));

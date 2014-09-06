@@ -175,9 +175,9 @@ public class SecurityBeanIT extends AbstractBeanIntegrationTest {
         stmt.close();
 
         final String pEmail = "deletetest@gmail.com";
-        securityBean.generateTempPassword(uuid);
+        securityBean.generateTempPassword(pEmail);
 
-        boolean result = securityBean.hasTempPassword(pEmail);
+        boolean result = securityBean.hasTempPassword(uuid);
         Assert.assertEquals(result, true);
 
     }
