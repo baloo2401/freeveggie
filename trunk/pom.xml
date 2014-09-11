@@ -237,16 +237,16 @@
                                     <debug>true</debug>
                                     <target>
                                         <echo message="Step 1 - Undeploy application"/>
-                                        <sshexec host="usine-dev.edubois.org" username="glassfish" password="glassfish" command="~/tools/undeploy.sh" trust="true" />
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/undeploy.sh" trust="true" />
 										
                                         <echo message="Step 2 - Stop service server"/>
-                                        <sshexec host="usine-dev.edubois.org" username="glassfish" password="glassfish" command="~/tools/stopDomain.sh" trust="true" />
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/stopDomain.sh" trust="true" />
 
                                         <echo message="Step 3 - Start service server"/>
-                                        <sshexec host="usine-dev.edubois.org" username="glassfish" password="glassfish" command="~/tools/startDomain.sh.sh" trust="true" />
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/startDomain.sh.sh" trust="true" />
 	
                                         <echo message="Step 4 - Deploy application"/>
-                                        <sshexec host="usine-dev.edubois.org" username="glassfish" password="glassfish" command="~/tools/deploy.sh" trust="true" />
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/deploy.sh" trust="true" />
 										
                                         <echo message="Step 5 - Deployement successful"/>
                                     </target>
