@@ -1,0 +1,14 @@
+<assembly>
+    <id>local-env-deployment</id>
+    <formats>
+        <format>tar.gz</format>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>src</directory>
+            <outputDirectory/>
+        </fileSet>
+    </fileSets>
+</assembly>
