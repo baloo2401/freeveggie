@@ -12,6 +12,7 @@
     <modules>
         <module>freeveggie-ear</module>
         <module>freeveggie-service</module>
+        <module>freeveggie-env</module>
         <module>freeveggie-framework</module>
         <module>freeveggie-play</module>
     </modules>
