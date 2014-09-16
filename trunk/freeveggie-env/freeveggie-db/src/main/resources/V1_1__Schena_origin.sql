@@ -9,34 +9,10 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: freeveggieprod; Type: DATABASE; Schema: -; Owner: freeveggieprod
---
-
-CREATE DATABASE freeveggieprod WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'fr_FR.UTF-8' LC_CTYPE = 'fr_FR.UTF-8';
-
-
-ALTER DATABASE freeveggieprod OWNER TO freeveggieprod;
-
-\connect freeveggieprod
-
-SET statement_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
@@ -184,27 +160,6 @@ ALTER TABLE public.s_usr_seq OWNER TO freeveggieprod;
 SET default_tablespace = '';
 
 SET default_with_oids = false;
-
---
--- Name: schema_version; Type: TABLE; Schema: public; Owner: superadmin; Tablespace: 
---
-
-CREATE TABLE schema_version (
-    version_rank integer NOT NULL,
-    installed_rank integer NOT NULL,
-    version character varying(50) NOT NULL,
-    description character varying(200) NOT NULL,
-    type character varying(20) NOT NULL,
-    script character varying(1000) NOT NULL,
-    checksum integer,
-    installed_by character varying(100) NOT NULL,
-    installed_on timestamp without time zone DEFAULT now() NOT NULL,
-    execution_time integer NOT NULL,
-    success boolean NOT NULL
-);
-
-
-ALTER TABLE public.schema_version OWNER TO superadmin;
 
 --
 -- Name: t_address; Type: TABLE; Schema: public; Owner: freeveggieprod; Tablespace: 
@@ -1915,13 +1870,6 @@ COMMENT ON COLUMN tj_seed_calendar.rpc_id IS 'The reference product';
 COMMENT ON COLUMN tj_seed_calendar.rmn_id IS 'The seed month';
 
 
---
--- Name: schema_version_pk; Type: CONSTRAINT; Schema: public; Owner: superadmin; Tablespace: 
---
-
-ALTER TABLE ONLY schema_version
-    ADD CONSTRAINT schema_version_pk PRIMARY KEY (version);
-
 
 --
 -- Name: t_address_pkey; Type: CONSTRAINT; Schema: public; Owner: freeveggieprod; Tablespace: 
@@ -2225,28 +2173,6 @@ ALTER TABLE ONLY t_relationship
 
 ALTER TABLE ONLY t_user
     ADD CONSTRAINT unq_t_user_username UNIQUE (usr_username);
-
-
---
--- Name: schema_version_ir_idx; Type: INDEX; Schema: public; Owner: superadmin; Tablespace: 
---
-
-CREATE INDEX schema_version_ir_idx ON schema_version USING btree (installed_rank);
-
-
---
--- Name: schema_version_s_idx; Type: INDEX; Schema: public; Owner: superadmin; Tablespace: 
---
-
-CREATE INDEX schema_version_s_idx ON schema_version USING btree (success);
-
-
---
--- Name: schema_version_vr_idx; Type: INDEX; Schema: public; Owner: superadmin; Tablespace: 
---
-
-CREATE INDEX schema_version_vr_idx ON schema_version USING btree (version_rank);
-
 
 --
 -- Name: fk_t_address_rci_d; Type: FK CONSTRAINT; Schema: public; Owner: freeveggieprod
