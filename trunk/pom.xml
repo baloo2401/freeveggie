@@ -219,11 +219,11 @@
             </build>
         </profile>
         <profile>
-            <!-- to launch use : mvn package -Dci -N -->
-            <id>prod-delivery</id>
+            <!-- to launch use : mvn package -Dservice -N -->
+            <id>prod-delivery-service</id>
             <activation>
                 <property>
-                    <name>ci</name>
+                    <name>service</name>
                 </property>
             </activation>
             <build>
@@ -248,6 +248,57 @@
 	
                                         <echo message="Step 4 - Deploy application"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/deploy.sh" trust="true" />
+										
+                                        <echo message="Step 5 - Deployement successful"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.ant</groupId>
+                                <artifactId>ant-jsch</artifactId>
+                                <version>1.7.1</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+		
+        <profile>
+            <!-- to launch use : mvn package -Dui -N -->
+            <id>prod-delivery-ui</id>
+            <activation>
+                <property>
+                    <name>ui</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>get-released-packages</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <debug>true</debug>
+                                    <target>
+                                        <echo message="Step 1 - Stop service server"/>
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/stopDomain.sh" trust="true" />
+										
+                                        <echo message="Step 2 - Undeploy application"/>
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/undeploy.sh" trust="true" />
+	
+                                        <echo message="Step 3 - Deploy application"/>
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/deploy.sh" trust="true" />
+
+                                        <echo message="Step 4 - Start service server"/>
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/startDomain.sh" trust="true" />
 										
                                         <echo message="Step 5 - Deployement successful"/>
                                     </target>
