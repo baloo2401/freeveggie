@@ -7,5 +7,5 @@ resolvers ++= Seq(
 	"Nexus Snapshot Repository" at "http://usine-dev.edubois.org:8080/nexus/content/repositories/snapshots/"
 )
 
-	// Use the Play sbt plugin for Play projects
+// Use the Play sbt plugin for Play projects
 addSbtPlugin("play" % "sbt-plugin" % "2.1.0")
