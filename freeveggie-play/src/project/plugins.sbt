@@ -3,6 +3,7 @@ logLevel := Level.Warn
 
 // The Typesafe repository
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
+
 // Nexus Snapshot Repository
 resolvers += "Local Maven Repository" at "http://usine-dev.edubois.org:8080/nexus/content/repositories/snapshots/"
 
