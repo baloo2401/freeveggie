@@ -1,9 +1,11 @@
-name := "freeveggie-play"                                                                                                                                                                                                
+name := "freeveggie-play"
 
-version := "1.0-SNAPSHOT"                                                                                                                                                                                                 
+version := "1.0-SNAPSHOT"
 
-//Dependencies
-libraryDependencies += "org.mdubois" % "freeveggie-framework-core" % version
-libraryDependencies += "org.mdubois" % "freeveggie-service-api" % "version
+libraryDependencies ++= Seq(                                                                                                                                                                                              
+  "org.mdubois" % "freeveggie-framework-core" % "1.0-SNAPSHOT",                                                                                                                                                                                                               
+  "org.mdubois" % "freeveggie-service-api" % "version                                                                                                                                                                     
+)
+
 
 play.Project.playJavaSettings
