@@ -3,6 +3,8 @@ logLevel := Level.Warn
 
 // The Typesafe repository
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
+// Nexus Snapshot Repository
+resolvers += "Local Maven Repository" at "http://usine-dev.edubois.org:8080/nexus/content/repositories/snapshots/"
 
 // Use the Play sbt plugin for Play projects
 addSbtPlugin("play" % "sbt-plugin" % "2.1.0")
