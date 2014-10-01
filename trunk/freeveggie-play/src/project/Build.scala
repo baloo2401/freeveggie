@@ -18,7 +18,7 @@ object ApplicationBuild extends Build {
     // Add your own project settings here      
   ).settings(
     // Add custom repository: 
-    resolvers += "Nexus snapshot repository" at "http://usine-dev.edubois.org/nexus/content/repositories/snapshots/"
+    resolvers += "Nexus snapshot repository" at "http://usine-dev.edubois.org:8080/nexus/content/repositories/snapshots/"
   )
 
 }
