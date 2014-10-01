@@ -16,6 +16,9 @@ object ApplicationBuild extends Build {
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here      
+  ).settings(
+    // Add custom repository: 
+    resolvers += "Nexus snapshot repository" at "http://usine-dev.edubois.org:8080/nexus/content/repositories/snapshots/"
   )
 
 }
