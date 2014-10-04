@@ -289,7 +289,7 @@
                                     <debug>true</debug>
                                     <target>
                                         <echo message="Step 1 - Stop service server"/>
-                                        <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/stopDomain.sh" trust="true" />
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/shutdownDomain.sh" trust="true" />
 										
                                         <echo message="Step 2 - Undeploy application"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/undeploy.sh" trust="true" />
@@ -300,7 +300,9 @@
                                         <echo message="Step 4 - Start service server"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/startDomain.sh" trust="true" />
 										
-                                        <echo message="Step 5 - Deployement successful"/>
+                                        <echo message="Step 4 - Start service server"/>
+                                        <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/validateEnvironment.sh " trust="true" />
+										
                                     </target>
                                 </configuration>
                                 <goals>
