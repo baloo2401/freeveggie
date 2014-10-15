@@ -44,6 +44,21 @@ import org.mdubois.freeveggie.service.msg.PartialUserMsg;
 @RunWith(JMockit.class)
 public class GardenCommentServiceTest {
 
+    @Mocked
+    private IUserPartialDAO mockUserPartialDAO;
+    @Mocked
+    private IGardenDAO mockGardenDAO;
+    @Mocked
+    private IGardenCommentDAO mockGardenCommentDAO;
+    @Mocked
+    private BusinessObjectConverter<GardenCommentBO, GardenCommentMsg> mockGardenCommentMsgConverter;
+    @Mocked
+    private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
+    @Mocked
+    private Converter<GardenCommentMsg, GardenCommentBO> gardenCommentBOConverter;
+    @Mocked
+    private IGardenCommentDAO gardenCommentDAO;
+
     /**
      * {@link Criteria}
      */
@@ -60,7 +75,6 @@ public class GardenCommentServiceTest {
     public void commentNoUser() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final GardenCommentMsg pGardenCommentMsg = new GardenCommentMsg();
         pGardenCommentMsg.setComment("Comment");
         GardenMsg garden = new GardenMsg();
@@ -73,14 +87,11 @@ public class GardenCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-
             {
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
 
                 mockUserPartialDAO.get(122L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -99,7 +110,6 @@ public class GardenCommentServiceTest {
 
         final GardenService gardenService = new GardenService();
 
-
         final GardenCommentMsg pGardenCommentMsg = new GardenCommentMsg();
         pGardenCommentMsg.setComment("Comment");
         GardenMsg garden = new GardenMsg();
@@ -112,21 +122,16 @@ public class GardenCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-
             {
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockUserPartialDAO.get(122L);
-                repeats(1);
+                times = 1;
                 returns(new PartialUserBO());
 
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -143,7 +148,6 @@ public class GardenCommentServiceTest {
     public void commentFromTheOwner() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final GardenCommentMsg pGardenCommentMsg = new GardenCommentMsg();
         pGardenCommentMsg.setComment("Comment");
         GardenMsg garden = new GardenMsg();
@@ -156,13 +160,6 @@ public class GardenCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-
             {
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
@@ -171,14 +168,14 @@ public class GardenCommentServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(2L);
                 mockUserPartialDAO.get(2L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setId(1L);
                 gardenBO.setOwner(userBO);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
 
             }
@@ -196,7 +193,6 @@ public class GardenCommentServiceTest {
     public void commentTwice() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final GardenCommentMsg pGardenCommentMsg = new GardenCommentMsg();
         pGardenCommentMsg.setComment("Comment");
         GardenMsg garden = new GardenMsg();
@@ -211,13 +207,6 @@ public class GardenCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-
             {
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
@@ -226,15 +215,14 @@ public class GardenCommentServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(2L);
                 mockUserPartialDAO.get(2L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setId(1L);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
-
 
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setId(10L);
@@ -261,7 +249,6 @@ public class GardenCommentServiceTest {
     public void comment() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final GardenCommentMsg pGardenCommentMsg = new GardenCommentMsg();
         pGardenCommentMsg.setComment("Comment");
         GardenMsg garden = new GardenMsg();
@@ -276,15 +263,6 @@ public class GardenCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenCommentBO,GardenCommentMsg> mockGardenCommentMsgConverter;
-
             {
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
@@ -294,15 +272,14 @@ public class GardenCommentServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(2L);
                 mockUserPartialDAO.get(2L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setId(1L);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
-
 
                 mockGardenCommentDAO.getGardenCommentByUserAndGarden(userBO.getId(), gardenBO.getId());
                 returns(null);
@@ -334,20 +311,16 @@ public class GardenCommentServiceTest {
     public void removeCommentNoComment() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
 
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -364,13 +337,9 @@ public class GardenCommentServiceTest {
     public void removeCommentArchived() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -379,7 +348,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.ARCHIVED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -397,13 +366,9 @@ public class GardenCommentServiceTest {
     public void removeCommentAlreadyRemoved() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -412,7 +377,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.REMOVED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -429,13 +394,9 @@ public class GardenCommentServiceTest {
     public void removeComment() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -457,7 +418,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBO.setGarden(garden);
                 gardenCommentBO.setCreationDate(now);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
 
                 GardenCommentBO gardenCommentBOExpected = new GardenCommentBO();
@@ -469,7 +430,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBOExpected.setGarden(garden);
                 gardenCommentBOExpected.setCreationDate(now);
 
-                mockGardenCommentDAO.update(with(new GardenCommentBOMatcher(gardenCommentBOExpected)));
+                mockGardenCommentDAO.update(with(gardenCommentBOExpected, new GardenCommentBOMatcher(gardenCommentBOExpected)));
             }
         };
 
@@ -487,20 +448,16 @@ public class GardenCommentServiceTest {
     public void reactivateCommentNoComment() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
 
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -517,13 +474,9 @@ public class GardenCommentServiceTest {
     public void reactivateCommentArchived() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -532,7 +485,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.ARCHIVED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -549,13 +502,9 @@ public class GardenCommentServiceTest {
     public void reactivateCommentAlreadyActivated() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -564,7 +513,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.SETTED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -581,13 +530,9 @@ public class GardenCommentServiceTest {
     public void reactivateComment() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -609,7 +554,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBO.setGarden(garden);
                 gardenCommentBO.setCreationDate(now);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
 
                 GardenCommentBO gardenCommentBOExpected = new GardenCommentBO();
@@ -621,7 +566,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBOExpected.setGarden(garden);
                 gardenCommentBOExpected.setCreationDate(now);
 
-                mockGardenCommentDAO.update(with(new GardenCommentBOMatcher(gardenCommentBOExpected)));
+                mockGardenCommentDAO.update(with(gardenCommentBOExpected, new GardenCommentBOMatcher(gardenCommentBOExpected)));
             }
         };
 
@@ -629,7 +574,6 @@ public class GardenCommentServiceTest {
     }
 
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Archive Comment">
     /**
      * Control that we can't archive a unexisting comment
@@ -640,20 +584,16 @@ public class GardenCommentServiceTest {
     public void archiveNoComment() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
 
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -670,13 +610,9 @@ public class GardenCommentServiceTest {
     public void archiveCommentDeleted() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -685,7 +621,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.REMOVED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -703,13 +639,9 @@ public class GardenCommentServiceTest {
     public void archiveCommentAlreadyArchive() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -718,7 +650,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.ARCHIVED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -735,16 +667,11 @@ public class GardenCommentServiceTest {
     public void archive() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-
             {
-
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
 
@@ -764,7 +691,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBO.setGarden(garden);
                 gardenCommentBO.setCreationDate(now);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
 
                 GardenCommentBO gardenCommentBOExpected = new GardenCommentBO();
@@ -776,7 +703,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBOExpected.setGarden(garden);
                 gardenCommentBOExpected.setCreationDate(now);
 
-                mockGardenCommentDAO.update(with(new GardenCommentBOMatcher(gardenCommentBOExpected)));
+                mockGardenCommentDAO.update(with(gardenCommentBOExpected, new GardenCommentBOMatcher(gardenCommentBOExpected)));
             }
         };
 
@@ -794,20 +721,16 @@ public class GardenCommentServiceTest {
     public void unarchiveNoComment() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
 
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -824,13 +747,9 @@ public class GardenCommentServiceTest {
     public void unarchiveCommentDeleted() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -839,7 +758,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.REMOVED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -856,13 +775,9 @@ public class GardenCommentServiceTest {
     public void unarchiveCommentAlreadyUnarchive() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
 
             {
 
@@ -871,7 +786,7 @@ public class GardenCommentServiceTest {
                 GardenCommentBO gardenCommentBO = new GardenCommentBO();
                 gardenCommentBO.setStatus(EvaluationStatus.SETTED);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
             }
         };
@@ -892,9 +807,6 @@ public class GardenCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -915,7 +827,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBO.setGarden(garden);
                 gardenCommentBO.setCreationDate(now);
                 mockGardenCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenCommentBO);
 
                 GardenCommentBO gardenCommentBOExpected = new GardenCommentBO();
@@ -927,7 +839,7 @@ public class GardenCommentServiceTest {
                 gardenCommentBOExpected.setGarden(garden);
                 gardenCommentBOExpected.setCreationDate(now);
 
-                mockGardenCommentDAO.update(with(new GardenCommentBOMatcher(gardenCommentBOExpected)));
+                mockGardenCommentDAO.update(with(gardenCommentBOExpected, new GardenCommentBOMatcher(gardenCommentBOExpected)));
             }
         };
 
@@ -947,16 +859,11 @@ public class GardenCommentServiceTest {
     public void getGardenCommentGardenNotExit() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
 
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> gardenCommentBOConverter;
-            @Mocked
-            private IGardenCommentDAO gardenCommentDAO;
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentBOConverter", gardenCommentBOConverter);
@@ -967,7 +874,7 @@ public class GardenCommentServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
-                gardenCommentDAO.getGardenCommentByGarden(pGardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                gardenCommentDAO.getGardenCommentByGarden(pGardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(null);
 
                 gardenCommentBOConverter.convert((List) null);
@@ -989,16 +896,10 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWithNullTechnicalInformation() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
 
             {
 
@@ -1012,7 +913,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1031,19 +932,12 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWithEmptyCriteria() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
 
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
-
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
                 Deencapsulation.setField(gardenService, "gardenCommentBOConverter", mockGardenCommentBOConverter);
@@ -1055,7 +949,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1075,7 +969,6 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWithCriteriaWithStatus() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         List<QueryCriteria<GardenCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenCommentCriteriaColumn>>();
@@ -1085,22 +978,14 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
                 Deencapsulation.setField(gardenService, "gardenCommentBOConverter", mockGardenCommentBOConverter);
 
-
-
-
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1120,7 +1005,6 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWithCriteriaButNotStatus() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         List<QueryCriteria<GardenCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenCommentCriteriaColumn>>();
@@ -1129,20 +1013,14 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
                 Deencapsulation.setField(gardenService, "gardenCommentBOConverter", mockGardenCommentBOConverter);
 
-
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1160,7 +1038,6 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWithPagination() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         List<QueryCriteria<GardenCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenCommentCriteriaColumn>>();
@@ -1170,11 +1047,6 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -1182,7 +1054,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1211,11 +1083,6 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<GardenCommentOrderColumn>(GardenCommentOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -1223,7 +1090,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
 
@@ -1246,16 +1113,11 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWriteUserNotExit() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
 
-             @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> gardenCommentBOConverter;
-            @Mocked
-            private IGardenCommentDAO gardenCommentDAO;
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentBOConverter", gardenCommentBOConverter);
@@ -1266,7 +1128,7 @@ public class GardenCommentServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
-                gardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                gardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(null);
 
                 gardenCommentBOConverter.convert((List) null);
@@ -1288,16 +1150,10 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWriteWithNullTechnicalInformation() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
 
             {
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -1310,7 +1166,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1329,16 +1185,10 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWriteWithEmptyCriteria() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
 
             {
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -1351,7 +1201,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1371,7 +1221,6 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWriteWithCriteriaWithStatus() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         List<QueryCriteria<GardenCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenCommentCriteriaColumn>>();
@@ -1381,11 +1230,6 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -1393,7 +1237,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1413,7 +1257,6 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWriteWithCriteriaButNotStatus() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         List<QueryCriteria<GardenCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenCommentCriteriaColumn>>();
@@ -1422,11 +1265,6 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -1434,7 +1272,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1452,7 +1290,6 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWriteWithPagination() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         List<QueryCriteria<GardenCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenCommentCriteriaColumn>>();
@@ -1462,11 +1299,6 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
@@ -1474,7 +1306,7 @@ public class GardenCommentServiceTest {
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }
@@ -1492,7 +1324,6 @@ public class GardenCommentServiceTest {
     public void getGardenCommentWriteWithOrder() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<GardenCommentCriteriaColumn, GardenCommentOrderColumn>();
         List<QueryCriteria<GardenCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenCommentCriteriaColumn>>();
@@ -1503,18 +1334,13 @@ public class GardenCommentServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<GardenCommentOrderColumn>(GardenCommentOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO mockGardenCommentDAO;
-            @Mocked
-            private Converter<GardenCommentMsg, GardenCommentBO> mockGardenCommentBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenCommentDAO", mockGardenCommentDAO);
                 Deencapsulation.setField(gardenService, "gardenCommentBOConverter", mockGardenCommentBOConverter);
 
                 List<GardenCommentBO> gardenCommentBOs = new ArrayList<GardenCommentBO>(1);
                 gardenCommentBOs.add(new GardenCommentBO());
-                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenCommentDAO.getGardenCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenCommentBOs);
                 mockGardenCommentBOConverter.convert(gardenCommentBOs);
             }

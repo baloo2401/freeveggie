@@ -1,12 +1,12 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.SecurityBeanLocal;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.SecurityBeanLocal;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.service.api.ISecurityService;
 import org.mdubois.freeveggie.service.msg.AuthenticationMsg;
@@ -19,6 +19,9 @@ import org.mdubois.freeveggie.service.msg.UserMsg;
  */
 public class SecurityBeanTest {
 
+    @Mocked
+    private ISecurityService securityService;
+
     /**
      * Test of create method, of class GardenBean.
      */
@@ -27,12 +30,11 @@ public class SecurityBeanTest {
         final ISecurityBean securityBean = new SecurityBeanLocal();
         final AuthenticationMsg pAuthentificationMsg = new AuthenticationMsg();
         final UserMsg userMsg = new UserMsg();
-        new Expectations(){
-            @Mocked
-            private ISecurityService securityService;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(securityBean, securityService);
-                
+
                 securityService.controlPassword(pAuthentificationMsg);
                 returns(userMsg);
             }
@@ -46,12 +48,11 @@ public class SecurityBeanTest {
         final ISecurityBean securityBean = new SecurityBeanLocal();
         final AuthenticationMsg pAuthentificationMsg = new AuthenticationMsg();
         final UserMsg userMsg = new UserMsg();
-        new Expectations(){
-            @Mocked
-            private ISecurityService securityService;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(securityBean, securityService);
-                
+
                 securityService.controlTempPassword(pAuthentificationMsg);
                 returns(userMsg);
             }
@@ -65,12 +66,11 @@ public class SecurityBeanTest {
         final ISecurityBean securityBean = new SecurityBeanLocal();
         final String pCode = "pCode";
         final UserMsg userMsg = new UserMsg();
-        new Expectations(){
-            @Mocked
-            private ISecurityService securityService;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(securityBean, securityService);
-                
+
                 securityService.hasTempPassword(pCode);
                 returns(true);
             }
@@ -84,12 +84,11 @@ public class SecurityBeanTest {
         final ISecurityBean securityBean = new SecurityBeanLocal();
         final String pLogin = "pLogin";
         final UserMsg userMsg = new UserMsg();
-        new Expectations(){
-            @Mocked
-            private ISecurityService securityService;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(securityBean, securityService);
-                
+
                 securityService.isExistingLogin(pLogin);
                 returns(true);
             }
@@ -103,12 +102,11 @@ public class SecurityBeanTest {
         final ISecurityBean securityBean = new SecurityBeanLocal();
         final String pEmail = "pEmail";
         final UserMsg userMsg = new UserMsg();
-        new Expectations(){
-            @Mocked
-            private ISecurityService securityService;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(securityBean, securityService);
-                
+
                 securityService.isExistingEmail(pEmail);
                 returns(false);
             }
@@ -122,12 +120,11 @@ public class SecurityBeanTest {
         final ISecurityBean securityBean = new SecurityBeanLocal();
         final String pEmail = "pEmail";
         final UserMsg userMsg = new UserMsg();
-        new Expectations(){
-            @Mocked
-            private ISecurityService securityService;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(securityBean, securityService);
-                
+
                 securityService.generateTempPassword(pEmail);
             }
         };

@@ -1,12 +1,12 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.SubscriptionBeanLocal;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.SubscriptionBeanLocal;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
 import org.mdubois.freeveggie.framework.security.ContextMsg;
@@ -20,6 +20,9 @@ import org.mdubois.freeveggie.service.msg.CreateAccountMsg;
  * @author mdubois
  */
 public class SubscriptionBeanTest {
+
+    @Mocked
+    private ISubscriptionService subscriptionService;
 
     /**
      * Test of create method, of class GardenBean.
@@ -35,9 +38,6 @@ public class SubscriptionBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private ISubscriptionService subscriptionService;
-
             {
                 Deencapsulation.setField(instance, subscriptionService);
 
@@ -47,7 +47,7 @@ public class SubscriptionBeanTest {
         };
 
         Long result = instance.create(pUserMsg);
-        Assert.assertEquals((Long)123L, result);
+        Assert.assertEquals((Long) 123L, result);
     }
 
     @Test(expected = BusinessException.class)
@@ -61,14 +61,11 @@ public class SubscriptionBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private ISubscriptionService subscriptionService;
-
             {
                 Deencapsulation.setField(instance, subscriptionService);
 
                 subscriptionService.create(pUserMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -86,18 +83,15 @@ public class SubscriptionBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private ISubscriptionService subscriptionService;
-
             {
                 Deencapsulation.setField(instance, subscriptionService);
 
                 subscriptionService.create(pUserMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
         instance.create(pUserMsg);
     }
-    
+
 }

@@ -26,9 +26,10 @@ import org.unitils.reflectionassert.ReflectionAssert;
  */
 public class ProductBOToMsgConverterTest extends AbstractConverterTest<ProductMsg, ProductBO> {
 
+    @Mocked
+    private Converter<GardenMsg, GardenBO> mockGardenBOToMsgConverter;
 
 //    private static final RefProductBO REF_PRODUCT_BO = new RefProductBO();
-
     @Test
     public void testConvertFull() {
 
@@ -46,9 +47,6 @@ public class ProductBOToMsgConverterTest extends AbstractConverterTest<ProductMs
         productBO.setLikes(productLikes);
 
         new Expectations() {
-
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOToMsgConverter;
 
             {
                 Deencapsulation.setField(converter, "gardenBOToMsgConverter", mockGardenBOToMsgConverter);

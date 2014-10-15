@@ -1,8 +1,8 @@
 package org.mdubois.freeveggie.framework.dao;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.framework.bo.BusinessObject;
 import java.io.Serializable;
+import org.mdubois.freeveggie.framework.bo.BusinessObject;
 // </editor-fold>
 
 /**

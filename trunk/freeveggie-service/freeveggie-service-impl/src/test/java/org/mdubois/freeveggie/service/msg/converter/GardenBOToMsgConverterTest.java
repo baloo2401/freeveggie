@@ -8,7 +8,12 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Test;
 import org.mdubois.freeveggie.Status;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.bo.AddressBO;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.GardenCommentBO;
+import org.mdubois.freeveggie.bo.GardenLikeBO;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.ProductBO;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.service.msg.AddressMsg;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
@@ -21,6 +26,12 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Mickael Dubois
  */
 public class GardenBOToMsgConverterTest extends AbstractConverterTest<GardenMsg, GardenBO> {
+
+    @Mocked
+    private Converter<AddressMsg, AddressBO> mockAddressBOToMsgConverter;
+
+    @Mocked
+    private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
 
     private static final Date NOW = new Date();
 
@@ -47,15 +58,9 @@ public class GardenBOToMsgConverterTest extends AbstractConverterTest<GardenMsg,
 
         new Expectations() {
 
-            @Mocked
-            private Converter<AddressMsg, AddressBO> mockAddressBOToMsgConverter;
-
-            @Mocked
-            private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
-
             {
-                Deencapsulation.setField(converter,"addressBOToMsgConverter", mockAddressBOToMsgConverter);
-                Deencapsulation.setField(converter,"partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
+                Deencapsulation.setField(converter, "addressBOToMsgConverter", mockAddressBOToMsgConverter);
+                Deencapsulation.setField(converter, "partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
 
                 mockAddressBOToMsgConverter.convert(gardenBO.getAddress());
                 returns(null);

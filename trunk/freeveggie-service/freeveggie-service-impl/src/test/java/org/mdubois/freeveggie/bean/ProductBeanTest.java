@@ -1,12 +1,12 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.ProductBeanLocal;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.ProductBeanLocal;
 import org.mdubois.freeveggie.criteria.ProductCommentCriteriaColumn;
 import org.mdubois.freeveggie.criteria.ProductCriteriaColumn;
 import org.mdubois.freeveggie.criteria.ProductLikeCriteriaColumn;
@@ -22,7 +22,6 @@ import org.mdubois.freeveggie.order.ProductLikeOrderColumn;
 import org.mdubois.freeveggie.order.ProductOrderColumn;
 import org.mdubois.freeveggie.service.api.IProductService;
 import org.mdubois.freeveggie.service.api.IRightControlerService;
-import org.mdubois.freeveggie.service.impl.RightControlerService;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
 import org.mdubois.freeveggie.service.msg.ProductCommentMsg;
 import org.mdubois.freeveggie.service.msg.ProductLikeMsg;
@@ -36,6 +35,10 @@ import org.mdubois.freeveggie.service.msg.UpdateProductMsg;
  */
 public class ProductBeanTest {
 
+    @Mocked
+    private IProductService gardenService;
+    @Mocked
+    private IRightControlerService rightControlerService;
     // <editor-fold defaultstate="collapsed" desc="Create">
     /**
      * Test of create method, of class ProductBean.
@@ -56,18 +59,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
-                
+
                 rightControlerService.isUserOwnerGarden(userId, gardenId);
                 returns(true);
 
@@ -79,7 +77,6 @@ public class ProductBeanTest {
         Long result = instance.create(pContextMsg, pProductMsg);
         assertEquals(expResult, result);
     }
-
 
     @Test(expected = AccessNotGrantedException.class)
     public void testCreateAccessNotGrantedException() throws Exception {
@@ -93,11 +90,6 @@ public class ProductBeanTest {
         final Long expResult = 1234L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -128,22 +120,17 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
-                
+
                 rightControlerService.isUserOwnerGarden(userId, gardenId);
                 returns(true);
 
                 gardenService.create(pProductMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -167,23 +154,18 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
-                
+
                 rightControlerService.isUserOwnerGarden(userId, gardenId);
                 returns(true);
 
                 gardenService.create(pProductMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -210,11 +192,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -231,7 +208,7 @@ public class ProductBeanTest {
         instance.update(pContextMsg, pProductMsg);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUpdateAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -245,11 +222,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -262,8 +234,7 @@ public class ProductBeanTest {
         instance.update(pContextMsg, pProductMsg);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUpdateAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -277,11 +248,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -291,7 +257,6 @@ public class ProductBeanTest {
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(false);
 
-                gardenService.update(pProductMsg);
             }
         };
 
@@ -312,11 +277,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -327,7 +287,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.update(pProductMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -348,11 +308,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -363,7 +318,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.update(pProductMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -387,11 +342,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -405,8 +355,7 @@ public class ProductBeanTest {
         instance.blacklist(pContextMsg, pProductId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testBlacklistAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -417,11 +366,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -447,11 +391,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -459,7 +398,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.blacklist(pProductId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -478,11 +417,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -490,7 +424,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.blacklist(pProductId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -514,11 +448,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -532,7 +461,7 @@ public class ProductBeanTest {
         instance.unblacklist(pContextMsg, pProductId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnunblacklistAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -543,11 +472,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -572,11 +496,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -584,7 +503,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.unblacklist(pProductId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -603,11 +522,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -615,7 +529,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.unblacklist(pProductId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -639,11 +553,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -661,8 +570,7 @@ public class ProductBeanTest {
         instance.remove(pContextMsg, pProductId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -673,11 +581,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -691,7 +594,7 @@ public class ProductBeanTest {
         instance.remove(pContextMsg, pProductId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -702,11 +605,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -722,7 +620,6 @@ public class ProductBeanTest {
 
         instance.remove(pContextMsg, pProductId);
     }
-
 
     @Test(expected = BusinessException.class)
     public void testRemovetThrowBusinessException() throws Exception {
@@ -736,11 +633,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -752,7 +644,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.remove(pProductId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -771,11 +663,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -787,7 +674,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.remove(pProductId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -811,11 +698,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -832,8 +714,7 @@ public class ProductBeanTest {
         instance.reactivate(pContextMsg, pProductId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void AccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -844,11 +725,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -861,8 +737,7 @@ public class ProductBeanTest {
         instance.reactivate(pContextMsg, pProductId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void AccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -873,11 +748,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -905,11 +775,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -920,7 +785,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.reactivate(pProductId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -939,11 +804,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -954,7 +814,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.reactivate(pProductId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -978,11 +838,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -996,8 +851,7 @@ public class ProductBeanTest {
         instance.archive(pContextMsg, pProductId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testArchiveAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1008,11 +862,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1037,11 +886,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1049,7 +893,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.archive(pProductId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1068,11 +912,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1080,7 +919,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.archive(pProductId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1104,11 +943,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1125,7 +959,7 @@ public class ProductBeanTest {
         instance.unarchive(pContextMsg, pProductId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1136,11 +970,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1153,7 +982,7 @@ public class ProductBeanTest {
         instance.unarchive(pContextMsg, pProductId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1164,11 +993,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1196,11 +1020,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1211,7 +1030,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.unarchive(pProductId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1230,11 +1049,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1245,7 +1059,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.unarchive(pProductId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1269,11 +1083,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1287,7 +1096,7 @@ public class ProductBeanTest {
         instance.getProductById(pContextMsg, pProductId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetProductByIdAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1298,11 +1107,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1327,11 +1131,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1339,7 +1138,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductById(pProductId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1358,11 +1157,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1370,7 +1164,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductById(pProductId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1395,11 +1189,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1413,7 +1202,7 @@ public class ProductBeanTest {
         instance.getProductByUser(pContextMsg, pUserId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetProductByUserAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1425,11 +1214,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1456,11 +1240,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1468,7 +1247,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByUser(pUserId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1488,11 +1267,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1500,7 +1274,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByUser(pUserId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1526,11 +1300,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1544,7 +1313,7 @@ public class ProductBeanTest {
         instance.getProductByCity(pContextMsg, pRefCityId, pRefProductId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetProductByCityAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1557,11 +1326,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1588,11 +1352,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1600,7 +1359,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1621,11 +1380,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1633,7 +1387,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1659,11 +1413,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1677,7 +1426,7 @@ public class ProductBeanTest {
         instance.getProductByState(pContextMsg, pRefStateId, pRefProductId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetProductByStateAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1690,11 +1439,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1721,11 +1465,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1733,7 +1472,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1754,11 +1493,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1766,7 +1500,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1792,11 +1526,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1810,7 +1539,7 @@ public class ProductBeanTest {
         instance.getProductByRegion(pContextMsg, pRefRegionId, pRefProductId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetProductByRegionAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1823,11 +1552,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1854,11 +1578,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1866,7 +1585,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1887,11 +1606,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1899,7 +1613,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1925,11 +1639,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1943,8 +1652,7 @@ public class ProductBeanTest {
         instance.getProductByCountry(pContextMsg, pRefCountryId, pRefProductId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetProductByCountryAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1957,11 +1665,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1988,11 +1691,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2000,7 +1698,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2021,11 +1719,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2033,7 +1726,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2057,11 +1750,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2075,7 +1763,7 @@ public class ProductBeanTest {
         instance.comment(pContextMsg, pProductCommentMsg);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2086,11 +1774,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2116,18 +1799,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.comment(pProductCommentMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2146,18 +1824,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.comment(pProductCommentMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2181,11 +1854,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2202,7 +1870,7 @@ public class ProductBeanTest {
         instance.removeComment(pContextMsg, pCommentId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2213,11 +1881,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2233,8 +1896,7 @@ public class ProductBeanTest {
         instance.removeComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveCommentAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2245,11 +1907,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2280,11 +1937,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2295,7 +1947,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.removeComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2314,11 +1966,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2329,7 +1976,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.removeComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2353,11 +2000,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2374,7 +2016,7 @@ public class ProductBeanTest {
         instance.reactivateComment(pContextMsg, pCommentId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testReactivateCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2385,11 +2027,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2403,7 +2040,7 @@ public class ProductBeanTest {
         instance.reactivateComment(pContextMsg, pCommentId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testReactivateCommentAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2414,11 +2051,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2447,11 +2079,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2463,7 +2090,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.reactivateComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2482,11 +2109,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2498,7 +2120,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.reactivateComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2522,11 +2144,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2540,8 +2157,7 @@ public class ProductBeanTest {
         instance.archiveComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testArchiveCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2552,11 +2168,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2582,18 +2193,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
                 returns(true);
                 gardenService.archiveComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2612,18 +2218,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
                 returns(true);
                 gardenService.archiveComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2647,11 +2248,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2668,8 +2264,7 @@ public class ProductBeanTest {
         instance.unarchiveComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2680,11 +2275,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2697,8 +2287,7 @@ public class ProductBeanTest {
         instance.unarchiveComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveCommentAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2709,11 +2298,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2741,11 +2325,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2756,7 +2335,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.unarchiveComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2775,11 +2354,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2790,7 +2364,7 @@ public class ProductBeanTest {
                 returns(true);
 
                 gardenService.unarchiveComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2815,11 +2389,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2833,8 +2402,7 @@ public class ProductBeanTest {
         instance.getProductComment(pContextMsg, pProductId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetProductCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2846,11 +2414,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2876,18 +2439,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductComment(pProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2908,18 +2466,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductComment(pProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2944,11 +2497,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2961,7 +2509,8 @@ public class ProductBeanTest {
 
         instance.getProductCommentWrite(pContextMsg, pUserId, pTechnicalInformation);
     }
-    @Test(expected=AccessNotGrantedException.class)
+
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetProductCommentWriteAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2973,11 +2522,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3003,18 +2547,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductCommentWrite(pUserId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3035,18 +2574,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductCommentWrite(pUserId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3070,11 +2604,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3088,8 +2617,7 @@ public class ProductBeanTest {
         instance.like(pContextMsg, pProductLikeMsg);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testLikeAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3100,11 +2628,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3130,18 +2653,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.like(pProductLikeMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3160,18 +2678,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.like(pProductLikeMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3195,11 +2708,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3212,7 +2720,8 @@ public class ProductBeanTest {
 
         instance.unlike(pContextMsg, pLikeId);
     }
-    @Test(expected=AccessNotGrantedException.class)
+
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveLikeAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3223,11 +2732,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3252,18 +2756,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.unlike(pLikeId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3282,18 +2781,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.unlike(pLikeId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3318,11 +2812,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3336,8 +2825,7 @@ public class ProductBeanTest {
         instance.getProductLike(pContextMsg, pProductId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetProductLikeAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3349,11 +2837,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3379,18 +2862,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductLike(pProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3411,18 +2889,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductLike(pProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3447,11 +2920,6 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3465,8 +2933,7 @@ public class ProductBeanTest {
         instance.getProductLikeWrite(pContextMsg, pUserId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetProductLikeWriteAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3478,11 +2945,6 @@ public class ProductBeanTest {
         final IProductBean instance = new ProductBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3508,18 +2970,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductLikeWrite(pUserId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3540,18 +2997,13 @@ public class ProductBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getProductLikeWrite(pUserId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 

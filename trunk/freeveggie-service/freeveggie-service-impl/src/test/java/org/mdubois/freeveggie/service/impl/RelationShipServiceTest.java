@@ -39,6 +39,17 @@ import org.mdubois.freeveggie.service.msg.RelationShipMsg;
 @RunWith(JMockit.class)
 public class RelationShipServiceTest {
 
+    @Mocked
+    private Converter<RelationShipMsg, RelationShipBO> relationshipBOConverter;
+    @Mocked
+    private Converter<RelationShipMsg, RelationShipBO> mockRelationshipBOConverter;
+    @Mocked
+    private IUserPartialDAO userPartialDAO;
+    @Mocked
+    private IRelationShipDAO relationShipDAO;
+    @Mocked
+    private BusinessObjectConverter<RelationShipBO, RelationShipMsg> relationshipMsgToBOConverter;
+
     @Test(expected = BusinessException.class)
     public void createInexistingSender() throws BusinessException {
         final IRelationShipService relationShipService = new RelationShipService();
@@ -55,13 +66,6 @@ public class RelationShipServiceTest {
         relationshipMsg.setType(RelationshipType.FRIEND);
 
         new Expectations() {
-
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private BusinessObjectConverter<RelationShipBO, RelationShipMsg> relationshipMsgToBOConverter;
 
             {
                 Deencapsulation.setField(relationShipService, userPartialDAO);
@@ -98,13 +102,6 @@ public class RelationShipServiceTest {
         relationshipMsg.setType(RelationshipType.FRIEND);
 
         new Expectations() {
-
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private BusinessObjectConverter<RelationShipBO, RelationShipMsg> relationshipMsgToBOConverter;
 
             {
                 Deencapsulation.setField(relationShipService, userPartialDAO);
@@ -145,13 +142,6 @@ public class RelationShipServiceTest {
         relationshipMsg.setType(RelationshipType.FRIEND);
 
         new Expectations() {
-
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private BusinessObjectConverter<RelationShipBO, RelationShipMsg> relationshipMsgToBOConverter;
 
             {
                 Deencapsulation.setField(relationShipService, userPartialDAO);
@@ -204,13 +194,6 @@ public class RelationShipServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private BusinessObjectConverter<RelationShipBO, RelationShipMsg> relationshipMsgToBOConverter;
-
             {
                 Deencapsulation.setField(relationShipService, userPartialDAO);
                 Deencapsulation.setField(relationShipService, relationShipDAO);
@@ -261,13 +244,6 @@ public class RelationShipServiceTest {
         relationshipMsg.setType(RelationshipType.FRIEND);
 
         new Expectations() {
-
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private BusinessObjectConverter<RelationShipBO, RelationShipMsg> relationshipMsgToBOConverter;
 
             {
                 Deencapsulation.setField(relationShipService, userPartialDAO);
@@ -321,9 +297,6 @@ public class RelationShipServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
 
@@ -344,7 +317,6 @@ public class RelationShipServiceTest {
 
                 relationShipDAO.get(1223L);
                 returns(relationShipBO);
-
 
                 relationShipBO.setStatus(RelationshipStatus.VALIDED);
                 relationShipBO.setAnswer("answer");
@@ -375,9 +347,6 @@ public class RelationShipServiceTest {
         relationshipMsg.setType(RelationshipType.FRIEND);
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
 
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
@@ -411,9 +380,6 @@ public class RelationShipServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
 
@@ -434,7 +400,6 @@ public class RelationShipServiceTest {
 
                 relationShipDAO.get(1223L);
                 returns(relationShipBO);
-
 
                 relationShipBO.setStatus(RelationshipStatus.VALIDED);
                 relationShipBO.setAnswer("answer");
@@ -466,9 +431,6 @@ public class RelationShipServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
 
@@ -492,14 +454,11 @@ public class RelationShipServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
 
                 relationShipDAO.get(relationShipId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -516,11 +475,6 @@ public class RelationShipServiceTest {
         relationshipExpected.setId(relationshipId);
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private Converter<RelationShipMsg, RelationShipBO> mockRelationshipBOConverter;
 
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
@@ -549,11 +503,6 @@ public class RelationShipServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private Converter<RelationShipMsg, RelationShipBO> mockRelationshipBOConverter;
-
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
                 Deencapsulation.setField(relationShipService, mockRelationshipBOConverter);
@@ -573,7 +522,7 @@ public class RelationShipServiceTest {
             }
         };
 
-        relationShipService.getRelationShip(user,null);
+        relationShipService.getRelationShip(user, null);
     }
 
     @Test
@@ -589,11 +538,6 @@ public class RelationShipServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private Converter<RelationShipMsg, RelationShipBO> mockRelationshipBOConverter;
-
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);
                 Deencapsulation.setField(relationShipService, mockRelationshipBOConverter);
@@ -602,7 +546,7 @@ public class RelationShipServiceTest {
                 QueryCriteria<RelationShipCriteriaColumn> gardenCriteria = new QueryCriteria<RelationShipCriteriaColumn>(RelationShipCriteriaColumn.STATUS, CriteriaOperation.EQUAL, RelationshipStatus.REFUSED);
                 techInfo.addCriteria(gardenCriteria);
 
-                relationShipDAO.getRelationShip(user, with(new TechnicalInformationMatcher(techInfo)));
+                relationShipDAO.getRelationShip(user, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(relationShipBOs);
 
                 mockRelationshipBOConverter.convert(relationShipBOs);
@@ -624,11 +568,6 @@ public class RelationShipServiceTest {
         final Long user = 12390L;
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipDAO relationShipDAO;
-            @Mocked
-            private Converter<RelationShipMsg, RelationShipBO> relationshipBOConverter;
 
             {
                 Deencapsulation.setField(relationShipService, relationShipDAO);

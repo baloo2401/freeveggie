@@ -1,7 +1,6 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.StatistiqueBeanLocal;
 import java.util.ArrayList;
 import java.util.List;
 import mockit.Deencapsulation;
@@ -9,6 +8,7 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.StatistiqueBeanLocal;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
@@ -30,6 +30,11 @@ import org.mdubois.freeveggie.service.msg.UserMsg;
  */
 public class StatistiqueBeanTest {
 
+    @Mocked
+    private IStatistiqueService statistiqueService;
+    @Mocked
+    private IRightControlerService rightControlerService;
+
     // <editor-fold defaultstate="collapsed" desc="getBestRatedProductByCity">
     /**
      * Test of create method, of class GardenBean.
@@ -48,10 +53,6 @@ public class StatistiqueBeanTest {
         final List<BestRatedProductMsg> expResult = new ArrayList<BestRatedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -83,10 +84,6 @@ public class StatistiqueBeanTest {
         final List<BestRatedProductMsg> expResult = new ArrayList<BestRatedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -114,10 +111,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -127,7 +120,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByCity(pRefCityId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -147,10 +140,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -160,7 +149,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByCity(pRefCityId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -186,10 +175,6 @@ public class StatistiqueBeanTest {
         final List<BestRatedProductMsg> expResult = new ArrayList<BestRatedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -221,10 +206,6 @@ public class StatistiqueBeanTest {
         final List<BestRatedProductMsg> expResult = new ArrayList<BestRatedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -251,10 +232,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -264,7 +241,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByRegion(pRefRegionId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -284,10 +261,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -297,7 +270,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByRegion(pRefRegionId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -323,10 +296,6 @@ public class StatistiqueBeanTest {
         final List<BestRatedProductMsg> expResult = new ArrayList<BestRatedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -358,10 +327,6 @@ public class StatistiqueBeanTest {
         final List<BestRatedProductMsg> expResult = new ArrayList<BestRatedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -388,10 +353,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -401,7 +362,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByUser(pRefUserId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -421,10 +382,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -434,7 +391,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByUser(pRefUserId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -460,10 +417,6 @@ public class StatistiqueBeanTest {
         final List<BestRatedProductMsg> expResult = new ArrayList<BestRatedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -494,10 +447,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -524,10 +473,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -537,7 +482,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByGarden(pRefGardenId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -557,10 +502,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -570,7 +511,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getBestRatedProductByGarden(pRefGardenId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -596,10 +537,6 @@ public class StatistiqueBeanTest {
         final List<MostSharedProductMsg> expResult = new ArrayList<MostSharedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -631,10 +568,6 @@ public class StatistiqueBeanTest {
         final List<MostSharedProductMsg> expResult = new ArrayList<MostSharedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -662,10 +595,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -675,7 +604,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByCity(pRefCityId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -695,10 +624,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -708,7 +633,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByCity(pRefCityId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -734,10 +659,6 @@ public class StatistiqueBeanTest {
         final List<MostSharedProductMsg> expResult = new ArrayList<MostSharedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -769,10 +690,6 @@ public class StatistiqueBeanTest {
         final List<MostSharedProductMsg> expResult = new ArrayList<MostSharedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -799,10 +716,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -812,7 +725,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByRegion(pRefRegionId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -832,10 +745,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -845,7 +754,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByRegion(pRefRegionId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -871,10 +780,6 @@ public class StatistiqueBeanTest {
         final List<MostSharedProductMsg> expResult = new ArrayList<MostSharedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -906,10 +811,6 @@ public class StatistiqueBeanTest {
         final List<MostSharedProductMsg> expResult = new ArrayList<MostSharedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -936,10 +837,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -949,7 +846,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByUser(pRefUserId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -969,10 +866,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -982,7 +875,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByUser(pRefUserId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1008,10 +901,6 @@ public class StatistiqueBeanTest {
         final List<MostSharedProductMsg> expResult = new ArrayList<MostSharedProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1042,10 +931,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1072,10 +957,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1085,7 +966,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByGarden(pRefGardenId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1105,10 +986,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1118,7 +995,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getMostSharedProductByGarden(pRefGardenId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1144,10 +1021,6 @@ public class StatistiqueBeanTest {
         final List<LastExchangeProductMsg> expResult = new ArrayList<LastExchangeProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1164,7 +1037,7 @@ public class StatistiqueBeanTest {
         List<LastExchangeProductMsg> result = instance.getLastExchangeProductByCity(pContextMsg, pRefCityId, pPagination);
         Assert.assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testGetLastExchangeProductByCityAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -1179,10 +1052,6 @@ public class StatistiqueBeanTest {
         final List<LastExchangeProductMsg> expResult = new ArrayList<LastExchangeProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1210,10 +1079,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1223,7 +1088,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByCity(pRefCityId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1243,10 +1108,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1256,7 +1117,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByCity(pRefCityId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1282,10 +1143,6 @@ public class StatistiqueBeanTest {
         final List<LastExchangeProductMsg> expResult = new ArrayList<LastExchangeProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1302,7 +1159,7 @@ public class StatistiqueBeanTest {
         List<LastExchangeProductMsg> result = instance.getLastExchangeProductByRegion(pContextMsg, pRefRegionId, pPagination);
         Assert.assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testGetLastExchangeProductByRegionAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -1317,10 +1174,6 @@ public class StatistiqueBeanTest {
         final List<LastExchangeProductMsg> expResult = new ArrayList<LastExchangeProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1347,10 +1200,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1360,7 +1209,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByRegion(pRefRegionId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1380,10 +1229,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1393,7 +1238,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByRegion(pRefRegionId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1419,10 +1264,6 @@ public class StatistiqueBeanTest {
         final List<LastExchangeProductMsg> expResult = new ArrayList<LastExchangeProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1439,7 +1280,7 @@ public class StatistiqueBeanTest {
         List<LastExchangeProductMsg> result = instance.getLastExchangeProductByUser(pContextMsg, pRefUserId, pPagination);
         Assert.assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testGetLastExchangeProductByUserAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -1454,10 +1295,6 @@ public class StatistiqueBeanTest {
         final List<LastExchangeProductMsg> expResult = new ArrayList<LastExchangeProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1484,10 +1321,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1497,7 +1330,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByUser(pRefUserId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1517,10 +1350,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1530,7 +1359,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByUser(pRefUserId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1556,10 +1385,6 @@ public class StatistiqueBeanTest {
         final List<LastExchangeProductMsg> expResult = new ArrayList<LastExchangeProductMsg>();
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1576,7 +1401,7 @@ public class StatistiqueBeanTest {
         List<LastExchangeProductMsg> result = instance.getLastExchangeProductByGarden(pContextMsg, pRefGardenId, pPagination);
         Assert.assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testGetLastExchangeProductByGardenAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -1590,10 +1415,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1620,10 +1441,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1633,7 +1450,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByGarden(pRefGardenId, pPagination);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1653,10 +1470,6 @@ public class StatistiqueBeanTest {
         final Pagination pPagination = new Pagination(1, 2);
 
         new Expectations() {
-            @Mocked
-            private IStatistiqueService statistiqueService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, statistiqueService);
@@ -1666,7 +1479,7 @@ public class StatistiqueBeanTest {
                 returns(true);
 
                 statistiqueService.getLastExchangeProductByGarden(pRefGardenId, pPagination);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 

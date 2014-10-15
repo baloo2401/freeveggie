@@ -1,6 +1,5 @@
 package org.mdubois.freeveggie.bean;
 
-import org.mdubois.freeveggie.bean.local.RelationShipBeanLocal;
 import java.util.ArrayList;
 import java.util.List;
 import mockit.Deencapsulation;
@@ -8,6 +7,7 @@ import mockit.Expectations;
 import mockit.Mocked;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.RelationShipBeanLocal;
 import org.mdubois.freeveggie.criteria.RelationShipCriteriaColumn;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
@@ -28,6 +28,11 @@ import org.mdubois.freeveggie.service.msg.RelationShipMsg;
  */
 public class RelationShipBeanTest {
 
+    @Mocked
+    private IRelationShipService relationShipService;
+    @Mocked
+    private IRightControlerService rightControlerService;
+
     // <editor-fold defaultstate="collapsed" desc="Create">
     /**
      * Test of create method, of class GardenBean.
@@ -47,11 +52,6 @@ public class RelationShipBeanTest {
         final Long expResult = 1234L;
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, relationShipService);
@@ -85,11 +85,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -118,11 +113,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -150,11 +140,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -163,7 +148,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.create(pRelationShipMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -185,11 +170,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -198,7 +178,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.create(pRelationShipMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -224,11 +204,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -247,7 +222,7 @@ public class RelationShipBeanTest {
         boolean result = instance.validate(pContextMsg, pRelationShipId, message);
         assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testValidateAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -260,11 +235,6 @@ public class RelationShipBeanTest {
         final String message = "message";
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, relationShipService);
@@ -281,7 +251,6 @@ public class RelationShipBeanTest {
         boolean result = instance.validate(pContextMsg, pRelationShipId, message);
     }
 
-    
     @Test(expected = AccessNotGrantedException.class)
     public void testValidateAccessNotGranted2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -294,11 +263,6 @@ public class RelationShipBeanTest {
         final String message = "message";
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, relationShipService);
@@ -326,11 +290,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -342,7 +301,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.validate(pRelationShipId, message);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -362,11 +321,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -378,7 +332,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.validate(pRelationShipId, message);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -404,11 +358,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -427,7 +376,7 @@ public class RelationShipBeanTest {
         boolean result = instance.refuse(pContextMsg, pRelationShipId, message);
         assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testRefuseAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -440,11 +389,6 @@ public class RelationShipBeanTest {
         final String message = "message";
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, relationShipService);
@@ -461,7 +405,6 @@ public class RelationShipBeanTest {
         instance.refuse(pContextMsg, pRelationShipId, message);
     }
 
-    
     @Test(expected = AccessNotGrantedException.class)
     public void testRefuseAccessNotGranted2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -475,11 +418,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -491,7 +429,6 @@ public class RelationShipBeanTest {
 
         instance.refuse(pContextMsg, pRelationShipId, message);
     }
-
 
     @Test(expected = BusinessException.class)
     public void testRefuseThrowBusinessException() throws Exception {
@@ -507,11 +444,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -523,7 +455,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.refuse(pRelationShipId, message);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -543,11 +475,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -559,7 +486,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.refuse(pRelationShipId, message);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -585,11 +512,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -605,8 +527,7 @@ public class RelationShipBeanTest {
         List<RelationShipMsg> result = instance.getRelationShip(pContextMsg, pRelationShipId, pTechInfo);
         assertEquals(expResult, result);
     }
-    
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testGetRelationShipAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -619,11 +540,6 @@ public class RelationShipBeanTest {
         final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechInfo = new TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn>();
 
         new Expectations() {
-
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, relationShipService);
@@ -650,11 +566,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -663,7 +574,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.getRelationShip(pRelationShipId, pTechInfo);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -683,11 +594,6 @@ public class RelationShipBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRelationShipService relationShipService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, relationShipService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -696,7 +602,7 @@ public class RelationShipBeanTest {
                 returns(true);
 
                 relationShipService.getRelationShip(pRelationShipId, pTechInfo);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 

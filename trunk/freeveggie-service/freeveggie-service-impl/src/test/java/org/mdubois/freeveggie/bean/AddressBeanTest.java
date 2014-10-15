@@ -1,13 +1,13 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.AddressBeanLocal;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.AddressBeanLocal;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
@@ -24,6 +24,11 @@ import org.mdubois.freeveggie.service.msg.AddressMsg;
  * @author mdubois
  */
 public class AddressBeanTest {
+
+    @Mocked
+    private IAddressService addresseService;
+    @Mocked
+    private IRightControlerService rightControlerService;
 
     // <editor-fold defaultstate="collapsed" desc="Update">
     /**
@@ -43,11 +48,6 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -61,7 +61,7 @@ public class AddressBeanTest {
 
         instance.update(pContextMsg, pAddressId, pAddressMsg);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testUpdateAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -74,11 +74,6 @@ public class AddressBeanTest {
         final Long pAddressId = 12L;
 
         new Expectations() {
-
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, addresseService);
@@ -105,11 +100,6 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -118,7 +108,7 @@ public class AddressBeanTest {
                 returns(true);
 
                 addresseService.update(pAddressId, pAddressMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -138,11 +128,6 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -151,7 +136,7 @@ public class AddressBeanTest {
                 returns(true);
 
                 addresseService.update(pAddressId, pAddressMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -177,9 +162,6 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
 
@@ -189,7 +171,7 @@ public class AddressBeanTest {
         };
 
         Long result = instance.create(pAddressMsg);
-        Assert.assertEquals((Long)123L, result);
+        Assert.assertEquals((Long) 123L, result);
     }
 
     @Test(expected = BusinessException.class)
@@ -205,14 +187,11 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
 
                 addresseService.create(pAddressMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -232,21 +211,18 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
 
                 addresseService.create(pAddressMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
         instance.create(pAddressMsg);
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="GetAddressById">
     /**
      * Test of create method, of class GardenBean.
@@ -261,11 +237,6 @@ public class AddressBeanTest {
         final AddressMsg expResult = new AddressMsg();
 
         new Expectations() {
-
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, addresseService);
@@ -282,7 +253,7 @@ public class AddressBeanTest {
         AddressMsg result = instance.getAddressById(pContextMsg, userId);
         assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testGetAddressByIdAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -293,11 +264,6 @@ public class AddressBeanTest {
         final AddressMsg expResult = new AddressMsg();
 
         new Expectations() {
-
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, addresseService);
@@ -322,11 +288,6 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -335,7 +296,7 @@ public class AddressBeanTest {
                 returns(true);
 
                 addresseService.getAddressById(userId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -352,11 +313,6 @@ public class AddressBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressService addresseService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, addresseService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -365,7 +321,7 @@ public class AddressBeanTest {
                 returns(true);
 
                 addresseService.getAddressById(userId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 

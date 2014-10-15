@@ -8,18 +8,21 @@ import org.mdubois.freeveggie.EvaluationNote;
 import org.mdubois.freeveggie.EvaluationStatus;
 import org.mdubois.freeveggie.bo.ProductCommentBO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
+import org.mdubois.freeveggie.framework.utils.SystemTime;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
 import org.mdubois.freeveggie.service.msg.ProductCommentMsg;
 import org.mdubois.freeveggie.service.msg.ProductMsg;
-import org.mdubois.freeveggie.framework.utils.SystemTime;
 // </editor-fold>
 
 /**
  *
  * @author Mickael Dubois
  */
-public class ProductCommentMsgToBOConverterTest extends BusinessObjectConverterTest<ProductCommentBO, ProductCommentMsg>{
+public class ProductCommentMsgToBOConverterTest extends BusinessObjectConverterTest<ProductCommentBO, ProductCommentMsg> {
 
+    @Mocked
+    @SuppressWarnings("unused")
+    private final SystemTime systemTime = null;
     private PartialUserMsg userMsg = new PartialUserMsg();
     private ProductMsg productMsg = new ProductMsg();
 
@@ -29,19 +32,18 @@ public class ProductCommentMsgToBOConverterTest extends BusinessObjectConverterT
 
     @Override
     public ProductCommentBO getNewBusinessObject() {
-        ProductCommentBO  bo = new ProductCommentBO();
+        ProductCommentBO bo = new ProductCommentBO();
         bo.setComment("comment");
         bo.setCreationDate(NOW);
         bo.setNote(EvaluationNote.BAD);
         bo.setStatus(EvaluationStatus.SETTED);
         return bo;
 
-
     }
 
     @Override
     public ProductCommentMsg getNewMessage() {
-        ProductCommentMsg  msg = new ProductCommentMsg();
+        ProductCommentMsg msg = new ProductCommentMsg();
         msg.setComment("comment");
         msg.setNote(EvaluationNote.BAD);
         msg.setWriter(userMsg);
@@ -50,22 +52,18 @@ public class ProductCommentMsgToBOConverterTest extends BusinessObjectConverterT
     }
 
     @Override
-    public BusinessObjectConverter<ProductCommentBO,ProductCommentMsg> getConverter() {
+    public BusinessObjectConverter<ProductCommentBO, ProductCommentMsg> getConverter() {
         return converter;
     }
 
     @Override
     public Expectations getConvertCallExpectaion() {
-        return new Expectations(){
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
+        return new Expectations() {
             {
                 SystemTime.asDate();
                 returns(NOW);
             }
         };
     }
-
 
 }

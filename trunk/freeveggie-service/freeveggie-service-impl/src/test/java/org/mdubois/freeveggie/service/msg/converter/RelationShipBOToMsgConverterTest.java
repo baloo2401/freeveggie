@@ -7,9 +7,11 @@ import mockit.Mocked;
 import org.junit.Test;
 import org.mdubois.freeveggie.RelationshipStatus;
 import org.mdubois.freeveggie.RelationshipType;
-import org.mdubois.freeveggie.bo.*;
-import org.mdubois.freeveggie.service.msg.*;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.RelationShipBO;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
+import org.mdubois.freeveggie.service.msg.PartialUserMsg;
+import org.mdubois.freeveggie.service.msg.RelationShipMsg;
 import org.unitils.reflectionassert.ReflectionAssert;
 
 /**
@@ -17,6 +19,9 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Mickael Dubois
  */
 public class RelationShipBOToMsgConverterTest extends AbstractConverterTest<RelationShipMsg, RelationShipBO> {
+
+    @Mocked
+    private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
 
     private static final Date NOW = new Date();
 
@@ -28,17 +33,13 @@ public class RelationShipBOToMsgConverterTest extends AbstractConverterTest<Rela
         final RelationShipBOToMsgConverter converter = getConverter();
         final PartialUserBO partialUserBO = new PartialUserBO();
 
-
         relationShipBO.setRecipient(partialUserBO);
         relationShipBO.setSender(partialUserBO);
 
         new Expectations() {
 
-            @Mocked
-            private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
-
             {
-                Deencapsulation.setField(converter,"partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
+                Deencapsulation.setField(converter, "partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
 
                 mockPartialUserBOToMsgConverter.convert(relationShipBO.getSender());
                 returns(null);

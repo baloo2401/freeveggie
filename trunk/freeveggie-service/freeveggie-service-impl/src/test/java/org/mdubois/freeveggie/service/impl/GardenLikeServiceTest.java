@@ -8,9 +8,7 @@ import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.EvaluationStatus;
@@ -46,16 +44,27 @@ import org.mdubois.freeveggie.service.msg.PartialUserMsg;
 @RunWith(JMockit.class)
 public class GardenLikeServiceTest {
 
+    @Mocked
+    private IUserPartialDAO mockUserPartialDAO;
+    @Mocked
+    private IGardenDAO mockGardenDAO;
+    @Mocked
+    private IGardenLikeDAO mockGardenLikeDAO;
+    @Mocked
+    private BusinessObjectConverter<GardenLikeBO, GardenLikeMsg> mockGardenLikeMsgConverter;
+    @Mocked
+    private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
+    @Mocked
+    private Converter<GardenLikeMsg, GardenLikeBO> gardenLikeBOConverter;
     /**
      * {@link Criteria}
      */
     private static QueryCriteria<GardenLikeCriteriaColumn> criteriaStatusEqualSetted = new QueryCriteria<GardenLikeCriteriaColumn>(GardenLikeCriteriaColumn.STATUS, CriteriaOperation.EQUAL, EvaluationStatus.SETTED);
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
-
+//    @After
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
     // <editor-fold defaultstate="collapsed" desc="Unlike test">
     /**
      * Test we get an exception when we try to unlike that doesn't exist.
@@ -70,15 +79,12 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
 
                 mockGardenLikeDAO.get(pLikeId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -99,9 +105,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -119,7 +122,7 @@ public class GardenLikeServiceTest {
                 gardenLikeBO.setGarden(gardenBO);
                 gardenLikeBO.setWriter(userBO);
                 gardenLikeBO.setStatus(EvaluationStatus.SETTED);
-                repeats(1);
+                times = 1;
                 returns(gardenLikeBO);
 
                 GardenLikeBO newGardenLikeBO = new GardenLikeBO();
@@ -129,7 +132,7 @@ public class GardenLikeServiceTest {
                 newGardenLikeBO.setWriter(userBO);
                 newGardenLikeBO.setStatus(EvaluationStatus.REMOVED);
 
-                mockGardenLikeDAO.save(with(new GardenLikeBOMatcher(newGardenLikeBO)));
+                mockGardenLikeDAO.save(with(newGardenLikeBO, new GardenLikeBOMatcher(newGardenLikeBO)));
             }
         };
 
@@ -149,11 +152,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -172,9 +170,8 @@ public class GardenLikeServiceTest {
                 gardenLikeBO.setGarden(gardenBO);
                 gardenLikeBO.setWriter(userBO);
                 gardenLikeBO.setStatus(EvaluationStatus.ARCHIVED);
-                repeats(1);
+                times = 1;
                 returns(gardenLikeBO);
-                mockGardenLikeBOConverter.convert(gardenLikeBO);
             }
         };
 
@@ -195,7 +192,6 @@ public class GardenLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pGardenId = 1L;
 
-
         final GardenLikeMsg pGardenLikeMsg = new GardenLikeMsg();
         PartialUserMsg writer = new PartialUserMsg();
         writer.setId(pWriterId);
@@ -206,15 +202,12 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
 
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -234,7 +227,6 @@ public class GardenLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pGardenId = 1L;
 
-
         final GardenLikeMsg pGardenLikeMsg = new GardenLikeMsg();
         GardenMsg garden = new GardenMsg();
         garden.setId(pGardenId);
@@ -245,11 +237,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
@@ -257,7 +244,7 @@ public class GardenLikeServiceTest {
 
                 PartialUserBO userBO = new PartialUserBO();
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 mockGardenDAO.get(pGardenId);
@@ -280,7 +267,6 @@ public class GardenLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pGardenId = 1L;
 
-
         final GardenLikeMsg pGardenLikeMsg = new GardenLikeMsg();
         GardenMsg garden = new GardenMsg();
         garden.setId(pGardenId);
@@ -291,15 +277,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
@@ -310,7 +287,7 @@ public class GardenLikeServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(pWriterId);
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
@@ -325,7 +302,6 @@ public class GardenLikeServiceTest {
                 gardenLikeBO.setWriter(userBO);
                 gardenLikeBO.setGarden(gardenBO);
                 returns(gardenLikeBO);
-                mockGardenLikeBOConverter.convert(gardenLikeBO);
             }
         };
 
@@ -344,7 +320,6 @@ public class GardenLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pGardenId = 1L;
 
-
         final GardenLikeMsg pGardenLikeMsg = new GardenLikeMsg();
         GardenMsg garden = new GardenMsg();
         garden.setId(pGardenId);
@@ -355,13 +330,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
@@ -371,7 +339,7 @@ public class GardenLikeServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(pWriterId);
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
@@ -398,7 +366,6 @@ public class GardenLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pGardenId = 1L;
 
-
         final GardenLikeMsg pGardenLikeMsg = new GardenLikeMsg();
         GardenMsg garden = new GardenMsg();
         garden.setId(pGardenId);
@@ -409,14 +376,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenLikeBO,GardenLikeMsg> mockGardenLikeMsgConverter;
             {
 
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
@@ -427,7 +386,7 @@ public class GardenLikeServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(pWriterId);
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
@@ -443,9 +402,7 @@ public class GardenLikeServiceTest {
                 newGardenLikeBO.setWriter(userBO);
                 newGardenLikeBO.setGarden(gardenBO);
 
-
                 //TODO MDU : control cration date
-
                 mockGardenLikeMsgConverter.createNew(pGardenLikeMsg);
                 returns(newGardenLikeBO);
 
@@ -474,14 +431,12 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO gardenLikeDAO;
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> gardenLikeBOConverter;
+
+                ;
 
             {
 
-                Deencapsulation.setField(gardenService, "gardenLikeDAO", gardenLikeDAO);
+                Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
                 Deencapsulation.setField(gardenService, "gardenLikeBOConverter", gardenLikeBOConverter);
 
                 TechnicalInformation<GardenLikeCriteriaColumn, GardenLikeOrderColumn> lTechnicalInformation = new TechnicalInformation<GardenLikeCriteriaColumn, GardenLikeOrderColumn>();
@@ -489,8 +444,8 @@ public class GardenLikeServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
-                gardenLikeDAO.getGardenLikeByGarden(pGardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
-                repeats(1);
+                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
+                times = 1;
                 returns(null);
 
                 gardenLikeBOConverter.convert((List) null);
@@ -517,11 +472,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
                 Deencapsulation.setField(gardenService, "gardenLikeBOConverter", mockGardenLikeBOConverter);
@@ -534,7 +484,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -558,11 +508,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
                 Deencapsulation.setField(gardenService, "gardenLikeBOConverter", mockGardenLikeBOConverter);
@@ -575,7 +520,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -604,11 +549,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
                 Deencapsulation.setField(gardenService, "gardenLikeBOConverter", mockGardenLikeBOConverter);
@@ -616,7 +556,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -644,11 +584,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
                 Deencapsulation.setField(gardenService, "gardenLikeBOConverter", mockGardenLikeBOConverter);
@@ -656,7 +591,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -683,11 +618,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -696,10 +626,9 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
-
 
             }
         };
@@ -726,11 +655,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<GardenLikeOrderColumn>(GardenLikeOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -739,7 +663,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByGarden(pGardenId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -749,7 +673,6 @@ public class GardenLikeServiceTest {
     }
 
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Get garden like write test">
     /**
      * This test control that, if the user id given in parameter is not
@@ -767,27 +690,21 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> gardenLikeBOConverter;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
                 Deencapsulation.setField(gardenService, "gardenLikeBOConverter", gardenLikeBOConverter);
-
 
                 TechnicalInformation<GardenLikeCriteriaColumn, GardenLikeOrderColumn> lTechnicalInformation = new TechnicalInformation<GardenLikeCriteriaColumn, GardenLikeOrderColumn>();
                 List<QueryCriteria<GardenLikeCriteriaColumn>> criterias = new ArrayList<QueryCriteria<GardenLikeCriteriaColumn>>();
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
-                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
-                repeats(1);
+                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
+                times = 1;
                 returns(null);
 
-                gardenLikeBOConverter.convert((List)null);
+                gardenLikeBOConverter.convert((List) null);
                 returns(null);
 
             }
@@ -812,11 +729,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -830,7 +742,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -854,11 +766,6 @@ public class GardenLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -872,7 +779,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -901,11 +808,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -914,7 +816,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -942,11 +844,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -955,7 +852,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -982,11 +879,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -995,7 +887,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }
@@ -1023,11 +915,6 @@ public class GardenLikeServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<GardenLikeOrderColumn>(GardenLikeOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO mockGardenLikeDAO;
-
-            @Mocked
-            private Converter<GardenLikeMsg, GardenLikeBO> mockGardenLikeBOConverter;
             {
 
                 Deencapsulation.setField(gardenService, "gardenLikeDAO", mockGardenLikeDAO);
@@ -1036,7 +923,7 @@ public class GardenLikeServiceTest {
                 List<GardenLikeBO> gardenLikeBOs = new ArrayList<GardenLikeBO>();
                 GardenLikeBO gardenLikeBO = new GardenLikeBO();
                 gardenLikeBOs.add(gardenLikeBO);
-                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockGardenLikeDAO.getGardenLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(gardenLikeBOs);
                 mockGardenLikeBOConverter.convert(gardenLikeBOs);
             }

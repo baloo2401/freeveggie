@@ -32,6 +32,17 @@ import org.mdubois.freeveggie.service.msg.UserMsg;
 @RunWith(JMockit.class)
 public class SecurityServiceTest {
 
+    @Mocked
+    private IAuthenticationDAO authenticationDAO;
+    @Mocked
+    private Converter<UserMsg, UserBO> userBOToMsgConverter;
+    @Mocked
+    private IUserDAO userDAO;
+    @Mocked
+    private INotificationDAO notificationDAO;
+    @Mocked
+    private UUID uuid;
+
     @Test(expected = BusinessException.class)
     public void testControlPasswordNoUser() throws BusinessException {
         final ISecurityService securityService = new SecurityService();
@@ -43,13 +54,7 @@ public class SecurityServiceTest {
         authenticationMsg.setLogin(login);
         authenticationMsg.setPassword(password);
 
-
         new Expectations() {
-
-            @Mocked
-            private IAuthenticationDAO authenticationDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOToMsgConverter;
 
             {
                 Deencapsulation.setField(securityService, authenticationDAO);
@@ -78,13 +83,6 @@ public class SecurityServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAuthenticationDAO authenticationDAO;
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOToMsgConverter;
-
             {
                 Deencapsulation.setField(securityService, authenticationDAO);
                 Deencapsulation.setField(securityService, userDAO);
@@ -95,7 +93,7 @@ public class SecurityServiceTest {
 
                 authenticationDAO.controlPassword(login, password);
                 returns(userBO);
-                
+
                 //To save last connexion
                 userDAO.save(userBO);
 
@@ -119,13 +117,7 @@ public class SecurityServiceTest {
         authenticationMsg.setLogin(login);
         authenticationMsg.setPassword(password);
 
-
         new Expectations() {
-
-            @Mocked
-            private IAuthenticationDAO authenticationDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOToMsgConverter;
 
             {
                 Deencapsulation.setField(securityService, authenticationDAO);
@@ -155,11 +147,6 @@ public class SecurityServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAuthenticationDAO authenticationDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOToMsgConverter;
-
             {
                 Deencapsulation.setField(securityService, authenticationDAO);
                 Deencapsulation.setField(securityService, userBOToMsgConverter);
@@ -186,9 +173,6 @@ public class SecurityServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
                 Deencapsulation.setField(securityService, userDAO);
 
@@ -208,9 +192,6 @@ public class SecurityServiceTest {
         final String login = "login";
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO userDAO;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -234,9 +215,6 @@ public class SecurityServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
                 Deencapsulation.setField(securityService, userDAO);
 
@@ -256,9 +234,6 @@ public class SecurityServiceTest {
         final String email = "email";
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO userDAO;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -281,9 +256,6 @@ public class SecurityServiceTest {
         final String uuid = "login";
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO userDAO;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -308,9 +280,6 @@ public class SecurityServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
                 Deencapsulation.setField(securityService, userDAO);
 
@@ -326,7 +295,6 @@ public class SecurityServiceTest {
         Assert.assertEquals(false, exist);
     }
 
-
     @Test(expected = BusinessException.class)
     public void testHasTempPasswordNoUser() throws Exception {
         final ISecurityService securityService = new SecurityService();
@@ -334,9 +302,6 @@ public class SecurityServiceTest {
         final String uuid = "login";
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO userDAO;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -356,9 +321,6 @@ public class SecurityServiceTest {
         final String uuid = "login";
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO userDAO;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -385,13 +347,6 @@ public class SecurityServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private INotificationDAO notificationDAO;
-            @Mocked
-            private UUID uuid;
-
             {
                 Deencapsulation.setField(securityService, userDAO);
                 Deencapsulation.setField(securityService, notificationDAO);
@@ -407,7 +362,7 @@ public class SecurityServiceTest {
                 EncryptionUtils.getMD5(anyString);
                 returns(encryptedPassword);
 
-                userDAO.update(with(new UserBOMatcher()));
+                userDAO.update(with(new UserBO(), new UserBOMatcher()));
 
                 notificationDAO.sendLostEmailNotice(userBO, anyString, anyString);
             }
@@ -416,8 +371,6 @@ public class SecurityServiceTest {
         securityService.generateTempPassword(email);
     }
 
-
-
     @Test(expected = BusinessException.class)
     public void testGenerateTempPasswordNoUserFound() throws Exception {
         final ISecurityService securityService = new SecurityService();
@@ -425,11 +378,6 @@ public class SecurityServiceTest {
         final String login = "login";
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private INotificationDAO notificationDAO;
 
             {
                 Deencapsulation.setField(securityService, userDAO);
@@ -456,13 +404,6 @@ public class SecurityServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private INotificationDAO notificationDAO;
-            @Mocked
-            private UUID uuid;
-
             {
                 Deencapsulation.setField(securityService, userDAO);
                 Deencapsulation.setField(securityService, notificationDAO);
@@ -473,14 +414,12 @@ public class SecurityServiceTest {
                 userBO.setUsername(login);
 
                 userDAO.getUserByEmail(email);
-                throwsException(new TechnicalException(""));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
         securityService.generateTempPassword(email);
     }
-
-
 
     private static class UserBOMatcher implements Matcher<UserBO> {
 
@@ -489,11 +428,6 @@ public class SecurityServiceTest {
             UserBO toMatch = (UserBO) item;
             return toMatch.getTemporaryPassword() != null;
 
-        }
-
-        @Override
-        public void describeMismatch(Object item, Description mismatchDescription) {
-            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override

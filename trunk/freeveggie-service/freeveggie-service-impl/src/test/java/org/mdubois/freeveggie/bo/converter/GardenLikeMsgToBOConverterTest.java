@@ -5,16 +5,13 @@ import java.util.Date;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Test;
-import org.mdubois.freeveggie.EvaluationNote;
 import org.mdubois.freeveggie.EvaluationStatus;
-import org.mdubois.freeveggie.Status;
 import org.mdubois.freeveggie.bo.GardenLikeBO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
+import org.mdubois.freeveggie.framework.utils.SystemTime;
 import org.mdubois.freeveggie.service.msg.GardenLikeMsg;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
-import org.mdubois.freeveggie.framework.utils.SystemTime;
-import org.unitils.reflectionassert.ReflectionAssert;
 // </editor-fold>
 
 /**
@@ -22,6 +19,10 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Mickael Dubois
  */
 public class GardenLikeMsgToBOConverterTest extends BusinessObjectConverterTest<GardenLikeBO, GardenLikeMsg> {
+
+    @Mocked
+    @SuppressWarnings("unused")
+    private final SystemTime systemTime = null;
 
     private PartialUserMsg userMsg = new PartialUserMsg();
     private GardenMsg gardenMsg = new GardenMsg();
@@ -61,9 +62,6 @@ public class GardenLikeMsgToBOConverterTest extends BusinessObjectConverterTest<
     @Override
     public Expectations getConvertCallExpectaion() {
         return new Expectations() {
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
 
             {
                 SystemTime.asDate();

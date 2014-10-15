@@ -8,7 +8,11 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Test;
 import org.mdubois.freeveggie.UserStatus;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.bo.AddressBO;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.ProfileBO;
+import org.mdubois.freeveggie.bo.SubscriptionBO;
+import org.mdubois.freeveggie.bo.UserBO;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.framework.security.UserRole;
 import org.mdubois.freeveggie.service.msg.AddressMsg;
@@ -22,6 +26,13 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Mickael Dubois
  */
 public class UserBOToMsgConverterTest extends AbstractConverterTest<UserMsg, UserBO> {
+
+    @Mocked
+    private Converter<AddressMsg, AddressBO> mockAddressBOToMsgConverter;
+    @Mocked
+    private Converter<ProfileMsg, ProfileBO> mockProfileBOToMsgConverter;
+    @Mocked
+    private Converter<SubscriptionMsg, SubscriptionBO> mockSubscriptionBOToMsgConverter;
 
     private static final Date NOW = new Date();
 
@@ -39,13 +50,6 @@ public class UserBOToMsgConverterTest extends AbstractConverterTest<UserMsg, Use
         userBO.setSubscription(new SubscriptionBO());
 
         new Expectations() {
-
-            @Mocked
-            private Converter<AddressMsg, AddressBO> mockAddressBOToMsgConverter;
-            @Mocked
-            private Converter<ProfileMsg, ProfileBO> mockProfileBOToMsgConverter;
-            @Mocked
-            private Converter<SubscriptionMsg, SubscriptionBO> mockSubscriptionBOToMsgConverter;
 
             {
                 Deencapsulation.setField(converter, "addressBOToMsgConverter", mockAddressBOToMsgConverter);

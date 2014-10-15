@@ -26,6 +26,13 @@ import org.mdubois.freeveggie.service.msg.RefCityMsg;
 @RunWith(JMockit.class)
 public class AddressServiceTest {
 
+    @Mocked
+    private IAddressDAO addressDAO;
+    @Mocked
+    private IRefCityDAO refCityDAO;
+    @Mocked
+    private BusinessObjectConverter<AddressBO, AddressMsg> converter;
+
     @Test
     public void create() throws BusinessException {
         final IAddressService addressService = new AddressService();
@@ -37,13 +44,6 @@ public class AddressServiceTest {
         addressMsg.setCity(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IAddressDAO addressDAO;
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> converter;
 
             {
                 Deencapsulation.setField(addressService, addressDAO);
@@ -69,7 +69,7 @@ public class AddressServiceTest {
         Assert.assertEquals(newAddressId, id);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void createNoCity() throws BusinessException {
         final IAddressService addressService = new AddressService();
         final AddressMsg addressMsg = new AddressMsg();
@@ -79,13 +79,6 @@ public class AddressServiceTest {
         addressMsg.setCity(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IAddressDAO addressDAO;
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> converter;
 
             {
                 Deencapsulation.setField(addressService, addressDAO);
@@ -115,13 +108,6 @@ public class AddressServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IAddressDAO addressDAO;
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> converter;
-
             {
                 Deencapsulation.setField(addressService, addressDAO);
                 Deencapsulation.setField(addressService, refCityDAO);
@@ -130,7 +116,6 @@ public class AddressServiceTest {
                 AddressBO addressBO = new AddressBO();
                 addressDAO.get(oldAddressId);
                 returns(addressBO);
-
 
                 converter.update(addressBO, addressMsg);
 
@@ -142,7 +127,7 @@ public class AddressServiceTest {
         addressService.update(oldAddressId, addressMsg);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void updateNoAddress() throws BusinessException {
         final IAddressService addressService = new AddressService();
         final Long oldAddressId = 12765L;
@@ -153,13 +138,6 @@ public class AddressServiceTest {
         addressMsg.setCity(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IAddressDAO addressDAO;
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> converter;
 
             {
                 Deencapsulation.setField(addressService, addressDAO);
