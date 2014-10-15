@@ -22,7 +22,7 @@
 
         <!-- glassfish -->
         <glassfish.embedded.all>3.1</glassfish.embedded.all>
-        
+
         <!-- cxf pluging version -->
         <cxf.version>2.5.1</cxf.version>
 
@@ -50,7 +50,7 @@
         <hsqldb.version>1.8.0.7</hsqldb.version>
 
         <!-- jmockt -->
-        <jmockit.version>0.993</jmockit.version>
+        <jmockit.version>1.8</jmockit.version>
 
         <!-- log4j -->
         <log4j.version>1.2.14</log4j.version>
@@ -112,7 +112,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.6.4.201312101107</version>
+                <version>0.7.1.201405082137</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
@@ -239,16 +239,16 @@
                                     <target>
                                         <echo message="Step 1 - Undeploy application"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/undeploy.sh" trust="true" />
-										
+
                                         <echo message="Step 2 - Stop service server"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/stopDomain.sh" trust="true" />
 
                                         <echo message="Step 3 - Start service server"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/startDomain.sh" trust="true" />
-	
+
                                         <echo message="Step 4 - Deploy application"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/deploy.sh" trust="true" />
-										
+
                                         <echo message="Step 5 - Deployement successful"/>
                                     </target>
                                 </configuration>
@@ -268,7 +268,7 @@
                 </plugins>
             </build>
         </profile>
-		
+
         <profile>
             <!-- to launch use : mvn package -Dui -N -->
             <id>prod-delivery-ui</id>
@@ -290,19 +290,19 @@
                                     <target>
                                         <echo message="Step 1 - Stop service server"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/shutdownDomain.sh" trust="true" />
-										
+
                                         <echo message="Step 2 - Undeploy application"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/undeploy.sh" trust="true" />
-	
+
                                         <echo message="Step 3 - Deploy application"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/deploy.sh" trust="true" />
 
                                         <echo message="Step 4 - Start service server"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/startDomain.sh" trust="true" />
-										
+
                                         <echo message="Step 4 - Start service server"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/validateEnvironment.sh " trust="true" />
-										
+
                                     </target>
                                 </configuration>
                                 <goals>
@@ -320,9 +320,9 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>	
+        </profile>
         <profile>
-<!--             to launch use : mvn package -Ddb -N -->
+            <!--             to launch use : mvn package -Ddb -N -->
             <id>prod-delivery-db</id>
             <activation>
                 <property>
@@ -342,10 +342,10 @@
                                     <target>
                                         <echo message="Step 1 - Test migration scrpit on the pprod postgress db"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="exploit" password="exploit" command="~/tools/database/test_migration.sh" trust="true" />
-										
+
                                         <echo message="Step 2 - Run the migration"/>
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="exploit" password="exploit" command="~/tools/database/migration.sh" trust="true" />
-										
+
                                     </target>
                                 </configuration>
                                 <goals>

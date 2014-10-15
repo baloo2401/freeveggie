@@ -19,6 +19,9 @@ import org.mdubois.freeveggie.service.msg.ProductRequestMsg;
 @RunWith(JMockit.class)
 public class ProductRequestMsgToBOConverterTest extends BusinessObjectConverterTest<ProductRequestBO, ProductRequestMsg> {
 
+    @Mocked
+    @SuppressWarnings("unused")
+    private final SystemTime systemTime = null;
     private static final Date NOW = new Date();
     private final ProductRequestMsgToBOConverter converter = new ProductRequestMsgToBOConverter();
 
@@ -57,10 +60,6 @@ public class ProductRequestMsgToBOConverterTest extends BusinessObjectConverterT
     @Override
     public Expectations getConvertCallExpectaion() {
         return new Expectations() {
-
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
 
             {
                 SystemTime.asDate();

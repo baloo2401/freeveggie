@@ -18,7 +18,7 @@
     <dependencies>
         <!-- Scope Test Dependency -->
         <dependency>
-            <groupId>mockit</groupId>
+            <groupId>org.jmockit</groupId>
             <artifactId>jmockit</artifactId>
             <version>${jmockit.version}</version>
             <scope>test</scope>

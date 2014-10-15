@@ -17,6 +17,9 @@ import org.unitils.reflectionassert.ReflectionAssert;
  */
 public class BestRatedProductBOToMsgConverterTest extends AbstractConverterTest<BestRatedProductMsg, BestRatedProductBO> {
 
+    @Mocked
+    private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
+
     @Test
     public void testConvertFull() {
 
@@ -32,9 +35,6 @@ public class BestRatedProductBOToMsgConverterTest extends AbstractConverterTest<
         mostSharedProductBO.setAverageNote(averageNote);
 
         new Expectations() {
-
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
 
             {
                 Deencapsulation.setField(converter, "productBOToMsgConverter", mockProductBOToMsgConverter);

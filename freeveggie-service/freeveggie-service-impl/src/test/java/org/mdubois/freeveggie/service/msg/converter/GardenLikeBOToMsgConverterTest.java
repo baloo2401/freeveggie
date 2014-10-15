@@ -10,10 +10,10 @@ import org.mdubois.freeveggie.EvaluationStatus;
 import org.mdubois.freeveggie.bo.GardenBO;
 import org.mdubois.freeveggie.bo.GardenLikeBO;
 import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.service.msg.GardenLikeMsg;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
-import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.unitils.reflectionassert.ReflectionAssert;
 // </editor-fold>
 
@@ -22,6 +22,12 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Mickael Dubois
  */
 public class GardenLikeBOToMsgConverterTest extends AbstractConverterTest<GardenLikeMsg, GardenLikeBO> {
+
+    @Mocked
+    private Converter<GardenMsg, GardenBO> mockGardenBOToMsgConverter;
+
+    @Mocked
+    private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
 
     private static final Date NOW = new Date();
 
@@ -41,15 +47,9 @@ public class GardenLikeBOToMsgConverterTest extends AbstractConverterTest<Garden
 
         new Expectations() {
 
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOToMsgConverter;
-
-            @Mocked
-            private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
-
             {
                 Deencapsulation.setField(converter, "gardenBOToMsgConverter", mockGardenBOToMsgConverter);
-                Deencapsulation.setField(converter,"partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
+                Deencapsulation.setField(converter, "partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
 
                 mockGardenBOToMsgConverter.convert(gardenLikeBO.getGarden());
                 returns(null);
@@ -71,7 +71,6 @@ public class GardenLikeBOToMsgConverterTest extends AbstractConverterTest<Garden
         expectedResult.setId(11L);
         expectedResult.setCreationDate(NOW);
         expectedResult.setStatus(EvaluationStatus.SETTED);
-
 
         return expectedResult;
     }

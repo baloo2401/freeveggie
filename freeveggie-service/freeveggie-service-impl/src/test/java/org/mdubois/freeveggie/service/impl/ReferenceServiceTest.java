@@ -10,11 +10,19 @@ import mockit.Mocked;
 import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mdubois.freeveggie.ProductType;
 import org.mdubois.freeveggie.Month;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.ProductType;
+import org.mdubois.freeveggie.bo.RefCityBO;
+import org.mdubois.freeveggie.bo.RefCountryBO;
+import org.mdubois.freeveggie.bo.RefProductBO;
+import org.mdubois.freeveggie.bo.RefRegionBO;
+import org.mdubois.freeveggie.bo.RefStateBO;
 import org.mdubois.freeveggie.criteria.RefProductCriteriaColumn;
-import org.mdubois.freeveggie.dao.api.*;
+import org.mdubois.freeveggie.dao.api.IRefCityDAO;
+import org.mdubois.freeveggie.dao.api.IRefCountryDAO;
+import org.mdubois.freeveggie.dao.api.IRefProductDAO;
+import org.mdubois.freeveggie.dao.api.IRefRegionDAO;
+import org.mdubois.freeveggie.dao.api.IRefStateDAO;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.framework.service.Pagination;
@@ -25,7 +33,11 @@ import org.mdubois.freeveggie.framework.service.order.OrderWay;
 import org.mdubois.freeveggie.framework.service.order.ResultOrder;
 import org.mdubois.freeveggie.order.RefProductOrderColumn;
 import org.mdubois.freeveggie.service.api.IReferenceService;
-import org.mdubois.freeveggie.service.msg.*;
+import org.mdubois.freeveggie.service.msg.RefCityMsg;
+import org.mdubois.freeveggie.service.msg.RefCountryMsg;
+import org.mdubois.freeveggie.service.msg.RefProductMsg;
+import org.mdubois.freeveggie.service.msg.RefRegionMsg;
+import org.mdubois.freeveggie.service.msg.RefStateMsg;
 // </editor-fold>
 
 /**
@@ -34,6 +46,27 @@ import org.mdubois.freeveggie.service.msg.*;
  */
 @RunWith(JMockit.class)
 public class ReferenceServiceTest {
+
+    @Mocked
+    private IRefProductDAO refProductDAO;
+    @Mocked
+    private Converter<RefProductMsg, RefProductBO> refProductBOConverter;
+    @Mocked
+    private IRefCountryDAO refCountryDAO;
+    @Mocked
+    private Converter<RefCountryMsg, RefCountryBO> refCountryBOConverter;
+    @Mocked
+    private IRefStateDAO refStateDAO;
+    @Mocked
+    private Converter<RefStateMsg, RefStateBO> refStateBOConverter;
+    @Mocked
+    private IRefCityDAO refCityDAO;
+    @Mocked
+    private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
+    @Mocked
+    private IRefRegionDAO refRegionDAO;
+    @Mocked
+    private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
 
     @Test
     public void getRefCitiesByCountryNoCountry() throws BusinessException {
@@ -44,11 +77,6 @@ public class ReferenceServiceTest {
         refCities.add(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
@@ -73,11 +101,6 @@ public class ReferenceServiceTest {
         refCities.add(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
@@ -111,11 +134,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
                 Deencapsulation.setField(referenceService, refCityDAO);
@@ -144,11 +162,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
                 Deencapsulation.setField(referenceService, refCityDAO);
@@ -172,11 +185,6 @@ public class ReferenceServiceTest {
         refCities.add(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
@@ -210,11 +218,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
                 Deencapsulation.setField(referenceService, refCityDAO);
@@ -243,11 +246,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
                 Deencapsulation.setField(referenceService, refCityDAO);
@@ -271,11 +269,6 @@ public class ReferenceServiceTest {
         refCities.add(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
@@ -309,11 +302,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
                 Deencapsulation.setField(referenceService, refCityDAO);
@@ -344,11 +332,6 @@ public class ReferenceServiceTest {
         refCities.add(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
@@ -382,11 +365,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCityDAO refCityDAO;
-            @Mocked
-            private Converter<RefCityMsg, RefCityBO> refCityBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCityBOConverter", refCityBOConverter);
                 Deencapsulation.setField(referenceService, refCityDAO);
@@ -418,11 +396,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
                 Deencapsulation.setField(referenceService, refRegionDAO);
@@ -446,11 +419,6 @@ public class ReferenceServiceTest {
         refRegions.add(RefRegionMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
@@ -484,11 +452,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
                 Deencapsulation.setField(referenceService, refRegionDAO);
@@ -517,11 +480,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
                 Deencapsulation.setField(referenceService, refRegionDAO);
@@ -545,11 +503,6 @@ public class ReferenceServiceTest {
         refRegions.add(refRegionMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
@@ -583,11 +536,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
                 Deencapsulation.setField(referenceService, refRegionDAO);
@@ -618,11 +566,6 @@ public class ReferenceServiceTest {
         refRegions.add(refRegionMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
@@ -656,11 +599,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefRegionDAO refRegionDAO;
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refRegionBOConverter", refRegionBOConverter);
                 Deencapsulation.setField(referenceService, refRegionDAO);
@@ -691,11 +629,6 @@ public class ReferenceServiceTest {
         refCities.add(refCityMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefCountryDAO refCountryDAO;
-            @Mocked
-            private Converter<RefCountryMsg, RefCountryBO> refCountryBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refCountryBOConverter", refCountryBOConverter);
@@ -729,11 +662,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCountryDAO refCountryDAO;
-            @Mocked
-            private Converter<RefCountryMsg, RefCountryBO> refCountryBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCountryBOConverter", refCountryBOConverter);
                 Deencapsulation.setField(referenceService, refCountryDAO);
@@ -763,11 +691,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefCountryDAO refCountryDAO;
-            @Mocked
-            private Converter<RefCountryMsg, RefCountryBO> refCountryBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, "refCountryBOConverter", refCountryBOConverter);
                 Deencapsulation.setField(referenceService, refCountryDAO);
@@ -792,11 +715,6 @@ public class ReferenceServiceTest {
         final RefCountryMsg refCityMsg = new RefCountryMsg();
 
         new Expectations() {
-
-            @Mocked
-            private IRefCountryDAO refCountryDAO;
-            @Mocked
-            private Converter<RefCountryMsg, RefCountryBO> refCountryBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, "refCountryBOConverter", refCountryBOConverter);
@@ -825,11 +743,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefStateDAO refStateDAO;
-            @Mocked
-            private Converter<RefStateMsg, RefStateBO> refStateBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, refStateDAO);
                 Deencapsulation.setField(referenceService, "refStateBOConverter", refStateBOConverter);
@@ -853,11 +766,6 @@ public class ReferenceServiceTest {
         refStates.add(refStateMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefStateDAO refStateDAO;
-            @Mocked
-            private Converter<RefStateMsg, RefStateBO> refStateBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, refStateDAO);
@@ -891,11 +799,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefStateDAO refStateDAO;
-            @Mocked
-            private Converter<RefStateMsg, RefStateBO> refStateBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, refStateDAO);
                 Deencapsulation.setField(referenceService, "refStateBOConverter", refStateBOConverter);
@@ -926,11 +829,6 @@ public class ReferenceServiceTest {
         refStates.add(refStateMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IRefStateDAO refStateDAO;
-            @Mocked
-            private Converter<RefStateMsg, RefStateBO> refStateBOConverter;
 
             {
                 Deencapsulation.setField(referenceService, refStateDAO);
@@ -964,15 +862,9 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefStateDAO refStateDAO;
-            @Mocked
-            private Converter<RefStateMsg, RefStateBO> refStateBOConverter;
-
             {
                 Deencapsulation.setField(referenceService, refStateDAO);
                 Deencapsulation.setField(referenceService, "refStateBOConverter", refStateBOConverter);
-
 
                 final List<RefStateBO> refStatesBO = new ArrayList<RefStateBO>();
                 RefStateBO refStateBO = new RefStateBO();
@@ -1000,10 +892,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefProductDAO refProductDAO;
-            @Mocked
-            private Converter<RefProductMsg, RefProductBO> refProductBOConverter;
             {
                 Deencapsulation.setField(service, refProductDAO);
                 Deencapsulation.setField(service, "refProductBOConverter", refProductBOConverter);
@@ -1043,10 +931,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefProductDAO refProductDAO;
-            @Mocked
-            private Converter<RefProductMsg, RefProductBO> refProductBOConverter;
             {
                 Deencapsulation.setField(service, refProductDAO);
                 Deencapsulation.setField(service, "refProductBOConverter", refProductBOConverter);
@@ -1077,10 +961,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefProductDAO refProductDAO;
-            @Mocked
-            private Converter<RefProductMsg, RefProductBO> refProductBOConverter;
             {
                 Deencapsulation.setField(service, refProductDAO);
                 Deencapsulation.setField(service, "refProductBOConverter", refProductBOConverter);
@@ -1113,10 +993,6 @@ public class ReferenceServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IRefProductDAO refProductDAO;
-            @Mocked
-            private Converter<RefProductMsg, RefProductBO> refProductBOConverter;
             {
                 Deencapsulation.setField(service, refProductDAO);
                 Deencapsulation.setField(service, "refProductBOConverter", refProductBOConverter);
@@ -1151,10 +1027,6 @@ public class ReferenceServiceTest {
         final IReferenceService service = new ReferenceService();
         new Expectations() {
 
-            @Mocked
-            private IRefProductDAO refProductDAO;
-            @Mocked
-            private Converter<RefProductMsg, RefProductBO> refProductBOConverter;
             {
                 Deencapsulation.setField(service, refProductDAO);
                 Deencapsulation.setField(service, "refProductBOConverter", refProductBOConverter);
@@ -1191,10 +1063,6 @@ public class ReferenceServiceTest {
         final IReferenceService service = new ReferenceService();
         new Expectations() {
 
-            @Mocked
-            private IRefProductDAO refProductDAO;
-            @Mocked
-            private Converter<RefProductMsg, RefProductBO> refProductBOConverter;
             {
                 Deencapsulation.setField(service, refProductDAO);
                 Deencapsulation.setField(service, "refProductBOConverter", refProductBOConverter);

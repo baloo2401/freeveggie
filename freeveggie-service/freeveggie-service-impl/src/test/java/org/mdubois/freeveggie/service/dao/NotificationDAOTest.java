@@ -12,7 +12,13 @@ import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.RelationshipType;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.ProductBO;
+import org.mdubois.freeveggie.bo.ProductRequestBO;
+import org.mdubois.freeveggie.bo.RefProductBO;
+import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.bo.UserBO;
 import org.mdubois.freeveggie.dao.api.INotificationDAO;
 import org.mdubois.freeveggie.dao.impl.NotificationDAO;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
@@ -26,6 +32,13 @@ import org.mdubois.freeveggie.framework.exception.TechnicalException;
 @RunWith(JMockit.class)
 public class NotificationDAOTest {
 
+    @Mocked
+    private Message message;
+    @Mocked
+    private Session session;
+    @Mocked
+    private Transport transport;
+
     @Test
     public void sendCreationUserNotice() throws BusinessException, MessagingException {
         final INotificationDAO notificationDAO = new NotificationDAO();
@@ -38,13 +51,6 @@ public class NotificationDAOTest {
         userBO.setUsername(login);
         final String code = "697OGP9VR6Vuih==";
         new Expectations() {
-
-            @Mocked
-            private Message message;
-            @Mocked
-            private Session session;
-            @Mocked
-            private Transport transport;
 
             {
                 Deencapsulation.setField(notificationDAO, session);
@@ -70,13 +76,6 @@ public class NotificationDAOTest {
         final String code = "697OGP9VR6Vuih==";
         new Expectations() {
 
-            @Mocked
-            private Message message;
-            @Mocked
-            private Session session;
-            @Mocked
-            private Transport transport;
-
             {
                 Deencapsulation.setField(notificationDAO, session);
 
@@ -101,18 +100,11 @@ public class NotificationDAOTest {
         final String code = "697OGP9VR6Vuih==";
         new Expectations() {
 
-            @Mocked
-            private Message message;
-            @Mocked
-            private Session session;
-            @Mocked
-            private Transport transport;
-
             {
                 Deencapsulation.setField(notificationDAO, session);
 
                 Transport.send((Message) any);
-                throwsException(new MessagingException());
+                result = new MessagingException();
             }
         };
         notificationDAO.sendLostEmailNotice(userBO, code, password);
@@ -140,13 +132,6 @@ public class NotificationDAOTest {
         productRequest.setProduct(productBO);
         productRequest.setQuantity(1.2f);
         new Expectations() {
-
-            @Mocked
-            private Message message;
-            @Mocked
-            private Session session;
-            @Mocked
-            private Transport transport;
 
             {
                 Deencapsulation.setField(notificationDAO, session);
@@ -178,13 +163,6 @@ public class NotificationDAOTest {
         relationshipBO.setRequest("request");
         relationshipBO.setType(RelationshipType.FRIEND);
         new Expectations() {
-
-            @Mocked
-            private Message message;
-            @Mocked
-            private Session session;
-            @Mocked
-            private Transport transport;
 
             {
                 Deencapsulation.setField(notificationDAO, session);

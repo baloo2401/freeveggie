@@ -33,6 +33,15 @@ import org.mdubois.freeveggie.service.msg.ProductMsg;
 @RunWith(JMockit.class)
 public class StatistiqueServiceTest {
 
+    @Mocked
+    private IStatistiqueDAO statistiqueDAO;
+    @Mocked
+    private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
+    @Mocked
+    private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
+    @Mocked
+    private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
+
     private static final Date NOW = new Date();
 
     @Test
@@ -49,11 +58,6 @@ public class StatistiqueServiceTest {
         bestRatedProductMsg.setProduct(productMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -86,11 +90,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "mostSharedProductBoToMsgConverter", mostSharedProductBoToMsgConverter);
@@ -122,15 +121,9 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "mostSharedProductBoToMsgConverter", mostSharedProductBoToMsgConverter);
-
 
                 List<MostSharedProductBO> bestRatedProductBOs = new ArrayList<MostSharedProductBO>();
                 MostSharedProductBO bestRatedProductBO = new MostSharedProductBO();
@@ -158,11 +151,6 @@ public class StatistiqueServiceTest {
         final Pagination pagination = new Pagination(1, 1);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -193,11 +181,6 @@ public class StatistiqueServiceTest {
         bestRatedProductMsg.setProduct(productMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -230,11 +213,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "mostSharedProductBoToMsgConverter", mostSharedProductBoToMsgConverter);
@@ -265,10 +243,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "mostSharedProductBoToMsgConverter", mostSharedProductBoToMsgConverter);
@@ -300,11 +274,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<MostSharedProductMsg, MostSharedProductBO> mostSharedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "mostSharedProductBoToMsgConverter", mostSharedProductBoToMsgConverter);
@@ -335,10 +304,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "bestRatedProductBoToMsgConverter", bestRatedProductBoToMsgConverter);
@@ -370,11 +335,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "bestRatedProductBoToMsgConverter", bestRatedProductBoToMsgConverter);
@@ -404,11 +364,6 @@ public class StatistiqueServiceTest {
         bestRatedProductMsg.setProduct(productMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -441,11 +396,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "bestRatedProductBoToMsgConverter", bestRatedProductBoToMsgConverter);
@@ -476,11 +426,6 @@ public class StatistiqueServiceTest {
         bestRatedProductMsg.setProduct(productMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -513,11 +458,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "bestRatedProductBoToMsgConverter", bestRatedProductBoToMsgConverter);
@@ -548,11 +488,6 @@ public class StatistiqueServiceTest {
         bestRatedProductMsg.setProduct(productMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -585,11 +520,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<BestRatedProductMsg, BestRatedProductBO> bestRatedProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "bestRatedProductBoToMsgConverter", bestRatedProductBoToMsgConverter);
@@ -621,10 +551,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "lastExchangeProductBoToMsgConverter", lastExchangeProductBoToMsgConverter);
@@ -655,11 +581,6 @@ public class StatistiqueServiceTest {
         final Pagination pagination = new Pagination(1, 1);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -692,11 +613,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "lastExchangeProductBoToMsgConverter", lastExchangeProductBoToMsgConverter);
@@ -727,11 +643,6 @@ public class StatistiqueServiceTest {
         final Pagination pagination = new Pagination(1, 1);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -764,11 +675,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "lastExchangeProductBoToMsgConverter", lastExchangeProductBoToMsgConverter);
@@ -800,11 +706,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "lastExchangeProductBoToMsgConverter", lastExchangeProductBoToMsgConverter);
@@ -834,11 +735,6 @@ public class StatistiqueServiceTest {
         bestRatedProductMsg.setProduct(productMsg);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
@@ -871,11 +767,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "lastExchangeProductBoToMsgConverter", lastExchangeProductBoToMsgConverter);
@@ -907,11 +798,6 @@ public class StatistiqueServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
-
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);
                 Deencapsulation.setField(statistiqueService, "lastExchangeProductBoToMsgConverter", lastExchangeProductBoToMsgConverter);
@@ -942,11 +828,6 @@ public class StatistiqueServiceTest {
         final Pagination pagination = new Pagination(1, 1);
 
         new Expectations() {
-
-            @Mocked
-            private IStatistiqueDAO statistiqueDAO;
-            @Mocked
-            private Converter<LastExchangeProductMsg, LastExchangeProductBO> lastExchangeProductBoToMsgConverter;
 
             {
                 Deencapsulation.setField(statistiqueService, statistiqueDAO);

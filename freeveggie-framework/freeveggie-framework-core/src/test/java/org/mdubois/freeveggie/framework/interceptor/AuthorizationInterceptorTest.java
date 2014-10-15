@@ -5,17 +5,21 @@ import java.lang.reflect.Method;
 import javax.interceptor.InvocationContext;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.NonStrictExpectations;
 import mockit.integration.junit4.JMockit;
-import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.AuthorizationDefinitionException;
 import org.mdubois.freeveggie.framework.exception.IllegalAccessException;
-import org.mdubois.freeveggie.framework.security.*;
+import org.mdubois.freeveggie.framework.security.Allow;
+import org.mdubois.freeveggie.framework.security.AllowAll;
+import org.mdubois.freeveggie.framework.security.AllowNoOne;
+import org.mdubois.freeveggie.framework.security.AllowNotLoggedIn;
+import org.mdubois.freeveggie.framework.security.ContextMsg;
+import org.mdubois.freeveggie.framework.security.UserContext;
+import org.mdubois.freeveggie.framework.security.UserRole;
 import org.mdubois.freeveggie.framework.utils.UserUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 // </editor-fold>
@@ -42,10 +46,10 @@ public class AuthorizationInterceptorTest {
     @Mocked
     AllowNotLoggedIn mockAllowNotLoggedIn;
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
+//    @After
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
 
     /**
      * Test of validate method, of class {@link AuthorizationInterceptor}.
@@ -65,7 +69,7 @@ public class AuthorizationInterceptorTest {
                 parameters[0] = null;
                 mockCtx.getParameters();
                 returns(parameters);
-                repeatsAtLeast(1);
+                minTimes = 1;
             }
         };
 

@@ -1,17 +1,15 @@
 package org.mdubois.freeveggie.framework.dao;
 
-import org.mdubois.freeveggie.framework.bo.BusinessObject;
-import org.mdubois.freeveggie.framework.service.order.OrderColumn;
 import javax.persistence.EntityManager;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
-import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mdubois.freeveggie.framework.bo.BusinessObject;
+import org.mdubois.freeveggie.framework.service.order.OrderColumn;
 import org.mdubois.freeveggie.framework.service.order.OrderWay;
 import org.mdubois.freeveggie.framework.service.order.ResultOrder;
 
@@ -22,10 +20,12 @@ import org.mdubois.freeveggie.framework.service.order.ResultOrder;
 @RunWith(JMockit.class)
 public class ReadWriteDAOTest {
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
+//    @After
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
+    @Mocked
+    private EntityManager mockEntityManager;
 
     /**
      * Test of save method, of class IReadWriteDAO.
@@ -37,9 +37,6 @@ public class ReadWriteDAOTest {
         final Object expResult = 100L;
 
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
 
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
@@ -84,9 +81,6 @@ public class ReadWriteDAOTest {
         final IReadWriteDAO instance = new ReadWriteDAOImpl();
         new Expectations() {
 
-            @Mocked
-            private EntityManager mockEntityManager;
-
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
 
@@ -104,9 +98,6 @@ public class ReadWriteDAOTest {
         final IReadWriteDAO instance = new ReadWriteDAOImpl();
 
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
 
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);

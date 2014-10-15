@@ -5,7 +5,7 @@ import javax.interceptor.InvocationContext;
 import junit.framework.Assert;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
+//import mockit.Mockit;
 import mockit.NonStrictExpectations;
 import mockit.integration.junit4.JMockit;
 import org.junit.After;
@@ -31,10 +31,10 @@ public class MessageValidatorInterceptorTest {
 	@Mocked
 	InvocationContext mockContext;
 
-	@After
-	public void tearDown() throws Exception {
-		Mockit.restoreAllOriginalDefinitions();
-	}
+//	@After
+//	public void tearDown() throws Exception {
+//		Mockit.restoreAllOriginalDefinitions();
+//	}
 
 	/**
 	 * * Test of validate method, of class MessageValidatorInterceptor.

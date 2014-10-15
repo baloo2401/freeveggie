@@ -17,6 +17,9 @@ import org.unitils.reflectionassert.ReflectionAssert;
  */
 public class MostSharedProductBOToMsgConverterTest extends AbstractConverterTest<MostSharedProductMsg, MostSharedProductBO> {
 
+    @Mocked
+    private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
+
     @Test
     public void testConvertFull() {
 
@@ -32,9 +35,6 @@ public class MostSharedProductBOToMsgConverterTest extends AbstractConverterTest
         mostSharedProductBO.setQuantityShared(quantity);
 
         new Expectations() {
-
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
 
             {
                 Deencapsulation.setField(converter, "productBOToMsgConverter", mockProductBOToMsgConverter);

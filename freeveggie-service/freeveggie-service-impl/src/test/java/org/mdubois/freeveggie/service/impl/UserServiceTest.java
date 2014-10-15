@@ -12,11 +12,19 @@ import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.UserStatus;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.bo.AddressBO;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.ProductBO;
+import org.mdubois.freeveggie.bo.RefCityBO;
+import org.mdubois.freeveggie.bo.RefCountryBO;
+import org.mdubois.freeveggie.bo.RefProductBO;
+import org.mdubois.freeveggie.bo.RefRegionBO;
+import org.mdubois.freeveggie.bo.RefStateBO;
+import org.mdubois.freeveggie.bo.UserBO;
 import org.mdubois.freeveggie.criteria.UserCriteriaColumn;
 import org.mdubois.freeveggie.dao.api.IUserDAO;
 import org.mdubois.freeveggie.dao.api.IUserPartialDAO;
-import org.mdubois.freeveggie.dao.impl.*;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.framework.security.UserRole;
@@ -37,6 +45,17 @@ import org.mdubois.freeveggie.service.msg.UserMsg;
 @RunWith(JMockit.class)
 public class UserServiceTest {
 
+    @Mocked
+    private IUserPartialDAO mockUserPartialDAO;
+    @Mocked
+    private Converter<UserMsg, UserBO> mockUserBOConverter;
+    @Mocked
+    private IUserDAO mockUserDAO;
+    @Mocked
+    private Converter<UserMsg, UserBO> userBOConverter;
+    @Mocked
+    private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOConverter;
+
     // <editor-fold defaultstate="collapsed" desc="Get user by id">
     @Test(expected = BusinessException.class)
     public void getUserByIdExc() throws BusinessException {
@@ -45,14 +64,11 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-
             {
                 Deencapsulation.setField(service, "userDAO", mockUserDAO);
 
                 mockUserDAO.get(userId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -70,11 +86,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> mockUserBOConverter;
-
             {
                 Deencapsulation.setField(service, "userDAO", mockUserDAO);
                 Deencapsulation.setField(service, "userBOConverter", mockUserBOConverter);
@@ -90,7 +101,6 @@ public class UserServiceTest {
     }
 
 // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Get user partial by id">
     @Test(expected = BusinessException.class)
     public void getUserPartialByIdExc() throws BusinessException {
@@ -99,14 +109,11 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-
             {
                 Deencapsulation.setField(service, "userPartialDAO", mockUserPartialDAO);
 
                 mockUserPartialDAO.get(userId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -124,16 +131,11 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockPartialDAO;
-            @Mocked
-            private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOConverter;
-
             {
-                Deencapsulation.setField(service, "userPartialDAO", mockPartialDAO);
+                Deencapsulation.setField(service, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(service, "partialUserBOConverter", mockPartialUserBOConverter);
 
-                mockPartialDAO.get(userId);
+                mockUserPartialDAO.get(userId);
                 returns(userExpected);
 
                 mockPartialUserBOConverter.convert(userExpected);
@@ -152,13 +154,10 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
 
                 returns(null);
 
@@ -174,20 +173,16 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.ADMIN);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
-                userDAO.save(with(new UserBOMatcher(userExc)));
+                mockUserDAO.save(with(userExc, new UserBOMatcher(userExc)));
             }
         };
         userService.changeRole(122L, UserRole.USER);
@@ -195,19 +190,16 @@ public class UserServiceTest {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Upgrade">
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void upgradeNoUser() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-                userDAO.get(122L);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
+                mockUserDAO.get(122L);
                 returns(null);
 
             }
@@ -222,20 +214,16 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.ADMIN);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
-                userDAO.save(with(new UserBOMatcher(userExc)));
+                mockUserDAO.save(with(userExc, new UserBOMatcher(userExc)));
             }
         };
         userService.upgrade(122L);
@@ -248,43 +236,35 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.USER);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
-                userDAO.save(with(new UserBOMatcher(userExc)));
+                mockUserDAO.save(with(userExc, new UserBOMatcher(userExc)));
             }
         };
         userService.upgrade(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void upgradeSuperAdmin() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -292,24 +272,20 @@ public class UserServiceTest {
         userService.upgrade(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void upgradeManager() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.MANAGER);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -319,67 +295,57 @@ public class UserServiceTest {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Downgrade">
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void downgradeNoUser() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(null);
             }
         };
         userService.downgrade(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void downgradeAdmin() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.ADMIN);
-                userDAO.get(122L);
-                returns(userExc);            }
+                mockUserDAO.get(122L);
+                returns(userExc);
+            }
         };
         userService.downgrade(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void downgradeUser() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.USER);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
             }
         };
@@ -393,20 +359,16 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
-                userDAO.save(with(new UserBOMatcher(userExc)));
+                mockUserDAO.save(with(userExc, new UserBOMatcher(userExc)));
 
             }
         };
@@ -420,21 +382,16 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.MANAGER);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
-                userDAO.save(with(new UserBOMatcher(userExc)));
-
+                mockUserDAO.save(with(userExc, new UserBOMatcher(userExc)));
 
             }
         };
@@ -443,19 +400,16 @@ public class UserServiceTest {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Validate">
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void validateNoUser() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-                userDAO.getUserByUUID("122L");
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
+                mockUserDAO.getUserByUUID("122L");
                 returns(null);
 
             }
@@ -471,45 +425,37 @@ public class UserServiceTest {
         final String uuid = "Boro34r+B9yCtRCJY5rLHw==";
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.ADMIN);
                 userExc.setStatus(UserStatus.NEW);
-                userDAO.getUserByUUID(uuid);
+                mockUserDAO.getUserByUUID(uuid);
                 returns(userExc);
 
-                userDAO.update(with(new UserBOMatcher(userExc)));
+                mockUserDAO.update(with(userExc, new UserBOMatcher(userExc)));
             }
         };
         userService.validate(uuid);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void validateValidated() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.VALIDED);
-                userDAO.getUserByUUID("122L");
+                mockUserDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }
@@ -517,25 +463,21 @@ public class UserServiceTest {
         userService.validate("122L");
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void validateDeleted() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.DELETED);
-                userDAO.getUserByUUID("122L");
+                mockUserDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }
@@ -543,25 +485,21 @@ public class UserServiceTest {
         userService.validate("122L");
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void validateBlacklisted() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.BLACKLISTED);
-                userDAO.getUserByUUID("122L");
+                mockUserDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }
@@ -569,25 +507,21 @@ public class UserServiceTest {
         userService.validate("122L");
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void validateArchived() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.ARCHIVED);
-                userDAO.getUserByUUID("122L");
+                mockUserDAO.getUserByUUID("122L");
                 returns(userExc);
 
             }
@@ -597,19 +531,16 @@ public class UserServiceTest {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Delete">
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void deleteNoUser() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-                userDAO.get(122L);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
+                mockUserDAO.get(122L);
                 returns(null);
 
             }
@@ -617,25 +548,21 @@ public class UserServiceTest {
         userService.delete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void deleteNew() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.ADMIN);
                 userExc.setStatus(UserStatus.NEW);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -650,46 +577,38 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.VALIDED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
-                userDAO.update(with(new UserBOMatcher(userExc)));
+                mockUserDAO.update(with(userExc, new UserBOMatcher(userExc)));
 
             }
         };
         userService.delete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void deleteDeleted() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.DELETED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -697,25 +616,21 @@ public class UserServiceTest {
         userService.delete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void deleteBlacklisted() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.BLACKLISTED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -723,25 +638,21 @@ public class UserServiceTest {
         userService.delete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void deleteArchived() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.ARCHIVED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -751,19 +662,16 @@ public class UserServiceTest {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="undelete">
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void undeleteNoUser() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-                userDAO.get(122L);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
+                mockUserDAO.get(122L);
                 returns(null);
 
             }
@@ -771,25 +679,21 @@ public class UserServiceTest {
         userService.undelete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void undeleteNew() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.ADMIN);
                 userExc.setStatus(UserStatus.NEW);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -797,25 +701,21 @@ public class UserServiceTest {
         userService.undelete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void undeleteValidated() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.VALIDED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -830,46 +730,38 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.DELETED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
-                userDAO.update(with(new UserBOMatcher(userExc)));
+                mockUserDAO.update(with(userExc, new UserBOMatcher(userExc)));
 
             }
         };
         userService.undelete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void undeleteBlacklisted() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.BLACKLISTED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -877,25 +769,21 @@ public class UserServiceTest {
         userService.undelete(122L);
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void undeleteArchived() throws BusinessException {
 
         final IUserService userService = new UserService();
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
-
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 UserBO userExc = new UserBO();
                 userExc.setId(122L);
                 userExc.setRole(UserRole.SUPERADMIN);
                 userExc.setStatus(UserStatus.ARCHIVED);
-                userDAO.get(122L);
+                mockUserDAO.get(122L);
                 returns(userExc);
 
             }
@@ -908,7 +796,6 @@ public class UserServiceTest {
     @Test
     public void getUserByCityNullResult() throws BusinessException {
 
-
         final IUserService userService = new UserService();
 
         final Integer cityId = 1;
@@ -916,19 +803,15 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
 
                 TechnicalInformation<UserCriteriaColumn, UserOrderColumn> techInfo = new TechnicalInformation<UserCriteriaColumn, UserOrderColumn>();
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                userDAO.getUserByCityAndProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByCityAndProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 userBOConverter.convert((List) null);
@@ -952,11 +835,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
-
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -971,7 +849,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByCityAndProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByCityAndProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1018,11 +896,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
-
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -1037,7 +910,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByCityAndProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByCityAndProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1082,19 +955,15 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
 
                 TechnicalInformation<UserCriteriaColumn, UserOrderColumn> techInfo = new TechnicalInformation<UserCriteriaColumn, UserOrderColumn>();
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                userDAO.getUserByRegionAndProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByRegionAndProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 userBOConverter.convert((List) null);
@@ -1118,11 +987,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
-
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -1137,7 +1001,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByRegionAndProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByRegionAndProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1187,11 +1051,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
-
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -1206,7 +1065,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByRegionAndProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByRegionAndProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1254,19 +1113,15 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
 
                 TechnicalInformation<UserCriteriaColumn, UserOrderColumn> techInfo = new TechnicalInformation<UserCriteriaColumn, UserOrderColumn>();
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                userDAO.getUserByStateAndProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByStateAndProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 userBOConverter.convert((List) null);
@@ -1290,10 +1145,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -1308,7 +1159,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByStateAndProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByStateAndProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1360,11 +1211,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
-
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -1379,7 +1225,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByStateAndProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByStateAndProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1429,19 +1275,15 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
             {
-                Deencapsulation.setField(userService, "userDAO", userDAO);
+                Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
 
                 TechnicalInformation<UserCriteriaColumn, UserOrderColumn> techInfo = new TechnicalInformation<UserCriteriaColumn, UserOrderColumn>();
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                userDAO.getUserByCountryAndProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByCountryAndProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 userBOConverter.convert((List) null);
@@ -1465,11 +1307,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
-
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -1484,7 +1321,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByCountryAndProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByCountryAndProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1539,10 +1376,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private UserDAO mockUserDAO;
-            @Mocked
-            private Converter<UserMsg, UserBO> userBOConverter;
             {
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
                 Deencapsulation.setField(userService, "userBOConverter", userBOConverter);
@@ -1557,7 +1390,7 @@ public class UserServiceTest {
                 QueryCriteria<UserCriteriaColumn> userCriteria = new QueryCriteria<UserCriteriaColumn>(UserCriteriaColumn.STATUS, CriteriaOperation.EQUAL, UserStatus.VALIDED);
                 techInfo.addCriteria(userCriteria);
 
-                mockUserDAO.getUserByCountryAndProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockUserDAO.getUserByCountryAndProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<UserBO> resList = new ArrayList<UserBO>();
 
@@ -1604,20 +1437,16 @@ public class UserServiceTest {
     public void blacklistNo() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -1634,13 +1463,9 @@ public class UserServiceTest {
     public void blacklistDeleted() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -1649,7 +1474,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.DELETED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -1666,13 +1491,9 @@ public class UserServiceTest {
     public void blacklistNew() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -1681,7 +1502,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.NEW);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -1698,13 +1519,9 @@ public class UserServiceTest {
     public void blacklistArchived() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -1713,7 +1530,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.ARCHIVED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -1730,13 +1547,9 @@ public class UserServiceTest {
     public void blacklistAlreadyBlacklist() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -1745,7 +1558,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.BLACKLISTED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -1762,16 +1575,11 @@ public class UserServiceTest {
     public void blacklist() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO mockUserDAO;
-
             {
-
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
@@ -1784,14 +1592,14 @@ public class UserServiceTest {
                 userBO.setId(1L);
                 userBO.setStatus(UserStatus.VALIDED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 UserBO userBOExpected = new UserBO();
                 userBOExpected.setId(1L);
                 userBOExpected.setStatus(UserStatus.BLACKLISTED);
 
-                mockUserDAO.update(with(new UserBOMatcher(userBOExpected)));
+                mockUserDAO.update(with(userBOExpected, new UserBOMatcher(userBOExpected)));
             }
         };
 
@@ -1809,20 +1617,16 @@ public class UserServiceTest {
     public void unblacklistNo() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -1839,13 +1643,9 @@ public class UserServiceTest {
     public void unblacklistDeleted() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -1854,7 +1654,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.DELETED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -1871,13 +1671,9 @@ public class UserServiceTest {
     public void unblacklistAlreadyUnblacklist() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -1886,7 +1682,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.VALIDED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -1907,9 +1703,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO mockUserDAO;
-
             {
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
@@ -1925,14 +1718,14 @@ public class UserServiceTest {
                 userBO.setId(1L);
                 userBO.setStatus(UserStatus.BLACKLISTED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 UserBO userBOExpected = new UserBO();
                 userBOExpected.setId(1L);
                 userBOExpected.setStatus(UserStatus.VALIDED);
 
-                mockUserDAO.update(with(new UserBOMatcher(userBOExpected)));
+                mockUserDAO.update(with(userBOExpected, new UserBOMatcher(userBOExpected)));
             }
         };
 
@@ -1950,20 +1743,16 @@ public class UserServiceTest {
     public void archiveNo() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -1980,13 +1769,9 @@ public class UserServiceTest {
     public void archiveDeleted() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -1995,7 +1780,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.DELETED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -2012,13 +1797,9 @@ public class UserServiceTest {
     public void archiveAlreadyArchive() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -2027,7 +1808,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.ARCHIVED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -2044,16 +1825,11 @@ public class UserServiceTest {
     public void archive() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO mockUserDAO;
-
             {
-
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
@@ -2069,15 +1845,14 @@ public class UserServiceTest {
                 userBO.setStatus(UserStatus.VALIDED);
 
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 UserBO userBOExpected = new UserBO();
                 userBOExpected.setId(1L);
                 userBOExpected.setStatus(UserStatus.ARCHIVED);
 
-
-                mockUserDAO.update(with(new UserBOMatcher(userBOExpected)));
+                mockUserDAO.update(with(userBOExpected, new UserBOMatcher(userBOExpected)));
             }
         };
 
@@ -2095,20 +1870,16 @@ public class UserServiceTest {
     public void unarchiveNo() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
 
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -2125,13 +1896,9 @@ public class UserServiceTest {
     public void unarchiveDeleted() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -2140,7 +1907,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.DELETED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -2157,13 +1924,9 @@ public class UserServiceTest {
     public void unarchiveAlreadyUnarchive() throws BusinessException {
         final UserService userService = new UserService();
 
-
         final Long pUserId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserDAO mockUserDAO;
 
             {
 
@@ -2172,7 +1935,7 @@ public class UserServiceTest {
                 UserBO userBO = new UserBO();
                 userBO.setStatus(UserStatus.VALIDED);
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
             }
         };
@@ -2193,9 +1956,6 @@ public class UserServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO mockUserDAO;
-
             {
 
                 Deencapsulation.setField(userService, "userDAO", mockUserDAO);
@@ -2212,15 +1972,14 @@ public class UserServiceTest {
                 userBO.setStatus(UserStatus.ARCHIVED);
 
                 mockUserDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 UserBO userBOExpected = new UserBO();
                 userBOExpected.setId(1L);
                 userBOExpected.setStatus(UserStatus.VALIDED);
 
-
-                mockUserDAO.update(with(new UserBOMatcher(userBOExpected)));
+                mockUserDAO.update(with(userBOExpected, new UserBOMatcher(userBOExpected)));
             }
         };
 

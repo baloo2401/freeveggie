@@ -30,6 +30,17 @@ import org.mdubois.freeveggie.service.msg.SubscriptionMsg;
 @RunWith(JMockit.class)
 public class SubscriptionServiceTest {
 
+    @Mocked
+    private IUserDAO userDAO;
+    @Mocked
+    private IAddressDAO addressDAO;
+    @Mocked
+    private ISubscriptionDAO subscriptionDAO;
+    @Mocked
+    private INotificationDAO notificationDAO;
+    @Mocked
+    private BusinessObjectConverter<AddressBO, AddressMsg> addressMsgConverter;
+
     @Test
     public void create() throws BusinessException {
         final ISubscriptionService subscriptionService = new SubscriptionService();
@@ -53,17 +64,6 @@ public class SubscriptionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private IAddressDAO addressDAO;
-            @Mocked
-            private ISubscriptionDAO subscriptionDAO;
-            @Mocked
-            private INotificationDAO notificationDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> addressMsgConverter;
-
             {
                 Deencapsulation.setField(subscriptionService, userDAO);
                 Deencapsulation.setField(subscriptionService, addressDAO);
@@ -72,7 +72,7 @@ public class SubscriptionServiceTest {
                 Deencapsulation.setField(subscriptionService, addressMsgConverter);
 
                 AddressBO addressBO = new AddressBO();
-                addressMsgConverter.createNew((AddressMsg)any);
+                addressMsgConverter.createNew((AddressMsg) any);
                 returns(addressBO);
 
                 userDAO.getUserByLogin("username");
@@ -82,10 +82,10 @@ public class SubscriptionServiceTest {
                 returns(null);
 
                 //TODO check parameter with with
-                userDAO.save((UserBO)any);
+                userDAO.save((UserBO) any);
                 returns(newUserId);
-                
-                subscriptionDAO.save((SubscriptionBO)any);
+
+                subscriptionDAO.save((SubscriptionBO) any);
 
                 notificationDAO.sendCreationUserNotice((UserBO) any, anyString);
             }
@@ -118,20 +118,13 @@ public class SubscriptionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private IAddressDAO addressDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> addressMsgConverter;
-
             {
                 Deencapsulation.setField(subscriptionService, userDAO);
                 Deencapsulation.setField(subscriptionService, addressDAO);
                 Deencapsulation.setField(subscriptionService, addressMsgConverter);
 
                 AddressBO addressBO = new AddressBO();
-                addressMsgConverter.createNew((AddressMsg)any);
+                addressMsgConverter.createNew((AddressMsg) any);
                 returns(addressBO);
 
                 addressDAO.save(addressBO);
@@ -170,21 +163,15 @@ public class SubscriptionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private IAddressDAO addressDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> addressMsgConverter;
             {
                 Deencapsulation.setField(subscriptionService, userDAO);
                 Deencapsulation.setField(subscriptionService, addressDAO);
                 Deencapsulation.setField(subscriptionService, addressMsgConverter);
 
                 AddressBO addressBO = new AddressBO();
-                addressMsgConverter.createNew((AddressMsg)any);
+                addressMsgConverter.createNew((AddressMsg) any);
                 returns(addressBO);
-                
+
                 addressDAO.save(addressBO);
 
                 userDAO.getUserByLogin("username");

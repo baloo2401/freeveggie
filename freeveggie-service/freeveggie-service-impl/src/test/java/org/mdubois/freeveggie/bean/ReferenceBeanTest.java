@@ -1,7 +1,6 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.ReferenceBeanLocal;
 import java.util.ArrayList;
 import java.util.List;
 import mockit.Deencapsulation;
@@ -11,13 +10,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mdubois.freeveggie.Month;
 import org.mdubois.freeveggie.ProductType;
+import org.mdubois.freeveggie.bean.local.ReferenceBeanLocal;
 import org.mdubois.freeveggie.criteria.RefProductCriteriaColumn;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.service.Pagination;
 import org.mdubois.freeveggie.framework.service.TechnicalInformation;
 import org.mdubois.freeveggie.order.RefProductOrderColumn;
 import org.mdubois.freeveggie.service.api.IReferenceService;
-import org.mdubois.freeveggie.service.msg.*;
+import org.mdubois.freeveggie.service.msg.RefCityMsg;
+import org.mdubois.freeveggie.service.msg.RefCountryMsg;
+import org.mdubois.freeveggie.service.msg.RefProductMsg;
+import org.mdubois.freeveggie.service.msg.RefRegionMsg;
+import org.mdubois.freeveggie.service.msg.RefStateMsg;
 // </editor-fold>
 
 /**
@@ -28,6 +32,9 @@ import org.mdubois.freeveggie.service.msg.*;
  */
 public class ReferenceBeanTest {
 
+    @Mocked
+    private IReferenceService referenceService;
+
     @Test
     public void getRefCitiesByCountry() throws BusinessException {
 
@@ -37,9 +44,6 @@ public class ReferenceBeanTest {
         final List<RefCityMsg> expResult = new ArrayList<RefCityMsg>();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);
@@ -63,9 +67,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -87,9 +88,6 @@ public class ReferenceBeanTest {
         final List<RefCityMsg> expResult = new ArrayList<RefCityMsg>();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);
@@ -113,9 +111,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -138,9 +133,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -162,9 +154,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -184,9 +173,6 @@ public class ReferenceBeanTest {
         final RefCountryMsg expResult = new RefCountryMsg();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);
@@ -208,9 +194,6 @@ public class ReferenceBeanTest {
         final List<RefProductMsg> expResult = new ArrayList<RefProductMsg>();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);
@@ -234,9 +217,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -258,9 +238,6 @@ public class ReferenceBeanTest {
         final List<RefProductMsg> expResult = new ArrayList<RefProductMsg>();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);
@@ -284,9 +261,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -308,9 +282,6 @@ public class ReferenceBeanTest {
         final List<RefRegionMsg> expResult = new ArrayList<RefRegionMsg>();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);
@@ -334,9 +305,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -358,9 +326,6 @@ public class ReferenceBeanTest {
         final List<RefRegionMsg> expResult = new ArrayList<RefRegionMsg>();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);
@@ -384,9 +349,6 @@ public class ReferenceBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IReferenceService referenceService;
-
             {
                 Deencapsulation.setField(instance, referenceService);
 
@@ -408,9 +370,6 @@ public class ReferenceBeanTest {
         final List<RefStateMsg> expResult = new ArrayList<RefStateMsg>();
 
         new Expectations() {
-
-            @Mocked
-            private IReferenceService referenceService;
 
             {
                 Deencapsulation.setField(instance, referenceService);

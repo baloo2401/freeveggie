@@ -1,16 +1,12 @@
 package org.mdubois.freeveggie.framework.interceptor;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import java.io.FileNotFoundException;
 import javax.interceptor.InvocationContext;
 import junit.framework.Assert;
-import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
 import org.apache.commons.logging.Log;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
@@ -26,10 +22,10 @@ public class DAOInterceptorTest {
     @Mocked
     InvocationContext mockContext;
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
+//    @After
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
 
 
     /**
@@ -47,7 +43,7 @@ public class DAOInterceptorTest {
 
             {
                 mockContext.proceed();
-                throwsException(new RuntimeException());
+                result = new RuntimeException();
             }
         };
 
@@ -71,7 +67,7 @@ public class DAOInterceptorTest {
 
             {
                 mockContext.proceed();
-                throwsException(new CheckedException());
+                result = new CheckedException();
             }
         };
 
@@ -95,7 +91,7 @@ public class DAOInterceptorTest {
             {
                 mockContext.proceed();
                 returns(expectedResult);
-                repeats(1);
+                times = 1;
             }
         };
 

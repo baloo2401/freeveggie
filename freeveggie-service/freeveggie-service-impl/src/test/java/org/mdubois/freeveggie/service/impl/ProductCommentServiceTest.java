@@ -46,6 +46,20 @@ import org.mdubois.freeveggie.service.msg.ProductMsg;
 @RunWith(JMockit.class)
 public class ProductCommentServiceTest {
 
+    @Mocked
+    private IUserPartialDAO mockUserPartialDAO;
+    @Mocked
+    private IProductDAO mockProductDAO;
+    @Mocked
+    private IProductCommentDAO mockProductCommentDAO;
+    @Mocked
+    private BusinessObjectConverter<ProductCommentBO, ProductCommentMsg> productCommentMsgConverter;
+    @Mocked
+    private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
+    @Mocked
+    @SuppressWarnings("unused")
+    private final SystemTime systemTime = null;
+
     //TODO : Assert that what returns converter is what the service returns
     /**
      * {@link Criteria}
@@ -63,7 +77,6 @@ public class ProductCommentServiceTest {
     public void commentNoUser() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final ProductCommentMsg pProductCommentMsg = new ProductCommentMsg();
         pProductCommentMsg.setComment("Comment");
         ProductMsg product = new ProductMsg();
@@ -77,14 +90,11 @@ public class ProductCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-
             {
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
 
                 mockUserPartialDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -103,7 +113,6 @@ public class ProductCommentServiceTest {
 
         final ProductService productService = new ProductService();
 
-
         final ProductCommentMsg pProductCommentMsg = new ProductCommentMsg();
         pProductCommentMsg.setComment("Comment");
         ProductMsg product = new ProductMsg();
@@ -117,21 +126,16 @@ public class ProductCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-
             {
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockUserPartialDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(new PartialUserBO());
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -148,7 +152,6 @@ public class ProductCommentServiceTest {
     public void commentFromTheOwner() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final ProductCommentMsg pProductCommentMsg = new ProductCommentMsg();
         pProductCommentMsg.setComment("Comment");
         ProductMsg product = new ProductMsg();
@@ -163,16 +166,6 @@ public class ProductCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
-
             {
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -181,7 +174,7 @@ public class ProductCommentServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(2L);
                 mockUserPartialDAO.get(2L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
@@ -191,7 +184,7 @@ public class ProductCommentServiceTest {
                 productBO.setId(1L);
                 productBO.setGarden(gardenBO);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
 
             }
@@ -209,7 +202,6 @@ public class ProductCommentServiceTest {
     public void commentTwice() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final ProductCommentMsg pProductCommentMsg = new ProductCommentMsg();
         pProductCommentMsg.setComment("Comment");
         ProductMsg product = new ProductMsg();
@@ -226,18 +218,6 @@ public class ProductCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
-
             {
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -247,7 +227,7 @@ public class ProductCommentServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(2L);
                 mockUserPartialDAO.get(2L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
@@ -256,9 +236,8 @@ public class ProductCommentServiceTest {
                 productBO.setId(1L);
                 productBO.setGarden(gardenBO);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
-
 
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setId(10L);
@@ -270,7 +249,6 @@ public class ProductCommentServiceTest {
                 productCommentBO.setCreationDate(now);
                 mockProductCommentDAO.getProductCommentByUserAndProduct(pUserId, pProductId);
                 returns(productCommentBO);
-                mockProductCommentBOConverter.convert(productCommentBO);
             }
         };
 
@@ -286,7 +264,6 @@ public class ProductCommentServiceTest {
     public void comment() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final ProductCommentMsg pProductCommentMsg = new ProductCommentMsg();
         pProductCommentMsg.setComment("Comment");
         ProductMsg product = new ProductMsg();
@@ -301,18 +278,6 @@ public class ProductCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
-
-            @Mocked
-            private BusinessObjectConverter<ProductCommentBO, ProductCommentMsg> productCommentMsgConverter;
             {
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -322,7 +287,7 @@ public class ProductCommentServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(2L);
                 mockUserPartialDAO.get(2L);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 GardenBO gardenBO = new GardenBO();
@@ -331,13 +296,11 @@ public class ProductCommentServiceTest {
                 productBO.setId(1L);
                 productBO.setGarden(gardenBO);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
-
 
                 mockProductCommentDAO.getProductCommentByUserAndProduct(userBO.getId(), productBO.getId());
                 returns(null);
-
 
                 ProductCommentBO productCommentBO = new ProductCommentBO();
 
@@ -361,20 +324,16 @@ public class ProductCommentServiceTest {
     public void removeCommentNoComment() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
 
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -391,13 +350,9 @@ public class ProductCommentServiceTest {
     public void removeCommentArchived() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -406,7 +361,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.ARCHIVED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -424,13 +379,9 @@ public class ProductCommentServiceTest {
     public void removeCommentAlreadyRemoved() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -439,7 +390,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.REMOVED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -456,13 +407,9 @@ public class ProductCommentServiceTest {
     public void removeComment() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -484,7 +431,7 @@ public class ProductCommentServiceTest {
                 productCommentBO.setProduct(product);
                 productCommentBO.setCreationDate(now);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
 
                 ProductCommentBO productCommentBOExpected = new ProductCommentBO();
@@ -496,7 +443,7 @@ public class ProductCommentServiceTest {
                 productCommentBOExpected.setProduct(product);
                 productCommentBOExpected.setCreationDate(now);
 
-                mockProductCommentDAO.update(with(new ProductCommentBOMatcher(productCommentBOExpected)));
+                mockProductCommentDAO.update(with(productCommentBOExpected, new ProductCommentBOMatcher(productCommentBOExpected)));
             }
         };
 
@@ -514,20 +461,16 @@ public class ProductCommentServiceTest {
     public void reactivateCommentNoComment() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
 
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -544,13 +487,9 @@ public class ProductCommentServiceTest {
     public void reactivateCommentArchived() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -559,7 +498,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.ARCHIVED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -576,13 +515,9 @@ public class ProductCommentServiceTest {
     public void reactivateCommentAlreadyActivated() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -591,7 +526,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.SETTED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -608,13 +543,9 @@ public class ProductCommentServiceTest {
     public void reactivateComment() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -636,7 +567,7 @@ public class ProductCommentServiceTest {
                 productCommentBO.setProduct(product);
                 productCommentBO.setCreationDate(now);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
 
                 ProductCommentBO productCommentBOExpected = new ProductCommentBO();
@@ -648,7 +579,7 @@ public class ProductCommentServiceTest {
                 productCommentBOExpected.setProduct(product);
                 productCommentBOExpected.setCreationDate(now);
 
-                mockProductCommentDAO.update(with(new ProductCommentBOMatcher(productCommentBOExpected)));
+                mockProductCommentDAO.update(with(productCommentBOExpected, new ProductCommentBOMatcher(productCommentBOExpected)));
             }
         };
 
@@ -666,20 +597,16 @@ public class ProductCommentServiceTest {
     public void archiveNoComment() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
 
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -696,13 +623,9 @@ public class ProductCommentServiceTest {
     public void archiveCommentDeleted() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -711,7 +634,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.REMOVED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -729,13 +652,9 @@ public class ProductCommentServiceTest {
     public void archiveCommentAlreadyArchive() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -744,7 +663,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.ARCHIVED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -761,16 +680,11 @@ public class ProductCommentServiceTest {
     public void archive() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-
             {
-
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
 
@@ -790,7 +704,7 @@ public class ProductCommentServiceTest {
                 productCommentBO.setProduct(product);
                 productCommentBO.setCreationDate(now);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
 
                 ProductCommentBO productCommentBOExpected = new ProductCommentBO();
@@ -802,7 +716,7 @@ public class ProductCommentServiceTest {
                 productCommentBOExpected.setProduct(product);
                 productCommentBOExpected.setCreationDate(now);
 
-                mockProductCommentDAO.update(with(new ProductCommentBOMatcher(productCommentBOExpected)));
+                mockProductCommentDAO.update(with(productCommentBOExpected, new ProductCommentBOMatcher(productCommentBOExpected)));
             }
         };
 
@@ -820,20 +734,16 @@ public class ProductCommentServiceTest {
     public void unarchiveNoComment() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
 
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -850,13 +760,9 @@ public class ProductCommentServiceTest {
     public void unarchiveCommentDeleted() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -865,7 +771,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.REMOVED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -882,13 +788,9 @@ public class ProductCommentServiceTest {
     public void unarchiveCommentAlreadyUnarchive() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductCommentId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
 
             {
 
@@ -897,7 +799,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBO.setStatus(EvaluationStatus.SETTED);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
             }
         };
@@ -918,9 +820,6 @@ public class ProductCommentServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
@@ -941,7 +840,7 @@ public class ProductCommentServiceTest {
                 productCommentBO.setProduct(product);
                 productCommentBO.setCreationDate(now);
                 mockProductCommentDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productCommentBO);
 
                 ProductCommentBO productCommentBOExpected = new ProductCommentBO();
@@ -953,7 +852,7 @@ public class ProductCommentServiceTest {
                 productCommentBOExpected.setProduct(product);
                 productCommentBOExpected.setCreationDate(now);
 
-                mockProductCommentDAO.update(with(new ProductCommentBOMatcher(productCommentBOExpected)));
+                mockProductCommentDAO.update(with(productCommentBOExpected, new ProductCommentBOMatcher(productCommentBOExpected)));
             }
         };
 
@@ -973,31 +872,25 @@ public class ProductCommentServiceTest {
     public void getProductCommentProductNotExit() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO productCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> productCommentBOConverter;
-
             {
 
-                Deencapsulation.setField(productService, "productCommentDAO", productCommentDAO);
-                Deencapsulation.setField(productService, "productCommentBOConverter", productCommentBOConverter);
+                Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
+                Deencapsulation.setField(productService, "productCommentBOConverter", mockProductCommentBOConverter);
 
                 TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> lTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
                 List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
-                productCommentDAO.getProductCommentByProduct(pProductId,with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(null);
 
-                productCommentBOConverter.convert((List) null);
+                mockProductCommentBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -1016,22 +909,15 @@ public class ProductCommentServiceTest {
     public void getProductCommentWithNullTechnicalInformation() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
                 Deencapsulation.setField(productService, "productCommentBOConverter", mockProductCommentBOConverter);
-
 
                 TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> lTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
                 List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1042,7 +928,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBOs.add(productCommentBO);
 
-                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
 
@@ -1062,16 +948,10 @@ public class ProductCommentServiceTest {
     public void getProductCommentWithEmptyCriteria() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
 
             {
 
@@ -1087,7 +967,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBOs.add(productCommentBO);
 
-                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
 
@@ -1108,7 +988,6 @@ public class ProductCommentServiceTest {
     public void getProductCommentWithCriteriaWithStatus() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
         List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1117,13 +996,6 @@ public class ProductCommentServiceTest {
         criterias.add(new QueryCriteria<ProductCommentCriteriaColumn>(ProductCommentCriteriaColumn.STATUS, CriteriaOperation.EQUAL, EvaluationStatus.ARCHIVED));
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
 
             {
 
@@ -1134,10 +1006,9 @@ public class ProductCommentServiceTest {
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
-
 
             }
         };
@@ -1156,7 +1027,6 @@ public class ProductCommentServiceTest {
     public void getProductCommentWithCriteriaButNotStatus() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
         List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1164,11 +1034,6 @@ public class ProductCommentServiceTest {
         criterias.add(new QueryCriteria<ProductCommentCriteriaColumn>(ProductCommentCriteriaColumn.CREATION_DATE, CriteriaOperation.EQUAL, now));
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
 
             {
 
@@ -1178,7 +1043,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1196,7 +1061,6 @@ public class ProductCommentServiceTest {
     public void getProductCommentWithPagination() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
         List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1206,11 +1070,6 @@ public class ProductCommentServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
@@ -1219,7 +1078,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1248,13 +1107,6 @@ public class ProductCommentServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<ProductCommentOrderColumn>(ProductCommentOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -1264,7 +1116,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1286,32 +1138,26 @@ public class ProductCommentServiceTest {
     public void getProductCommentWriteUserNotExit() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO productCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> productCommentBOConverter;
-
             {
 
-                Deencapsulation.setField(productService, "productCommentDAO", productCommentDAO);
-                Deencapsulation.setField(productService, "productCommentBOConverter", productCommentBOConverter);
+                Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
+                Deencapsulation.setField(productService, "productCommentBOConverter", mockProductCommentBOConverter);
 
                 TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> lTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
                 List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
-                productCommentDAO.getProductCommentByWriter(pUserWriterId,with(new TechnicalInformationMatcher(lTechnicalInformation)));
-                repeats(1);
+                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
+                times = 1;
                 returns(null);
 
-                productCommentBOConverter.convert((List) null);
+                mockProductCommentBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -1330,16 +1176,10 @@ public class ProductCommentServiceTest {
     public void getProductCommentWriteWithNullTechnicalInformation() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = null;
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
 
             {
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
@@ -1353,7 +1193,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1372,16 +1212,10 @@ public class ProductCommentServiceTest {
     public void getProductCommentWriteWithEmptyCriteria() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
 
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
 
             {
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
@@ -1395,7 +1229,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1415,7 +1249,6 @@ public class ProductCommentServiceTest {
     public void getProductCommentWriteWithCriteriaWithStatus() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
         List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1425,11 +1258,6 @@ public class ProductCommentServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
@@ -1438,7 +1266,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1458,7 +1286,6 @@ public class ProductCommentServiceTest {
     public void getProductCommentWriteWithCriteriaButNotStatus() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
         List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1466,11 +1293,6 @@ public class ProductCommentServiceTest {
         criterias.add(new QueryCriteria<ProductCommentCriteriaColumn>(ProductCommentCriteriaColumn.CREATION_DATE, CriteriaOperation.EQUAL, now));
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
-
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
 
             {
 
@@ -1480,7 +1302,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1498,7 +1320,6 @@ public class ProductCommentServiceTest {
     public void getProductCommentWriteWithPagination() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
         List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1508,11 +1329,6 @@ public class ProductCommentServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
-
             {
 
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
@@ -1521,7 +1337,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }
@@ -1539,7 +1355,6 @@ public class ProductCommentServiceTest {
     public void getProductCommentWriteWithOrder() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pUserWriterId = 1L;
         final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn>();
         List<QueryCriteria<ProductCommentCriteriaColumn>> criterias = new ArrayList<QueryCriteria<ProductCommentCriteriaColumn>>();
@@ -1550,11 +1365,6 @@ public class ProductCommentServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<ProductCommentOrderColumn>(ProductCommentOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO mockProductCommentDAO;
-            @Mocked
-            private Converter< ProductCommentMsg, ProductCommentBO> mockProductCommentBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productCommentDAO", mockProductCommentDAO);
                 Deencapsulation.setField(productService, "productCommentBOConverter", mockProductCommentBOConverter);
@@ -1562,7 +1372,7 @@ public class ProductCommentServiceTest {
                 ProductCommentBO productCommentBO = new ProductCommentBO();
                 List<ProductCommentBO> productCommentBOs = new ArrayList<ProductCommentBO>();
                 productCommentBOs.add(productCommentBO);
-                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductCommentDAO.getProductCommentByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productCommentBOs);
                 mockProductCommentBOConverter.convert(productCommentBOs);
             }

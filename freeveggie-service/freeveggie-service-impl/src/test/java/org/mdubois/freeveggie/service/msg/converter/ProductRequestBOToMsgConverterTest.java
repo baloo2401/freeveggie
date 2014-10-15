@@ -9,10 +9,10 @@ import org.mdubois.freeveggie.RequestStatus;
 import org.mdubois.freeveggie.bo.PartialUserBO;
 import org.mdubois.freeveggie.bo.ProductBO;
 import org.mdubois.freeveggie.bo.ProductRequestBO;
+import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
 import org.mdubois.freeveggie.service.msg.ProductMsg;
 import org.mdubois.freeveggie.service.msg.ProductRequestMsg;
-import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.unitils.reflectionassert.ReflectionAssert;
 
 /**
@@ -20,6 +20,11 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Mickael Dubois
  */
 public class ProductRequestBOToMsgConverterTest extends AbstractConverterTest<ProductRequestMsg, ProductRequestBO> {
+
+    @Mocked
+    private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
+    @Mocked
+    private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
 
     private static final Date NOW = new Date();
 
@@ -35,19 +40,12 @@ public class ProductRequestBOToMsgConverterTest extends AbstractConverterTest<Pr
 
         new Expectations() {
 
-            @Mocked
-            private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
-
             {
                 Deencapsulation.setField(converter, "partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
                 Deencapsulation.setField(converter, "productBOToMsgConverter", mockProductBOToMsgConverter);
 
-
                 mockProductBOToMsgConverter.convert(productBO);
                 returns(null);
-
 
                 mockPartialUserBOToMsgConverter.convert(userBO);
                 returns(null);

@@ -1,7 +1,5 @@
 package org.mdubois.freeveggie.framework.dao;
 
-import org.mdubois.freeveggie.framework.bo.BusinessObject;
-import org.mdubois.freeveggie.framework.msg.MessageEnum;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +11,14 @@ import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
 import org.apache.commons.collections.map.LinkedMap;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mdubois.freeveggie.framework.bo.BusinessObject;
+import org.mdubois.freeveggie.framework.msg.MessageEnum;
 import org.mdubois.freeveggie.framework.service.Pagination;
 import org.mdubois.freeveggie.framework.service.TechnicalInformation;
 import org.mdubois.freeveggie.framework.service.criteria.CriteriaColumn;
@@ -36,9 +35,24 @@ import org.mdubois.freeveggie.framework.service.order.ResultOrder;
 @RunWith(JMockit.class)
 public class ReadOnlyDAOTest {
 
+    @Mocked
+    private EntityManager mockEntityManager;
+    @Mocked
+    private TypedQuery mockTypedQuery;
+    @Mocked
+    TypedQuery typedQuery;
+    @Mocked
+    Query mockQuery;
+    @Mocked
+    org.hibernate.Query mockQueryHibernate;
+    @Mocked
+    HQLSimpleParser mockLocalHQLSimpleParser;
+    @Mocked
+    private HQLSimpleParser mockHQLSimpleParser;
+
     @After
     public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
+//        Mockit.restoreAllOriginalDefinitions();
     }
 
     @Test
@@ -56,14 +70,11 @@ public class ReadOnlyDAOTest {
         final BusinessObjectImpl resulExpected = new BusinessObjectImpl();
         new Expectations() {
 
-            @Mocked
-            private EntityManager mockEntityManager;
-
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
 
                 mockEntityManager.find(BusinessObjectImpl.class, pId);
-                repeats(1);
+                times = 1;
                 returns(resulExpected);
             }
         };
@@ -79,11 +90,6 @@ public class ReadOnlyDAOTest {
     public void testGetAll_3args_Null_Null_Null() {
         final ReadOnlyDAO<BusinessObjectImpl, Long> instance = new ReadOnlyDAOImpl();
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
 
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
@@ -109,11 +115,6 @@ public class ReadOnlyDAOTest {
         expectedResult.add(new BusinessObjectImpl());
         new Expectations() {
 
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
-
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
 
@@ -138,18 +139,12 @@ public class ReadOnlyDAOTest {
         final ReadOnlyDAO<BusinessObjectImpl, Long> instance = new ReadOnlyDAOImpl();
         List<QueryCriteria<? extends CriteriaColumn>> criterias = new ArrayList<QueryCriteria<? extends CriteriaColumn>>();
 
-
         QueryCriteria<CriteriaColumn> criteria = new QueryCriteria<CriteriaColumn>(new CriteriaColumnImpl(), CriteriaOperation.MIN);
         criteria.setValue("criteriavalue");
 
         criterias.add(criteria);
 
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
 
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
@@ -177,16 +172,10 @@ public class ReadOnlyDAOTest {
         final ReadOnlyDAO<BusinessObjectImpl, Long> instance = new ReadOnlyDAOImpl();
         List<QueryCriteria<? extends CriteriaColumn>> criterias = new ArrayList<QueryCriteria<? extends CriteriaColumn>>();
 
-
         QueryCriteria<CriteriaColumn> criteria = new QueryCriteria<CriteriaColumn>(new CriteriaColumnImpl(), CriteriaOperation.MIN, "criteriavalue");
         criterias.add(criteria);
 
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
 
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
@@ -218,12 +207,6 @@ public class ReadOnlyDAOTest {
         criterias.add(criteria);
 
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
-
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
 
@@ -257,11 +240,6 @@ public class ReadOnlyDAOTest {
         final ResultOrder<OrderColumn> resultSearchOrder = new ResultOrder<OrderColumn>(searchColumn, OrderWay.ASC);
         new Expectations() {
 
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
-
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
 
@@ -285,11 +263,6 @@ public class ReadOnlyDAOTest {
         Pagination pagination = new Pagination(100, 12);
 
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
 
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
@@ -321,11 +294,6 @@ public class ReadOnlyDAOTest {
         List expResult = null;
         new Expectations() {
 
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
-
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
 
@@ -351,11 +319,6 @@ public class ReadOnlyDAOTest {
         final IReadOnlyDAO instance = new ReadOnlyDAOImpl();
         List expResult = null;
         new Expectations() {
-
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
 
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
@@ -383,11 +346,6 @@ public class ReadOnlyDAOTest {
         List expResult = null;
         new Expectations() {
 
-            @Mocked
-            private EntityManager mockEntityManager;
-            @Mocked
-            private TypedQuery mockTypedQuery;
-
             {
                 Deencapsulation.setField(instance, "entityManager", mockEntityManager);
 
@@ -406,8 +364,6 @@ public class ReadOnlyDAOTest {
         List result = instance.getAll(withDefaultOrder, pPagination);
         assertEquals(expResult, result);
     }
-    @Mocked
-    TypedQuery typedQuery;
 
     @Test
     public void testAddPagination() {
@@ -427,9 +383,6 @@ public class ReadOnlyDAOTest {
         };
         readOnlyDAO.addPagination(typedQuery, pTechnicalInformation);
     }
-    @Mocked
-    @SuppressWarnings("unused")
-    private HQLSimpleParser mockHQLSimpleParser;
 
     @Test
     public void testFindPaginationQuery() {
@@ -442,15 +395,6 @@ public class ReadOnlyDAOTest {
         Pagination pagination = new Pagination(10, 11);
 
         new Expectations() {
-
-            @Mocked
-            EntityManager mockEntityManager;
-            @Mocked
-            Query mockQuery;
-            @Mocked
-            org.hibernate.Query mockQueryHibernate;
-            @Mocked
-            HQLSimpleParser mockLocalHQLSimpleParser;
 
             {
                 Deencapsulation.setField(readOnlyDAO, "entityManager", mockEntityManager);
@@ -502,15 +446,6 @@ public class ReadOnlyDAOTest {
         technicalInformation.setPagination(pagination);
 
         new Expectations() {
-
-            @Mocked
-            EntityManager mockEntityManager;
-            @Mocked
-            Query mockQuery;
-            @Mocked
-            org.hibernate.Query mockQueryHibernate;
-            @Mocked
-            HQLSimpleParser mockLocalHQLSimpleParser;
 
             {
                 Deencapsulation.setField(readOnlyDAO, "entityManager", mockEntityManager);
@@ -570,15 +505,6 @@ public class ReadOnlyDAOTest {
         technicalInformation.setOrder(order);
 
         new Expectations() {
-
-            @Mocked
-            EntityManager mockEntityManager;
-            @Mocked
-            Query mockQuery;
-            @Mocked
-            org.hibernate.Query mockQueryHibernate;
-            @Mocked
-            HQLSimpleParser mockLocalHQLSimpleParser;
 
             {
                 Deencapsulation.setField(readOnlyDAO, "entityManager", mockEntityManager);
@@ -650,15 +576,6 @@ public class ReadOnlyDAOTest {
         technicalInformation.addCriteria(criteria);
 
         new Expectations() {
-
-            @Mocked
-            EntityManager mockEntityManager;
-            @Mocked
-            Query mockQuery;
-            @Mocked
-            org.hibernate.Query mockQueryHibernate;
-            @Mocked
-            HQLSimpleParser mockLocalHQLSimpleParser;
 
             {
                 Deencapsulation.setField(readOnlyDAO, "entityManager", mockEntityManager);
@@ -740,15 +657,6 @@ public class ReadOnlyDAOTest {
 
         new Expectations() {
 
-            @Mocked
-            EntityManager mockEntityManager;
-            @Mocked
-            Query mockQuery;
-            @Mocked
-            org.hibernate.Query mockQueryHibernate;
-            @Mocked
-            HQLSimpleParser mockLocalHQLSimpleParser;
-
             {
                 Deencapsulation.setField(readOnlyDAO, "entityManager", mockEntityManager);
                 mockEntityManager.createNamedQuery("BusinessObjectImpl.get");
@@ -802,15 +710,6 @@ public class ReadOnlyDAOTest {
 
         new Expectations() {
 
-            @Mocked
-            EntityManager mockEntityManager;
-            @Mocked
-            Query mockQuery;
-            @Mocked
-            org.hibernate.Query mockQueryHibernate;
-            @Mocked
-            HQLSimpleParser mockLocalHQLSimpleParser;
-
             {
                 Deencapsulation.setField(readOnlyDAO, "entityManager", mockEntityManager);
                 mockEntityManager.createNamedQuery("BusinessObjectImpl.get");
@@ -851,15 +750,6 @@ public class ReadOnlyDAOTest {
 
         new Expectations() {
 
-            @Mocked
-            EntityManager mockEntityManager;
-            @Mocked
-            Query mockQuery;
-            @Mocked
-            org.hibernate.Query mockQueryHibernate;
-            @Mocked
-            HQLSimpleParser mockLocalHQLSimpleParser;
-
             {
                 Deencapsulation.setField(readOnlyDAO, "entityManager", mockEntityManager);
                 mockEntityManager.createNamedQuery("BusinessObjectImpl.get");
@@ -883,7 +773,7 @@ public class ReadOnlyDAOTest {
                 mockQuery.setParameter("key", parameter);
 
                 mockQuery.getSingleResult();
-                throwsException(new NoResultException() );
+                result = new NoResultException();
             }
         };
 
@@ -912,10 +802,10 @@ public class ReadOnlyDAOTest {
 
     public class CriteriaColumnImpl implements CriteriaColumn {
 
-            @Override
-            public String getCriteriaColumn() {
-                    return "criteriaColumn";
-            }
+        @Override
+        public String getCriteriaColumn() {
+            return "criteriaColumn";
+        }
     }
 
     public class BusinessObjectImpl extends BusinessObject<Long> {
@@ -926,7 +816,6 @@ public class ReadOnlyDAOTest {
         }
 
     }
-
 
     public enum CultureMode implements MessageEnum {
 

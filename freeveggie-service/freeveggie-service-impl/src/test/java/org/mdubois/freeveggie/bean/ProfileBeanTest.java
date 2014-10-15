@@ -1,12 +1,12 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.ProfileBeanLocal;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.ProfileBeanLocal;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
@@ -23,6 +23,11 @@ import org.mdubois.freeveggie.service.msg.ProfileMsg;
  * @author mdubois
  */
 public class ProfileBeanTest {
+
+    @Mocked
+    private IProfileService profileService;
+    @Mocked
+    private IRightControlerService rightControlerService;
 
     // <editor-fold defaultstate="collapsed" desc="Create">
     /**
@@ -41,11 +46,6 @@ public class ProfileBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, profileService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -61,7 +61,7 @@ public class ProfileBeanTest {
         boolean result = instance.update(pContextMsg, pProfilMsg);
         assertEquals(expResult, result);
     }
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testUpdateAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -71,13 +71,8 @@ public class ProfileBeanTest {
         final ProfileMsg pProfilMsg = new ProfileMsg();
         pProfilMsg.setId(userId);
         final IProfilBean instance = new ProfileBeanLocal();
-        
-        new Expectations() {
 
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
+        new Expectations() {
 
             {
                 Deencapsulation.setField(instance, profileService);
@@ -103,11 +98,6 @@ public class ProfileBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, profileService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -116,7 +106,7 @@ public class ProfileBeanTest {
                 returns(true);
 
                 profileService.update(userId, pProfilMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -135,11 +125,6 @@ public class ProfileBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, profileService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -148,7 +133,7 @@ public class ProfileBeanTest {
                 returns(true);
 
                 profileService.update(userId, pProfilMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -171,11 +156,6 @@ public class ProfileBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, profileService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -191,8 +171,7 @@ public class ProfileBeanTest {
         ProfileMsg result = instance.getProfilById(pContextMsg, userId);
         assertEquals(expResult, result);
     }
-    
-    
+
     @Test(expected = AccessNotGrantedException.class)
     public void testGetProfilByIdAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -203,11 +182,6 @@ public class ProfileBeanTest {
         final ProfileMsg expResult = new ProfileMsg();
 
         new Expectations() {
-
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, profileService);
@@ -231,11 +205,6 @@ public class ProfileBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, profileService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -244,7 +213,7 @@ public class ProfileBeanTest {
                 returns(true);
 
                 profileService.getProfilById(userId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -261,11 +230,6 @@ public class ProfileBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProfileService profileService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, profileService);
                 Deencapsulation.setField(instance, rightControlerService);
@@ -274,7 +238,7 @@ public class ProfileBeanTest {
                 returns(true);
 
                 profileService.getProfilById(userId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 

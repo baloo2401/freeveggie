@@ -7,8 +7,8 @@ import mockit.Mocked;
 import org.mdubois.freeveggie.Status;
 import org.mdubois.freeveggie.bo.GardenBO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
-import org.mdubois.freeveggie.service.msg.GardenMsg;
 import org.mdubois.freeveggie.framework.utils.SystemTime;
+import org.mdubois.freeveggie.service.msg.GardenMsg;
 // </editor-fold>
 
 /**
@@ -17,6 +17,9 @@ import org.mdubois.freeveggie.framework.utils.SystemTime;
  */
 public class GardenMsgToBOConverterTest extends BusinessObjectConverterTest<GardenBO, GardenMsg> {
 
+    @Mocked
+    @SuppressWarnings("unused")
+    private final SystemTime systemTime = null;
     private final GardenMsgToBOConverter converter = new GardenMsgToBOConverter();
     private static final Date NOW = new Date();
 
@@ -28,7 +31,6 @@ public class GardenMsgToBOConverterTest extends BusinessObjectConverterTest<Gard
         bo.setName("name");
         bo.setStatus(Status.CREATED);
         return bo;
-
 
     }
 
@@ -48,10 +50,6 @@ public class GardenMsgToBOConverterTest extends BusinessObjectConverterTest<Gard
     @Override
     public Expectations getConvertCallExpectaion() {
         return new Expectations() {
-
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
 
             {
                 SystemTime.asDate();

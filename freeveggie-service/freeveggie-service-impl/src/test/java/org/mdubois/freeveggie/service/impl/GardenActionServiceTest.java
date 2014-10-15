@@ -18,7 +18,6 @@ import org.mdubois.freeveggie.dao.api.IGardenDAO;
 import org.mdubois.freeveggie.dao.api.IUserPartialDAO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
-import org.mdubois.freeveggie.service.api.IGardenService;
 import org.mdubois.freeveggie.service.matcher.GardenBOMatcher;
 import org.mdubois.freeveggie.service.msg.AddressMsg;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
@@ -33,9 +32,16 @@ import org.mdubois.freeveggie.service.msg.RefCityMsg;
 @RunWith(JMockit.class)
 public class GardenActionServiceTest {
 
-    /**
-     * {@link IGardenService}
-     */
+    @Mocked
+    private IGardenDAO mockGardenDAO;
+    @Mocked
+    private IUserPartialDAO mockUserPartialDAO;
+    @Mocked
+    private IAddressDAO mockAddressDAO;
+    @Mocked
+    private BusinessObjectConverter<GardenBO, GardenMsg> mockGardenMsgConverter;
+    @Mocked
+    private BusinessObjectConverter<AddressBO, AddressMsg> mockAddressMsgConverter;
 
     private static final Date dateTest = new Date();
 
@@ -54,23 +60,13 @@ public class GardenActionServiceTest {
         gardenMsg.setAddress(addressMsg);
         gardenMsg.setName("My New Garden");
         gardenMsg.setOwner(user);
-        new Expectations(){
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IAddressDAO mockAddressDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenBO, GardenMsg> mockGardenMsgConverter;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> mockaddressMsgConverter;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "addressDAO", mockAddressDAO);
                 Deencapsulation.setField(gardenService, "gardenMsgConverter", mockGardenMsgConverter);
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
-
 
                 AddressBO addressBO = new AddressBO();
                 addressBO.setStreetName("Rue de la loire");
@@ -100,7 +96,7 @@ public class GardenActionServiceTest {
 
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void createWithUnexistingUserBOAsOwner() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
@@ -114,21 +110,13 @@ public class GardenActionServiceTest {
         gardenMsg.setAddress(addressMsg);
         gardenMsg.setName("My New Garden");
         gardenMsg.setOwner(user);
-        new Expectations(){
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IAddressDAO mockAddressDAO;
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenBO, GardenMsg> mockGardenMsgConverter;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "addressDAO", mockAddressDAO);
                 Deencapsulation.setField(gardenService, "userPartialDAO", mockUserPartialDAO);
                 Deencapsulation.setField(gardenService, "gardenMsgConverter", mockGardenMsgConverter);
-
 
                 AddressBO addressBO = new AddressBO();
                 addressBO.setStreetName("Rue de la loire");
@@ -152,7 +140,7 @@ public class GardenActionServiceTest {
 
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void createWithNewAddressInexisting() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
@@ -166,13 +154,8 @@ public class GardenActionServiceTest {
         gardenMsg.setAddress(addressMsg);
         gardenMsg.setName("My New Garden");
         gardenMsg.setOwner(user);
-        new Expectations(){
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IAddressDAO mockAddressDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenBO, GardenMsg> mockGardenMsgConverter;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "addressDAO", mockAddressDAO);
@@ -191,7 +174,7 @@ public class GardenActionServiceTest {
                 mockAddressDAO.get(122L);
                 returns(null);
 
-                }
+            }
         };
         gardenService.create(gardenMsg);
 
@@ -211,17 +194,8 @@ public class GardenActionServiceTest {
         gardenMsg.setAddress(addressMsg);
         gardenMsg.setName("My New Garden");
         gardenMsg.setOwner(user);
-        new Expectations(){
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IAddressDAO mockAddressDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenBO, GardenMsg> mockGardenMsgConverter;
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private BusinessObjectConverter<AddressBO, AddressMsg> mockAddressMsgConverter;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "addressDAO", mockAddressDAO);
@@ -258,7 +232,6 @@ public class GardenActionServiceTest {
     }
 
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Test update">
     @Test
     public void update() throws BusinessException {
@@ -276,15 +249,11 @@ public class GardenActionServiceTest {
         gardenMsg.setAddress(addressMsg);
         gardenMsg.setName("My New Garden");
         gardenMsg.setOwner(user);
-        new Expectations(){
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenBO, GardenMsg> mockGardenMsgConverter;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenMsgConverter", mockGardenMsgConverter);
-
 
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setId(12L);
@@ -302,7 +271,7 @@ public class GardenActionServiceTest {
 
     }
 
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void updateExecption() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
@@ -318,11 +287,8 @@ public class GardenActionServiceTest {
         gardenMsg.setAddress(addressMsg);
         gardenMsg.setName("My New Garden");
         gardenMsg.setOwner(user);
-        new Expectations(){
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private BusinessObjectConverter<GardenBO, GardenMsg> mockGardenMsgConverter;
+        new Expectations() {
+
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 mockGardenDAO.get(12L);
@@ -338,9 +304,10 @@ public class GardenActionServiceTest {
     // <editor-fold defaultstate="collapsed" desc="Blacklist ">
     /**
      * Control that we can't blacklist a unexisting
+     *
      * @throws BusinessException
      */
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void blacklistNo() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
@@ -348,15 +315,12 @@ public class GardenActionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -366,6 +330,7 @@ public class GardenActionServiceTest {
 
     /**
      * Control that we can't blacklist a deleted .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
@@ -376,9 +341,6 @@ public class GardenActionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
@@ -386,7 +348,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.DELETED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -395,7 +357,8 @@ public class GardenActionServiceTest {
     }
 
     /**
-     * Control that we can blacklist an already blacklist  without using save.
+     * Control that we can blacklist an already blacklist without using save.
+     *
      * @throws BusinessException
      */
     @Test
@@ -406,9 +369,6 @@ public class GardenActionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
@@ -416,7 +376,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.BLACKLISTED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -426,6 +386,7 @@ public class GardenActionServiceTest {
 
     /**
      * Control that blacklist works.
+     *
      * @throws BusinessException
      */
     @Test
@@ -436,10 +397,7 @@ public class GardenActionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO mockGardenDAO;
             {
-
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
@@ -455,7 +413,7 @@ public class GardenActionServiceTest {
                 gardenBO.setStatus(Status.CREATED);
                 gardenBO.setCreationDate(now);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
 
                 GardenBO gardenBOExpected = new GardenBO();
@@ -463,7 +421,7 @@ public class GardenActionServiceTest {
                 gardenBOExpected.setStatus(Status.BLACKLISTED);
                 gardenBOExpected.setCreationDate(now);
 
-                mockGardenDAO.update(with(new GardenBOMatcher(gardenBOExpected)));
+                mockGardenDAO.update(with(gardenBOExpected, new GardenBOMatcher(gardenBOExpected)));
             }
         };
 
@@ -474,26 +432,23 @@ public class GardenActionServiceTest {
     // <editor-fold defaultstate="collapsed" desc="Unblacklist ">
     /**
      * Control that we can't unblacklist an unexisting .
+     *
      * @throws BusinessException
      */
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void unblacklistNo() throws BusinessException {
         final GardenService gardenService = new GardenService();
-
 
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -503,19 +458,16 @@ public class GardenActionServiceTest {
 
     /**
      * Control that we can unblacklist a deleted .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
     public void unblacklistDeleted() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -524,7 +476,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.DELETED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -534,19 +486,16 @@ public class GardenActionServiceTest {
 
     /**
      * Control that we don't call save when we unblacklist an unblacklistd .
+     *
      * @throws BusinessException
      */
     @Test
     public void unblacklistAlreadyUnblacklist() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -555,7 +504,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.CREATED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -565,6 +514,7 @@ public class GardenActionServiceTest {
 
     /**
      * Control that unblacklist works.
+     *
      * @throws BusinessException
      */
     @Test
@@ -574,9 +524,6 @@ public class GardenActionServiceTest {
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -594,7 +541,7 @@ public class GardenActionServiceTest {
                 gardenBO.setStatus(Status.BLACKLISTED);
                 gardenBO.setCreationDate(now);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
 
                 GardenBO gardenBOExpected = new GardenBO();
@@ -602,7 +549,7 @@ public class GardenActionServiceTest {
                 gardenBOExpected.setStatus(Status.CREATED);
                 gardenBOExpected.setCreationDate(now);
 
-                mockGardenDAO.update(with(new GardenBOMatcher(gardenBOExpected)));
+                mockGardenDAO.update(with(gardenBOExpected, new GardenBOMatcher(gardenBOExpected)));
             }
         };
 
@@ -613,26 +560,23 @@ public class GardenActionServiceTest {
     // <editor-fold defaultstate="collapsed" desc="Test create">
     /**
      * Test that if we cant remove an unexiting .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
     public void removeNo() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -642,19 +586,16 @@ public class GardenActionServiceTest {
 
     /**
      * Test that we can't remove an archive .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
     public void removeArchived() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -663,7 +604,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.ARCHIVED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -672,20 +613,18 @@ public class GardenActionServiceTest {
     }
 
     /**
-     * That if we try to remove an already DELETED  there is no pb and no call to save.
+     * That if we try to remove an already DELETED there is no pb and no call to
+     * save.
+     *
      * @throws BusinessException
      */
     @Test
     public void removeAlreadyDELETED() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -694,7 +633,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.DELETED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -704,19 +643,16 @@ public class GardenActionServiceTest {
 
     /**
      * Test that remove works.
+     *
      * @throws BusinessException
      */
     @Test
     public void remove() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -734,7 +670,7 @@ public class GardenActionServiceTest {
                 gardenBO.setStatus(Status.CREATED);
                 gardenBO.setCreationDate(now);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
 
                 GardenBO gardenBOExpected = new GardenBO();
@@ -742,7 +678,7 @@ public class GardenActionServiceTest {
                 gardenBOExpected.setStatus(Status.DELETED);
                 gardenBOExpected.setCreationDate(now);
 
-                mockGardenDAO.update(with(new GardenBOMatcher(gardenBOExpected)));
+                mockGardenDAO.update(with(gardenBOExpected, new GardenBOMatcher(gardenBOExpected)));
             }
         };
 
@@ -753,26 +689,23 @@ public class GardenActionServiceTest {
     // <editor-fold defaultstate="collapsed" desc="Test reactivate">
     /**
      * Test that if we cant reactive an unexiting .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
     public void reactivateNo() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -782,19 +715,16 @@ public class GardenActionServiceTest {
 
     /**
      * Control that if we can't reactived an archive .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
     public void reactivateArchived() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -803,7 +733,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.ARCHIVED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -813,19 +743,16 @@ public class GardenActionServiceTest {
 
     /**
      * Control that we can reactivated an already activate .
+     *
      * @throws BusinessException
      */
     @Test
     public void reactivateAlreadyActivated() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -834,7 +761,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.CREATED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -844,19 +771,16 @@ public class GardenActionServiceTest {
 
     /**
      * Controle that reactivate works.
+     *
      * @throws BusinessException
      */
     @Test
     public void reactivate() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -874,7 +798,7 @@ public class GardenActionServiceTest {
                 gardenBO.setStatus(Status.DELETED);
                 gardenBO.setCreationDate(now);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
 
                 GardenBO gardenBOExpected = new GardenBO();
@@ -882,7 +806,7 @@ public class GardenActionServiceTest {
                 gardenBOExpected.setStatus(Status.CREATED);
                 gardenBOExpected.setCreationDate(now);
 
-                mockGardenDAO.update(with(new GardenBOMatcher(gardenBOExpected)));
+                mockGardenDAO.update(with(gardenBOExpected, new GardenBOMatcher(gardenBOExpected)));
             }
         };
 
@@ -893,26 +817,23 @@ public class GardenActionServiceTest {
     // <editor-fold defaultstate="collapsed" desc="Archive ">
     /**
      * Control that we can't archive a unexisting
+     *
      * @throws BusinessException
      */
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void archiveNo() throws BusinessException {
         final GardenService gardenService = new GardenService();
-
 
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -922,19 +843,16 @@ public class GardenActionServiceTest {
 
     /**
      * Control that we can't archive a deleted .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
     public void archiveDeleted() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -943,7 +861,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.DELETED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -952,20 +870,17 @@ public class GardenActionServiceTest {
     }
 
     /**
-     * Control that we can archive an already archive  without using save.
+     * Control that we can archive an already archive without using save.
+     *
      * @throws BusinessException
      */
     @Test
     public void archiveAlreadyArchive() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -974,7 +889,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.ARCHIVED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -984,21 +899,18 @@ public class GardenActionServiceTest {
 
     /**
      * Control that archive works.
+     *
      * @throws BusinessException
      */
     @Test
     public void archive() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO mockGardenDAO;
             {
-
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
@@ -1014,7 +926,7 @@ public class GardenActionServiceTest {
                 gardenBO.setStatus(Status.CREATED);
                 gardenBO.setCreationDate(now);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
 
                 GardenBO gardenBOExpected = new GardenBO();
@@ -1022,7 +934,7 @@ public class GardenActionServiceTest {
                 gardenBOExpected.setStatus(Status.ARCHIVED);
                 gardenBOExpected.setCreationDate(now);
 
-                mockGardenDAO.update(with(new GardenBOMatcher(gardenBOExpected)));
+                mockGardenDAO.update(with(gardenBOExpected, new GardenBOMatcher(gardenBOExpected)));
             }
         };
 
@@ -1033,26 +945,23 @@ public class GardenActionServiceTest {
     // <editor-fold defaultstate="collapsed" desc="Unarchive ">
     /**
      * Control that we can't unarchive an unexisting .
+     *
      * @throws BusinessException
      */
-    @Test(expected=BusinessException.class)
+    @Test(expected = BusinessException.class)
     public void unarchiveNo() throws BusinessException {
         final GardenService gardenService = new GardenService();
-
 
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -1062,19 +971,16 @@ public class GardenActionServiceTest {
 
     /**
      * Control that we can unarchive a deleted .
+     *
      * @throws BusinessException
      */
     @Test(expected = BusinessException.class)
     public void unarchiveDeleted() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -1083,7 +989,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.DELETED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -1093,19 +999,16 @@ public class GardenActionServiceTest {
 
     /**
      * Control that we don't call save when we unarchive an unarchived .
+     *
      * @throws BusinessException
      */
     @Test
     public void unarchiveAlreadyUnarchive() throws BusinessException {
         final GardenService gardenService = new GardenService();
 
-
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -1114,7 +1017,7 @@ public class GardenActionServiceTest {
                 GardenBO gardenBO = new GardenBO();
                 gardenBO.setStatus(Status.CREATED);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
             }
         };
@@ -1124,6 +1027,7 @@ public class GardenActionServiceTest {
 
     /**
      * Control that unarchive works.
+     *
      * @throws BusinessException
      */
     @Test
@@ -1133,9 +1037,6 @@ public class GardenActionServiceTest {
         final Long pGardenId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenDAO mockGardenDAO;
 
             {
 
@@ -1153,7 +1054,7 @@ public class GardenActionServiceTest {
                 gardenBO.setStatus(Status.ARCHIVED);
                 gardenBO.setCreationDate(now);
                 mockGardenDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(gardenBO);
 
                 GardenBO gardenBOExpected = new GardenBO();
@@ -1161,13 +1062,12 @@ public class GardenActionServiceTest {
                 gardenBOExpected.setStatus(Status.CREATED);
                 gardenBOExpected.setCreationDate(now);
 
-                mockGardenDAO.update(with(new GardenBOMatcher(gardenBOExpected)));
+                mockGardenDAO.update(with(gardenBOExpected, new GardenBOMatcher(gardenBOExpected)));
             }
         };
 
         gardenService.unarchive(pGardenId);
     }
     // </editor-fold>
-
 
 }

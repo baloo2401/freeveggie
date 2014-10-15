@@ -9,9 +9,9 @@ import org.mdubois.freeveggie.RelationshipStatus;
 import org.mdubois.freeveggie.RelationshipType;
 import org.mdubois.freeveggie.bo.RelationShipBO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
+import org.mdubois.freeveggie.framework.utils.SystemTime;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
 import org.mdubois.freeveggie.service.msg.RelationShipMsg;
-import org.mdubois.freeveggie.framework.utils.SystemTime;
 // </editor-fold>
 
 /**
@@ -20,6 +20,9 @@ import org.mdubois.freeveggie.framework.utils.SystemTime;
  */
 public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTest<RelationShipBO, RelationShipMsg> {
 
+    @Mocked
+    @SuppressWarnings("unused")
+    private final SystemTime systemTime = null;
     private final RelationshipMsgToBOConverter converter = new RelationshipMsgToBOConverter();
     private final static Date NOW = new Date();
 
@@ -61,9 +64,6 @@ public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTes
     @Override
     public Expectations getConvertCallExpectaion() {
         return new Expectations() {
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
 
             {
                 SystemTime.asDate();

@@ -19,6 +19,9 @@ import org.unitils.reflectionassert.ReflectionAssert;
  */
 public class RefStateBOToMsgConverterTest extends AbstractConverterTest<RefStateMsg, RefStateBO> {
 
+    @Mocked
+    private Converter<RefCountryMsg, RefCountryBO> refCountryBOConverter;
+
     @Test
     public void testConvertFull() {
         RefStateMsg expectedMessage = getExpectedMessage();
@@ -28,9 +31,6 @@ public class RefStateBOToMsgConverterTest extends AbstractConverterTest<RefState
         source.setCountry(countryBO);
 
         new Expectations() {
-
-            @Mocked
-            private Converter<RefCountryMsg, RefCountryBO> refCountryBOConverter;
 
             {
                 Deencapsulation.setField(converter, refCountryBOConverter);

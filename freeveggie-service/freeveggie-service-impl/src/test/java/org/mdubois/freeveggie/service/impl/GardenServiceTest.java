@@ -7,13 +7,19 @@ import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.Status;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.bo.AddressBO;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.ProductBO;
+import org.mdubois.freeveggie.bo.RefCityBO;
+import org.mdubois.freeveggie.bo.RefCountryBO;
+import org.mdubois.freeveggie.bo.RefProductBO;
+import org.mdubois.freeveggie.bo.RefRegionBO;
+import org.mdubois.freeveggie.bo.RefStateBO;
 import org.mdubois.freeveggie.criteria.GardenCriteriaColumn;
 import org.mdubois.freeveggie.dao.api.IGardenDAO;
 import org.mdubois.freeveggie.dao.impl.GardenDAO;
@@ -35,16 +41,23 @@ import org.mdubois.freeveggie.service.msg.GardenMsg;
 @RunWith(JMockit.class)
 public class GardenServiceTest {
 
+    @Mocked
+    private GardenDAO mockGardenDAO;
+    @Mocked
+    private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
+    @Mocked
+    private IGardenDAO gardenDAO;
+    @Mocked
+    private Converter<GardenMsg, GardenBO> gardenBOConverter;
+
     /**
      * {@link IGardenService}
      */
     private static IGardenService gardenService = new GardenService();
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
-
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
     @Test(expected = BusinessException.class)
     public void getGardenByIdExc() throws BusinessException {
 
@@ -52,14 +65,11 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
 
                 mockGardenDAO.get(gardenId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -75,11 +85,6 @@ public class GardenServiceTest {
         gardenExpected.setId(gardenId);
 
         new Expectations() {
-
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
 
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
@@ -102,10 +107,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -114,7 +115,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -133,11 +134,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -146,12 +142,11 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
                 PartialUserBO user = new PartialUserBO();
                 user.setId(userId);
-
 
                 GardenBO garden = new GardenBO();
                 garden.setOwner(user);
@@ -180,11 +175,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -193,7 +183,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
                 PartialUserBO user = new PartialUserBO();
@@ -232,16 +222,11 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
 
-                mockGardenDAO.getGardenByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
                 PartialUserBO user = new PartialUserBO();
@@ -273,11 +258,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -286,7 +266,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByCityAndProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByCityAndProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -305,11 +285,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -318,7 +293,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByCityAndProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByCityAndProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -341,22 +316,15 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
-
-
 
                 TechnicalInformation<GardenCriteriaColumn, GardenOrderColumn> techInfo = new TechnicalInformation<GardenCriteriaColumn, GardenOrderColumn>();
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByCityAndProduct(prodId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByCityAndProduct(prodId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 RefCityBO city = new RefCityBO();
                 city.setId(cityId);
@@ -403,11 +371,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -422,7 +385,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByCityAndProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByCityAndProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
@@ -459,11 +422,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -472,7 +430,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -491,11 +449,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-             @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -504,7 +457,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -527,11 +480,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -546,7 +494,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
@@ -590,11 +538,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -609,7 +552,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByRegionAndProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
@@ -649,11 +592,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -662,7 +600,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByStateAndProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByStateAndProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -681,11 +619,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -694,7 +627,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByStateAndProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByStateAndProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -717,11 +650,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -736,7 +664,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByStateAndProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByStateAndProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
@@ -782,11 +710,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -801,7 +724,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByStateAndProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByStateAndProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
@@ -843,11 +766,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -856,7 +774,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -875,11 +793,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> gardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", gardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", gardenBOConverter);
@@ -888,7 +801,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                gardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                gardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
                 gardenBOConverter.convert((List) null);
@@ -911,11 +824,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -930,7 +838,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 
@@ -979,11 +887,6 @@ public class GardenServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private GardenDAO mockGardenDAO;
-            @Mocked
-            private Converter<GardenMsg, GardenBO> mockGardenBOConverter;
-
             {
                 Deencapsulation.setField(gardenService, "gardenDAO", mockGardenDAO);
                 Deencapsulation.setField(gardenService, "gardenBOConverter", mockGardenBOConverter);
@@ -998,7 +901,7 @@ public class GardenServiceTest {
                 QueryCriteria<GardenCriteriaColumn> gardenCriteria = new QueryCriteria<GardenCriteriaColumn>(GardenCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(gardenCriteria);
 
-                mockGardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockGardenDAO.getGardenByCountryAndProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<GardenBO> resList = new ArrayList<GardenBO>();
 

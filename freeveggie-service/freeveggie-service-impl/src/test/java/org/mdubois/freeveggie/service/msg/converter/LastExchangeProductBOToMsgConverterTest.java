@@ -20,6 +20,9 @@ import org.unitils.reflectionassert.ReflectionAssert;
  */
 public class LastExchangeProductBOToMsgConverterTest extends AbstractConverterTest<LastExchangeProductMsg, LastExchangeProductBO> {
 
+    @Mocked
+    private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
+
     private static final Date NOW = new Date();
 
     @Test
@@ -37,9 +40,6 @@ public class LastExchangeProductBOToMsgConverterTest extends AbstractConverterTe
         mostSharedProductBO.setLastExchangeDate(NOW);
 
         new Expectations() {
-
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
 
             {
                 Deencapsulation.setField(converter, "productBOToMsgConverter", mockProductBOToMsgConverter);

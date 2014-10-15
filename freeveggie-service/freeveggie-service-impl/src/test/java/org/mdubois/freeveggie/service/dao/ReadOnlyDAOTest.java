@@ -55,12 +55,12 @@ public abstract class ReadOnlyDAOTest<T extends BusinessObject<PK>, PK extends S
             List<T> entities = getDao().getAll(false, null);
             Assert.assertTrue("Dataset need more data to run test", entities.size() >= 2);
             List<QueryCriteria<CriteriaColumn>> criterias = getCriterias(getCriteriaColumn());
-            List<QueryCriteria<? extends CriteriaColumn>> criteriaTest = new ArrayList<QueryCriteria<? extends CriteriaColumn>>(1);
+            List<QueryCriteria<? extends CriteriaColumn>> criteriaTest = new ArrayList<>(1);
             QueryCriteria<CriteriaColumn> newCriteria;
             for (QueryCriteria<CriteriaColumn> criteria : criterias) {
                 Object expectedValue = PropertyUtils.getNestedProperty(entities.get(0), criteria.getCriteria().getCriteriaColumn().replace("_", ""));
                 criteriaTest.clear();
-                newCriteria = new QueryCriteria<CriteriaColumn>(criteria.getCriteria(), CriteriaOperation.EQUAL, expectedValue);
+                newCriteria = new QueryCriteria<>(criteria.getCriteria(), CriteriaOperation.EQUAL, expectedValue);
                 criteriaTest.add(newCriteria);
                 List<T> entitiesTests = getDao().getAll(criteriaTest, null, null);
                 Assert.assertTrue(entities != null && entities.size() > 0);

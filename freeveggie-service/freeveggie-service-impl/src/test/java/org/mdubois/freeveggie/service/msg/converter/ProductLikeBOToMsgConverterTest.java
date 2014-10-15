@@ -10,10 +10,10 @@ import org.mdubois.freeveggie.EvaluationStatus;
 import org.mdubois.freeveggie.bo.PartialUserBO;
 import org.mdubois.freeveggie.bo.ProductBO;
 import org.mdubois.freeveggie.bo.ProductLikeBO;
+import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
 import org.mdubois.freeveggie.service.msg.ProductLikeMsg;
 import org.mdubois.freeveggie.service.msg.ProductMsg;
-import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.unitils.reflectionassert.ReflectionAssert;
 // </editor-fold>
 
@@ -22,6 +22,12 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Mickael Dubois
  */
 public class ProductLikeBOToMsgConverterTest extends AbstractConverterTest<ProductLikeMsg, ProductLikeBO> {
+
+    @Mocked
+    private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
+
+    @Mocked
+    private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
 
     private static final Date NOW = new Date();
 
@@ -41,15 +47,9 @@ public class ProductLikeBOToMsgConverterTest extends AbstractConverterTest<Produ
 
         new Expectations() {
 
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOToMsgConverter;
-
-            @Mocked
-            private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
-
             {
                 Deencapsulation.setField(converter, "productBOToMsgConverter", mockProductBOToMsgConverter);
-                Deencapsulation.setField(converter,"partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
+                Deencapsulation.setField(converter, "partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
 
                 mockProductBOToMsgConverter.convert(productLikeBO.getProduct());
                 returns(null);
@@ -71,7 +71,6 @@ public class ProductLikeBOToMsgConverterTest extends AbstractConverterTest<Produ
         expectedResult.setId(11L);
         expectedResult.setCreationDate(NOW);
         expectedResult.setStatus(EvaluationStatus.SETTED);
-
 
         return expectedResult;
     }

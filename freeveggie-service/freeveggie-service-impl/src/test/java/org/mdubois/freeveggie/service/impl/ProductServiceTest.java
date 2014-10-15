@@ -7,16 +7,21 @@ import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.Status;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.bo.AddressBO;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.ProductBO;
+import org.mdubois.freeveggie.bo.RefCityBO;
+import org.mdubois.freeveggie.bo.RefCountryBO;
+import org.mdubois.freeveggie.bo.RefProductBO;
+import org.mdubois.freeveggie.bo.RefRegionBO;
+import org.mdubois.freeveggie.bo.RefStateBO;
 import org.mdubois.freeveggie.criteria.ProductCriteriaColumn;
-import org.mdubois.freeveggie.dao.api.IProductDAO;
-import org.mdubois.freeveggie.dao.impl.*;
+import org.mdubois.freeveggie.dao.impl.ProductDAO;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.framework.service.TechnicalInformation;
@@ -35,16 +40,20 @@ import org.mdubois.freeveggie.service.msg.ProductMsg;
 @RunWith(JMockit.class)
 public class ProductServiceTest {
 
+    @Mocked
+    private ProductDAO mockProductDAO;
+    @Mocked
+    private Converter<ProductMsg, ProductBO> mockProductBOConverter;
+
     /**
      * {@link IProductService}
      */
     private static IProductService productService = new ProductService();
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
-
+//    @After
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
     // <editor-fold defaultstate="collapsed" desc="Test method get by id">
     @Test(expected = BusinessException.class)
     public void getProductByIdExc() throws BusinessException {
@@ -53,14 +62,11 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockProductDAO.get(productId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -76,11 +82,6 @@ public class ProductServiceTest {
         productExpected.setId(productId);
 
         new Expectations() {
-
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
 
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -104,23 +105,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -136,11 +132,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -152,7 +143,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
                 ProductBO product = new ProductBO();
@@ -184,11 +175,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -200,7 +186,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
                 ProductBO product = new ProductBO();
@@ -238,11 +224,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -250,7 +231,7 @@ public class ProductServiceTest {
                 PartialUserBO user = new PartialUserBO();
                 user.setId(userId);
 
-                mockProductDAO.getProductByUser(userId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByUser(userId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
                 GardenBO garden = new GardenBO();
@@ -279,23 +260,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByCityAndRefProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCityAndRefProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -310,23 +286,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByCityAndRefProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCityAndRefProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -345,11 +316,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -364,7 +330,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByCityAndRefProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCityAndRefProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
@@ -401,11 +367,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -420,7 +381,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByCityAndRefProduct(cityId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCityAndRefProduct(cityId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
@@ -453,23 +414,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByRegionAndRefProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByRegionAndRefProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -484,23 +440,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByRegionAndRefProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByRegionAndRefProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -519,11 +470,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -538,7 +484,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByRegionAndRefProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByRegionAndRefProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
@@ -578,11 +524,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -597,7 +538,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByRegionAndRefProduct(regionId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByRegionAndRefProduct(regionId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
@@ -633,23 +574,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByStateAndRefProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByStateAndRefProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -664,23 +600,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByStateAndRefProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByStateAndRefProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -699,11 +630,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -718,7 +644,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByStateAndRefProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByStateAndRefProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
@@ -760,11 +686,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -779,7 +700,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByStateAndRefProduct(stateId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByStateAndRefProduct(stateId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
@@ -817,23 +738,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByCountryAndRefProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCountryAndRefProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -848,23 +764,18 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private Converter< ProductMsg, ProductBO> productBOConverter;
-
             {
-                Deencapsulation.setField(productService, "productBOConverter", productBOConverter);
-                Deencapsulation.setField(productService, "productDAO", productDAO);
+                Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
+                Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> techInfo = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                productDAO.getProductByCountryAndRefProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCountryAndRefProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
                 returns(null);
 
-                productBOConverter.convert((List) null);
+                mockProductBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -883,11 +794,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -902,7 +808,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByCountryAndRefProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCountryAndRefProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 
@@ -947,11 +853,6 @@ public class ProductServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private ProductDAO mockProductDAO;
-            @Mocked
-            private Converter<ProductMsg, ProductBO> mockProductBOConverter;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productBOConverter", mockProductBOConverter);
@@ -966,7 +867,7 @@ public class ProductServiceTest {
                 QueryCriteria<ProductCriteriaColumn> productCriteria = new QueryCriteria<ProductCriteriaColumn>(ProductCriteriaColumn.STATUS, CriteriaOperation.EQUAL, Status.CREATED);
                 techInfo.addCriteria(productCriteria);
 
-                mockProductDAO.getProductByCountryAndRefProduct(countryId, prodId, with(new TechnicalInformationMatcher(techInfo)));
+                mockProductDAO.getProductByCountryAndRefProduct(countryId, prodId, with(techInfo, new TechnicalInformationMatcher(techInfo)));
 
                 List<ProductBO> resList = new ArrayList<ProductBO>();
 

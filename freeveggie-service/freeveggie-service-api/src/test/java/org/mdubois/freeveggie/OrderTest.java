@@ -4,7 +4,21 @@ import junit.framework.Assert;
 import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mdubois.freeveggie.order.*;
+import org.mdubois.freeveggie.order.AddressOrderColumn;
+import org.mdubois.freeveggie.order.GardenCommentOrderColumn;
+import org.mdubois.freeveggie.order.GardenLikeOrderColumn;
+import org.mdubois.freeveggie.order.GardenOrderColumn;
+import org.mdubois.freeveggie.order.ProductCommentOrderColumn;
+import org.mdubois.freeveggie.order.ProductLikeOrderColumn;
+import org.mdubois.freeveggie.order.ProductOrderColumn;
+import org.mdubois.freeveggie.order.ProductRequestOrderColumn;
+import org.mdubois.freeveggie.order.RefCityOrderColumn;
+import org.mdubois.freeveggie.order.RefCountryOrderColumn;
+import org.mdubois.freeveggie.order.RefProductOrderColumn;
+import org.mdubois.freeveggie.order.RefRegionOrderColumn;
+import org.mdubois.freeveggie.order.RefStateOrderColumn;
+import org.mdubois.freeveggie.order.RelationShipOrderColumn;
+import org.mdubois.freeveggie.order.UserOrderColumn;
 
 /**
  *
@@ -15,123 +29,123 @@ public class OrderTest {
 
     @Test
     public void testAddressOrderColumn() {
-        Assert.assertEquals(AddressOrderColumn.CITY_NAME.getOrderedColumn(), "city.name");
-        Assert.assertEquals(AddressOrderColumn.CITY_ZIP_CODE.getOrderedColumn(), "city.zipCode");
-        Assert.assertEquals(AddressOrderColumn.REGION.getOrderedColumn(), "city.region.name");
-        Assert.assertEquals(AddressOrderColumn.STATE.getOrderedColumn(), "city.region.state.name");
-        Assert.assertEquals(AddressOrderColumn.COUNTRY.getOrderedColumn(), "city.region.state.country.name");
+        Assert.assertEquals("city.name", AddressOrderColumn.CITY_NAME.getOrderedColumn());
+        Assert.assertEquals("city.zipCode", AddressOrderColumn.CITY_ZIP_CODE.getOrderedColumn());
+        Assert.assertEquals("city.region.name", AddressOrderColumn.REGION.getOrderedColumn());
+        Assert.assertEquals("city.region.state.name", AddressOrderColumn.STATE.getOrderedColumn());
+        Assert.assertEquals("city.region.state.country.name", AddressOrderColumn.COUNTRY.getOrderedColumn());
 
     }
 
     @Test
     public void testGardenCommentOrderColumn() {
-        Assert.assertEquals(GardenCommentOrderColumn.NOTE.getOrderedColumn(), "_note");
-        Assert.assertEquals(GardenCommentOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(GardenCommentOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
+        Assert.assertEquals("_note", GardenCommentOrderColumn.NOTE.getOrderedColumn());
+        Assert.assertEquals("_status", GardenCommentOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", GardenCommentOrderColumn.CREATION_DATE.getOrderedColumn());
     }
 
     @Test
     public void testGardenOrderColumn() {
-        Assert.assertEquals(GardenOrderColumn.NAME.getOrderedColumn(), "name");
-        Assert.assertEquals(GardenOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
+        Assert.assertEquals("name", GardenOrderColumn.NAME.getOrderedColumn());
+        Assert.assertEquals("creationDate", GardenOrderColumn.CREATION_DATE.getOrderedColumn());
     }
 
     @Test
     public void testGardenLikeOrderColumn() {
-        Assert.assertEquals(GardenLikeOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(GardenLikeOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
+        Assert.assertEquals("_status", GardenLikeOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", GardenLikeOrderColumn.CREATION_DATE.getOrderedColumn());
     }
 
     @Test
     public void testProductCommentOrderColumn() {
-        Assert.assertEquals(ProductCommentOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(ProductCommentOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
-        Assert.assertEquals(ProductCommentOrderColumn.NOTE.getOrderedColumn(), "_note");
+        Assert.assertEquals("_status", ProductCommentOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", ProductCommentOrderColumn.CREATION_DATE.getOrderedColumn());
+        Assert.assertEquals("_note", ProductCommentOrderColumn.NOTE.getOrderedColumn());
     }
 
     @Test
     public void testProductOrderColumn() {
 
-        Assert.assertEquals(ProductOrderColumn.NAME.getOrderedColumn(), "name");
-        Assert.assertEquals(ProductOrderColumn.QUANTITY.getOrderedColumn(), "quantity");
-        Assert.assertEquals(ProductOrderColumn.CULTURE_TYPE.getOrderedColumn(), "_cultureType");
-        Assert.assertEquals(ProductOrderColumn.CULTURE_MODE.getOrderedColumn(), "_cultureMode");
-        Assert.assertEquals(ProductOrderColumn.EXCHANGE_TYPE.getOrderedColumn(), "_exchangeType");
-        Assert.assertEquals(ProductOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(ProductOrderColumn.REFERENCE_PRODUCT_NAME.getOrderedColumn(), "referenceProduct.name");
+        Assert.assertEquals("name", ProductOrderColumn.NAME.getOrderedColumn());
+        Assert.assertEquals("quantity", ProductOrderColumn.QUANTITY.getOrderedColumn());
+        Assert.assertEquals("_cultureType", ProductOrderColumn.CULTURE_TYPE.getOrderedColumn());
+        Assert.assertEquals("_cultureMode", ProductOrderColumn.CULTURE_MODE.getOrderedColumn());
+        Assert.assertEquals("_exchangeType", ProductOrderColumn.EXCHANGE_TYPE.getOrderedColumn());
+        Assert.assertEquals("_status", ProductOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("referenceProduct.name", ProductOrderColumn.REFERENCE_PRODUCT_NAME.getOrderedColumn());
     }
 
     @Test
     public void testProductLikeOrderColumn() {
-        Assert.assertEquals(ProductLikeOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(ProductLikeOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
+        Assert.assertEquals("_status", ProductLikeOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", ProductLikeOrderColumn.CREATION_DATE.getOrderedColumn());
     }
 
     @Test
     public void testProductRequestOrderColumn() {
 
-        Assert.assertEquals(ProductRequestOrderColumn.REQUESTER.getOrderedColumn(), "requester.username");
-        Assert.assertEquals(ProductRequestOrderColumn.PRODUCT_REF.getOrderedColumn(), "product.referenceProduct.name");
-        Assert.assertEquals(ProductRequestOrderColumn.PRODUCER.getOrderedColumn(), "product.garden.owner.username");
-        Assert.assertEquals(ProductRequestOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(ProductRequestOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
-        Assert.assertEquals(ProductRequestOrderColumn.QUANTITY.getOrderedColumn(), "quantity");
-        Assert.assertEquals(ProductRequestOrderColumn.ANSWER_DATE.getOrderedColumn(), "answerDate");
-        Assert.assertEquals(ProductRequestOrderColumn.PICKING_DATE.getOrderedColumn(), "pickingDate");
+        Assert.assertEquals("requester.username", ProductRequestOrderColumn.REQUESTER.getOrderedColumn());
+        Assert.assertEquals("product.referenceProduct.name", ProductRequestOrderColumn.PRODUCT_REF.getOrderedColumn());
+        Assert.assertEquals("product.garden.owner.username", ProductRequestOrderColumn.PRODUCER.getOrderedColumn());
+        Assert.assertEquals("_status", ProductRequestOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", ProductRequestOrderColumn.CREATION_DATE.getOrderedColumn());
+        Assert.assertEquals("quantity", ProductRequestOrderColumn.QUANTITY.getOrderedColumn());
+        Assert.assertEquals("answerDate", ProductRequestOrderColumn.ANSWER_DATE.getOrderedColumn());
+        Assert.assertEquals("pickingDate", ProductRequestOrderColumn.PICKING_DATE.getOrderedColumn());
     }
 
     @Test
     public void testRefCityOrderColumn() {
-        Assert.assertEquals(RefCityOrderColumn.NAME.getOrderedColumn(), "name");
-        Assert.assertEquals(RefCityOrderColumn.ZIP_CODE.getOrderedColumn(), "zipCode");
+        Assert.assertEquals("name", RefCityOrderColumn.NAME.getOrderedColumn());
+        Assert.assertEquals("zipCode", RefCityOrderColumn.ZIP_CODE.getOrderedColumn());
     }
 
     @Test
     public void testRefCountryOrderColumn() {
-        Assert.assertEquals(RefCountryOrderColumn.NAME.getOrderedColumn(), "name");
-        Assert.assertEquals(RefCountryOrderColumn.CODE_ISO_A2.getOrderedColumn(), "codeIsoA2");
-        Assert.assertEquals(RefCountryOrderColumn.CODE_ISO_A3.getOrderedColumn(), "codeIsoA3");
-        Assert.assertEquals(RefCountryOrderColumn.CODE_ISO_NUMBER.getOrderedColumn(), "codeIsoNumber");
+        Assert.assertEquals("name", RefCountryOrderColumn.NAME.getOrderedColumn());
+        Assert.assertEquals("codeIsoA2", RefCountryOrderColumn.CODE_ISO_A2.getOrderedColumn());
+        Assert.assertEquals("codeIsoA3", RefCountryOrderColumn.CODE_ISO_A3.getOrderedColumn());
+        Assert.assertEquals("codeIsoNumber", RefCountryOrderColumn.CODE_ISO_NUMBER.getOrderedColumn());
     }
 
     @Test
     public void testRefRegionOrderColumn() {
-        Assert.assertEquals(RefRegionOrderColumn.NAME.getOrderedColumn(), "name");
+        Assert.assertEquals("name", RefRegionOrderColumn.NAME.getOrderedColumn());
     }
 
     @Test
     public void testRefStateOrderColumn() {
-        Assert.assertEquals(RefStateOrderColumn.NAME.getOrderedColumn(), "name");
+        Assert.assertEquals("name", RefStateOrderColumn.NAME.getOrderedColumn());
     }
 
     @Test
     public void testRefProductOrderColumn() {
 
-        Assert.assertEquals(RefProductOrderColumn.NAME.getOrderedColumn(), "name");
-        Assert.assertEquals(RefProductOrderColumn.TYPE.getOrderedColumn(), "_type");
-        Assert.assertEquals(RefProductOrderColumn.PROTEIN.getOrderedColumn(), "protein");
-        Assert.assertEquals(RefProductOrderColumn.LIPID.getOrderedColumn(), "lipid");
-        Assert.assertEquals(RefProductOrderColumn.CARBOHYDRATE.getOrderedColumn(), "carbohydrate");
+        Assert.assertEquals("name", RefProductOrderColumn.NAME.getOrderedColumn());
+        Assert.assertEquals("_type", RefProductOrderColumn.TYPE.getOrderedColumn());
+        Assert.assertEquals("protein", RefProductOrderColumn.PROTEIN.getOrderedColumn());
+        Assert.assertEquals("lipid", RefProductOrderColumn.LIPID.getOrderedColumn());
+        Assert.assertEquals("carbohydrate", RefProductOrderColumn.CARBOHYDRATE.getOrderedColumn());
     }
 
     @Test
     public void testRelationShipOrderColumn() {
 
-        Assert.assertEquals(RelationShipOrderColumn.TYPE.getOrderedColumn(), "_type");
-        Assert.assertEquals(RelationShipOrderColumn.RECIPIENT.getOrderedColumn(), "recipient");
-        Assert.assertEquals(RelationShipOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(RelationShipOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
+        Assert.assertEquals("_type", RelationShipOrderColumn.TYPE.getOrderedColumn());
+        Assert.assertEquals("recipient", RelationShipOrderColumn.RECIPIENT.getOrderedColumn());
+        Assert.assertEquals("_status", RelationShipOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", RelationShipOrderColumn.CREATION_DATE.getOrderedColumn());
     }
 
     @Test
     public void testRequestStatus() {
 
-        Assert.assertEquals(UserOrderColumn.LASTNAME.getOrderedColumn(), "lastname");
-        Assert.assertEquals(UserOrderColumn.FIRSTNAME.getOrderedColumn(), "firstname");
-        Assert.assertEquals(UserOrderColumn.USERNAME.getOrderedColumn(), "username");
-        Assert.assertEquals(UserOrderColumn.LAST_CONNEXION.getOrderedColumn(), "lastConnexion");
-        Assert.assertEquals(UserOrderColumn.STATUS.getOrderedColumn(), "_status");
-        Assert.assertEquals(UserOrderColumn.CREATION_DATE.getOrderedColumn(), "creationDate");
-        Assert.assertEquals(UserOrderColumn.ROLE.getOrderedColumn(), "_role");
+        Assert.assertEquals("lastname", UserOrderColumn.LASTNAME.getOrderedColumn());
+        Assert.assertEquals("firstname", UserOrderColumn.FIRSTNAME.getOrderedColumn());
+        Assert.assertEquals("username", UserOrderColumn.USERNAME.getOrderedColumn());
+        Assert.assertEquals("lastConnexion", UserOrderColumn.LAST_CONNEXION.getOrderedColumn());
+        Assert.assertEquals("_status", UserOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", UserOrderColumn.CREATION_DATE.getOrderedColumn());
+        Assert.assertEquals("_role", UserOrderColumn.ROLE.getOrderedColumn());
     }
 }

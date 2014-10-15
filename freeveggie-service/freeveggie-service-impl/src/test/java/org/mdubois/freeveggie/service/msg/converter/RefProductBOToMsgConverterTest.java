@@ -22,6 +22,9 @@ import org.unitils.reflectionassert.ReflectionAssert;
  */
 public class RefProductBOToMsgConverterTest extends AbstractConverterTest<RefProductMsg, RefProductBO> {
 
+    @Mocked
+    private Converter<Month, RefMonthBO> refMontgBOConverter;
+
     @Test
     public void testConvertFull() {
         RefProductMsg expectedMessage = getExpectedMessage();
@@ -37,9 +40,6 @@ public class RefProductBOToMsgConverterTest extends AbstractConverterTest<RefPro
         source.setReapMonths(reapSeason);
 
         new Expectations() {
-
-            @Mocked
-            private Converter<Month, RefMonthBO> refMontgBOConverter;
 
             {
                 Deencapsulation.setField(converter, refMontgBOConverter);

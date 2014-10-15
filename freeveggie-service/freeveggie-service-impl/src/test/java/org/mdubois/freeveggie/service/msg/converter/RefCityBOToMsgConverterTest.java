@@ -19,6 +19,9 @@ import org.unitils.reflectionassert.ReflectionAssert;
  */
 public class RefCityBOToMsgConverterTest extends AbstractConverterTest<RefCityMsg, RefCityBO> {
 
+    @Mocked
+    private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
+
     @Test
     public void testConvertFull() {
         RefCityMsg expectedMessage = getExpectedMessage();
@@ -28,9 +31,6 @@ public class RefCityBOToMsgConverterTest extends AbstractConverterTest<RefCityMs
         source.setRegion(regionBO);
 
         new Expectations() {
-
-            @Mocked
-            private Converter<RefRegionMsg, RefRegionBO> refRegionBOConverter;
 
             {
                 Deencapsulation.setField(converter, refRegionBOConverter);

@@ -41,13 +41,25 @@ import org.mdubois.freeveggie.service.msg.ProductRequestMsg;
 @RunWith(JMockit.class)
 public class ProductRequestServiceTest {
 
+    @Mocked
+    private IProductRequestDAO productRequestDAO;
+    @Mocked
+    private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
+    @Mocked
+    private IUserPartialDAO userPartialDAO;
+    @Mocked
+    private IProductDAO productDAO;
+    @Mocked
+    private INotificationDAO notificationDAO;
+    @Mocked
+    private BusinessObjectConverter<ProductRequestBO, ProductRequestMsg> productRequestMsgConverter;
+
     private static QueryCriteria<ProductRequestCriteriaColumn> criteriaStatusEqualAccepted = new QueryCriteria<ProductRequestCriteriaColumn>(ProductRequestCriteriaColumn.STATUS, CriteriaOperation.EQUAL, RequestStatus.ACCEPTED);
 
     // <editor-fold defaultstate="collapsed" desc="Test send request">
     @Test(expected = BusinessException.class)
     public void sendRequestNoUser() throws BusinessException {
         final ProductService productService = new ProductService();
-
 
         final ProductRequestMsg pProductRequestMsg = new ProductRequestMsg();
         ProductMsg product = new ProductMsg();
@@ -61,17 +73,12 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IProductDAO productDAO;
-
             {
                 Deencapsulation.setField(productService, userPartialDAO);
                 Deencapsulation.setField(productService, productDAO);
 
                 userPartialDAO.get(userId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -83,7 +90,6 @@ public class ProductRequestServiceTest {
     public void sendRequestNoProduct() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final ProductRequestMsg pProductRequestMsg = new ProductRequestMsg();
         ProductMsg product = new ProductMsg();
         final long productId = 1L;
@@ -96,18 +102,13 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IProductDAO productDAO;
-
             {
                 Deencapsulation.setField(productService, userPartialDAO);
                 Deencapsulation.setField(productService, productDAO);
 
                 PartialUserBO partialUserBO = new PartialUserBO();
                 userPartialDAO.get(userId);
-                repeats(1);
+                times = 1;
                 returns(partialUserBO);
 
                 productDAO.get(productId);
@@ -122,7 +123,6 @@ public class ProductRequestServiceTest {
     public void sendRequest() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final ProductRequestMsg pProductRequestMsg = new ProductRequestMsg();
         ProductMsg product = new ProductMsg();
         final long productId = 1L;
@@ -135,17 +135,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private IProductDAO productDAO;
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private INotificationDAO notificationDAO;
-            @Mocked
-            private BusinessObjectConverter<ProductRequestBO, ProductRequestMsg> productRequestMsgConverter;
-
             {
                 Deencapsulation.setField(productService, userPartialDAO);
                 Deencapsulation.setField(productService, productDAO);
@@ -155,7 +144,7 @@ public class ProductRequestServiceTest {
 
                 PartialUserBO partialUserBO = new PartialUserBO();
                 userPartialDAO.get(userId);
-                repeats(1);
+                times = 1;
                 returns(partialUserBO);
 
                 ProductBO productBO = new ProductBO();
@@ -181,19 +170,15 @@ public class ProductRequestServiceTest {
     public void acceptRequest() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final long productRequestId = 1L;
         final String message = "message";
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
             private SystemTime systemTime;
+
             {
                 Deencapsulation.setField(productService, productRequestDAO);
-
 
                 ProductRequestBO productRequestBO = new ProductRequestBO();
                 productRequestDAO.get(productRequestId);
@@ -217,19 +202,15 @@ public class ProductRequestServiceTest {
     public void acceptRequestNoRequest() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final long productRequestId = 1L;
         final String message = "message";
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
             private SystemTime systemTime;
+
             {
                 Deencapsulation.setField(productService, productRequestDAO);
-
 
                 ProductRequestBO productRequestBO = new ProductRequestBO();
                 productRequestDAO.get(productRequestId);
@@ -246,19 +227,15 @@ public class ProductRequestServiceTest {
     public void refuseRequest() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final long productRequestId = 1L;
         final String message = "message";
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
             private SystemTime systemTime;
+
             {
                 Deencapsulation.setField(productService, productRequestDAO);
-
 
                 ProductRequestBO productRequestBO = new ProductRequestBO();
                 productRequestDAO.get(productRequestId);
@@ -282,19 +259,15 @@ public class ProductRequestServiceTest {
     public void refuseRequestNoRequest() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final long productRequestId = 1L;
         final String message = "message";
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
             private SystemTime systemTime;
+
             {
                 Deencapsulation.setField(productService, productRequestDAO);
-
 
                 ProductRequestBO productRequestBO = new ProductRequestBO();
                 productRequestDAO.get(productRequestId);
@@ -316,10 +289,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -329,8 +298,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestByProduct(productId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestByProduct(productId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productRequestBOs);
 
                 productRequestBOConverter.convert(productRequestBOs);
@@ -349,10 +318,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -362,8 +327,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestByProduct(productId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestByProduct(productId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(null);
 
                 productRequestBOConverter.convert((List) null);
@@ -385,10 +350,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -398,8 +359,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestByGarden(gardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestByGarden(gardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productRequestBOs);
 
                 productRequestBOConverter.convert(productRequestBOs);
@@ -418,10 +379,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -431,8 +388,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestByGarden(gardenId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestByGarden(gardenId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(null);
 
                 productRequestBOConverter.convert((List) null);
@@ -454,10 +411,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -467,8 +420,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestReceived(userPartialId,  with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestReceived(userPartialId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productRequestBOs);
 
                 productRequestBOConverter.convert(productRequestBOs);
@@ -487,11 +440,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -501,8 +449,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestReceived(userPartialId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestReceived(userPartialId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(null);
 
                 productRequestBOConverter.convert((List) null);
@@ -524,10 +472,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -537,8 +481,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestSend(userPartialId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestSend(userPartialId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productRequestBOs);
 
                 productRequestBOConverter.convert(productRequestBOs);
@@ -557,10 +501,6 @@ public class ProductRequestServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductRequestDAO productRequestDAO;
-            @Mocked
-            private Converter<ProductRequestMsg, ProductRequestBO> productRequestBOConverter;
             {
                 Deencapsulation.setField(productService, productRequestDAO);
                 Deencapsulation.setField(productService, "productRequestBOConverter", productRequestBOConverter);
@@ -570,8 +510,8 @@ public class ProductRequestServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualAccepted);
 
-                List<ProductRequestBO>  productRequestBOs = new ArrayList<ProductRequestBO>();
-                productRequestDAO.getProductRequestSend(userPartialId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                List<ProductRequestBO> productRequestBOs = new ArrayList<ProductRequestBO>();
+                productRequestDAO.getProductRequestSend(userPartialId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(null);
 
                 productRequestBOConverter.convert((List) null);

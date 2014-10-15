@@ -6,22 +6,28 @@ import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
 import mockit.integration.junit4.JMockit;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mdubois.freeveggie.bo.*;
-import org.mdubois.freeveggie.dao.api.*;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.GardenCommentBO;
+import org.mdubois.freeveggie.bo.GardenLikeBO;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.ProductBO;
+import org.mdubois.freeveggie.bo.ProductCommentBO;
+import org.mdubois.freeveggie.bo.ProductLikeBO;
+import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.dao.api.IGardenCommentDAO;
+import org.mdubois.freeveggie.dao.api.IGardenDAO;
+import org.mdubois.freeveggie.dao.api.IGardenLikeDAO;
+import org.mdubois.freeveggie.dao.api.IProductCommentDAO;
+import org.mdubois.freeveggie.dao.api.IProductDAO;
+import org.mdubois.freeveggie.dao.api.IProductLikeDAO;
+import org.mdubois.freeveggie.dao.api.IRelationShipDAO;
+import org.mdubois.freeveggie.dao.api.IUserPartialDAO;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
-import org.mdubois.freeveggie.framework.exception.TechnicalException;
-import org.mdubois.freeveggie.framework.msg.converter.Converter;
-import org.mdubois.freeveggie.framework.security.EncryptionUtils;
 import org.mdubois.freeveggie.framework.security.UserRole;
 import org.mdubois.freeveggie.framework.utils.UserUtils;
 import org.mdubois.freeveggie.service.api.IRightControlerService;
-import org.mdubois.freeveggie.service.api.ISecurityService;
-import org.mdubois.freeveggie.service.msg.AuthenticationMsg;
-import org.mdubois.freeveggie.service.msg.UserMsg;
 // </editor-fold>
 
 /**
@@ -31,6 +37,25 @@ import org.mdubois.freeveggie.service.msg.UserMsg;
 @RunWith(JMockit.class)
 public class RightControlerServiceTest {
 
+    @Mocked
+    private UserUtils userUtils;
+    @Mocked
+    private IUserPartialDAO userPartialDAO;
+    @Mocked
+    private IRelationShipDAO relationShipDAO;
+    @Mocked
+    private IGardenLikeDAO gardenLikeDAO;
+    @Mocked
+    private IGardenCommentDAO gardenCommentDAO;
+    @Mocked
+    private IGardenDAO gardenDAO;
+    @Mocked
+    private IProductCommentDAO productCommentDAO;
+    @Mocked
+    private IProductDAO productDAO;
+    @Mocked
+    private IProductLikeDAO productLikeDAO;
+
     @Test(expected = BusinessException.class)
     public void testIsUserInRoleUnknowUser() throws BusinessException {
         final IRightControlerService rightControlerService = new RightControlerService();
@@ -38,9 +63,6 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
 
         new Expectations() {
-
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
 
             {
                 Deencapsulation.setField(rightControlerService, userPartialDAO);
@@ -59,13 +81,8 @@ public class RightControlerServiceTest {
 
         final Long userId = 123L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private UserUtils userUtils;
             {
                 Deencapsulation.setField(rightControlerService, userPartialDAO);
 
@@ -89,13 +106,8 @@ public class RightControlerServiceTest {
 
         final Long userId = 123L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO userPartialDAO;
-            @Mocked
-            private UserUtils userUtils;
             {
                 Deencapsulation.setField(rightControlerService, userPartialDAO);
 
@@ -120,11 +132,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
             {
                 Deencapsulation.setField(rightControlerService, productDAO);
 
@@ -144,11 +153,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
             {
                 Deencapsulation.setField(rightControlerService, productDAO);
 
@@ -177,11 +183,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductDAO productDAO;
             {
                 Deencapsulation.setField(rightControlerService, productDAO);
 
@@ -210,11 +213,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productCommentId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO productCommentDAO;
             {
                 Deencapsulation.setField(rightControlerService, productCommentDAO);
 
@@ -234,11 +234,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productCommentId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO productCommentDAO;
             {
                 Deencapsulation.setField(rightControlerService, productCommentDAO);
 
@@ -264,11 +261,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productCommentId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductCommentDAO productCommentDAO;
             {
                 Deencapsulation.setField(rightControlerService, productCommentDAO);
 
@@ -294,11 +288,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productLikeId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO productLikeDAO;
             {
                 Deencapsulation.setField(rightControlerService, productLikeDAO);
 
@@ -318,11 +309,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productLikeId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO productLikeDAO;
             {
                 Deencapsulation.setField(rightControlerService, productLikeDAO);
 
@@ -348,11 +336,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long productLikeId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO productLikeDAO;
             {
                 Deencapsulation.setField(rightControlerService, productLikeDAO);
 
@@ -371,8 +356,6 @@ public class RightControlerServiceTest {
         Assert.assertEquals(true, result);
     }
 
-
-
     @Test
     public void testIsUserOwnerGardenNoGarden() throws BusinessException {
         final IRightControlerService rightControlerService = new RightControlerService();
@@ -380,11 +363,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenDAO);
 
@@ -404,11 +384,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenDAO);
 
@@ -434,11 +411,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenDAO gardenDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenDAO);
 
@@ -464,11 +438,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenCommentId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO gardenCommentDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenCommentDAO);
 
@@ -488,11 +459,14 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenCommentId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO gardenCommentDAO;
+            private IGardenDAO gardenDAO;
+
+            private IProductCommentDAO productCommentDAO;
+
+            private IProductDAO productDAO;
+
             {
                 Deencapsulation.setField(rightControlerService, gardenCommentDAO);
 
@@ -518,11 +492,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenCommentId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenCommentDAO gardenCommentDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenCommentDAO);
 
@@ -548,11 +519,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenLikeId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO gardenLikeDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenLikeDAO);
 
@@ -572,11 +540,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenLikeId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO gardenLikeDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenLikeDAO);
 
@@ -595,8 +560,6 @@ public class RightControlerServiceTest {
         Assert.assertEquals(false, result);
     }
 
-
-
     @Test
     public void testIsUserOwnerGardenLike() throws BusinessException {
         final IRightControlerService rightControlerService = new RightControlerService();
@@ -604,11 +567,8 @@ public class RightControlerServiceTest {
         final Long userId = 123L;
         final Long gardenLikeId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IGardenLikeDAO gardenLikeDAO;
             {
                 Deencapsulation.setField(rightControlerService, gardenLikeDAO);
 
@@ -626,8 +586,6 @@ public class RightControlerServiceTest {
         boolean result = rightControlerService.isUserOwnerGardenLike(userId, gardenLikeId);
         Assert.assertEquals(true, result);
     }
-    
-
 
     @Test
     public void testIsUserOwnerRelationship() throws BusinessException {
@@ -636,20 +594,17 @@ public class RightControlerServiceTest {
         final Long pUserId = 123L;
         final Long pRelationShipId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO  relationShipDAO;
             {
                 Deencapsulation.setField(rightControlerService, relationShipDAO);
 
-                RelationShipBO  relationShipBO  = new RelationShipBO();
+                RelationShipBO relationShipBO = new RelationShipBO();
                 relationShipBO.setId(pRelationShipId);
                 PartialUserBO partiUserBO = new PartialUserBO();
                 partiUserBO.setId(pUserId);
-                
-				relationShipBO.setRecipient(partiUserBO );
+
+                relationShipBO.setRecipient(partiUserBO);
 
                 relationShipDAO.get(pRelationShipId);
                 returns(relationShipBO);
@@ -659,10 +614,6 @@ public class RightControlerServiceTest {
         boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationShipId);
         Assert.assertEquals(true, result);
     }
-    
-
-    
-
 
     @Test
     public void testIsUserOwnerRelationship2() throws BusinessException {
@@ -671,20 +622,17 @@ public class RightControlerServiceTest {
         final Long pUserId = 123L;
         final Long pRelationShipId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO  relationShipDAO;
             {
                 Deencapsulation.setField(rightControlerService, relationShipDAO);
 
-                RelationShipBO  relationShipBO  = new RelationShipBO();
+                RelationShipBO relationShipBO = new RelationShipBO();
                 relationShipBO.setId(pRelationShipId);
                 PartialUserBO partiUserBO = new PartialUserBO();
                 partiUserBO.setId(1234L);
-                
-				relationShipBO.setRecipient(partiUserBO );
+
+                relationShipBO.setRecipient(partiUserBO);
 
                 relationShipDAO.get(pRelationShipId);
                 returns(relationShipBO);
@@ -695,11 +643,6 @@ public class RightControlerServiceTest {
         Assert.assertEquals(false, result);
     }
 
-    
-
-    
-
-
     @Test
     public void testIsUserOwnerRelationship3() throws BusinessException {
         final IRightControlerService rightControlerService = new RightControlerService();
@@ -707,11 +650,8 @@ public class RightControlerServiceTest {
         final Long pUserId = 123L;
         final Long pRelationShipId = 1233L;
 
-
         new Expectations() {
 
-            @Mocked
-            private IRelationShipDAO  relationShipDAO;
             {
                 Deencapsulation.setField(rightControlerService, relationShipDAO);
 

@@ -1,7 +1,6 @@
 package org.mdubois.freeveggie.service.impl;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import java.util.List;
 import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
@@ -27,6 +26,15 @@ import org.mdubois.freeveggie.service.msg.ProfileMsg;
 @RunWith(JMockit.class)
 public class ProfileServiceTest {
 
+    @Mocked
+    private IProfileDAO profileDAO;
+    @Mocked
+    private BusinessObjectConverter<ProfileBO, ProfileMsg> converter;
+    @Mocked
+    private IUserDAO userDAO;
+    @Mocked
+    private Converter<ProfileMsg, ProfileBO> profilBOConverter;
+
     @Test
     public void update() throws BusinessException {
         final IProfileService profileService = new ProfileService();
@@ -43,11 +51,6 @@ public class ProfileServiceTest {
         profileMsg.setUserPictureFilename("2user picture filename");
 
         new Expectations() {
-
-            @Mocked
-            private IProfileDAO profileDAO;
-            @Mocked
-            private BusinessObjectConverter<ProfileBO, ProfileMsg> converter;
 
             {
                 Deencapsulation.setField(profileService, profileDAO);
@@ -94,20 +97,15 @@ public class ProfileServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProfileDAO profileDAO;
-            @Mocked
-            private BusinessObjectConverter<ProfileBO, ProfileMsg> converter;
-
             {
                 Deencapsulation.setField(profileService, profileDAO);
                 Deencapsulation.setField(profileService, converter);
 
                 ProfileBO profileBO = new ProfileBO();
-                
+
                 profileDAO.get(userId);
                 returns(profileBO);
-                
+
                 converter.update(profileBO, profileMsg);
                 profileDAO.update(profileBO);
             }
@@ -122,13 +120,6 @@ public class ProfileServiceTest {
         final Long userId = 12765L;
 
         new Expectations() {
-
-            @Mocked
-            private IProfileDAO profileDAO;
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private Converter<ProfileMsg, ProfileBO> profilBOConverter;
 
             {
                 Deencapsulation.setField(profileService, userDAO);
@@ -178,23 +169,16 @@ public class ProfileServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserDAO userDAO;
-            @Mocked
-            private IProfileDAO profileDAO;
-            @Mocked
-            private Converter<ProfileMsg, ProfileBO> profilBOConverter;
-
             {
                 Deencapsulation.setField(profileService, profileDAO);
                 Deencapsulation.setField(profileService, userDAO);
                 Deencapsulation.setField(profileService, profilBOConverter);
-                
+
                 UserBO userBO = new UserBO();
 
                 userDAO.get(userId);
                 returns(userBO);
-                
+
                 profilBOConverter.convert(userBO.getProfile());
                 returns(null);
             }
@@ -202,7 +186,5 @@ public class ProfileServiceTest {
 
         profileService.getProfilById(userId);
     }
-
-
 
 }

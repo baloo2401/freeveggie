@@ -9,14 +9,24 @@ import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.Status;
-import org.mdubois.freeveggie.bo.*;
+import org.mdubois.freeveggie.bo.GardenBO;
+import org.mdubois.freeveggie.bo.PartialUserBO;
+import org.mdubois.freeveggie.bo.ProductBO;
+import org.mdubois.freeveggie.bo.RefCityBO;
+import org.mdubois.freeveggie.bo.RefProductBO;
 import org.mdubois.freeveggie.dao.api.IGardenDAO;
 import org.mdubois.freeveggie.dao.api.IProductDAO;
 import org.mdubois.freeveggie.dao.api.IRefProductDAO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.service.matcher.ProductBOMatcher;
-import org.mdubois.freeveggie.service.msg.*;
+import org.mdubois.freeveggie.service.msg.AddressMsg;
+import org.mdubois.freeveggie.service.msg.GardenMsg;
+import org.mdubois.freeveggie.service.msg.PartialUserMsg;
+import org.mdubois.freeveggie.service.msg.ProductMsg;
+import org.mdubois.freeveggie.service.msg.RefCityMsg;
+import org.mdubois.freeveggie.service.msg.RefProductMsg;
+import org.mdubois.freeveggie.service.msg.UpdateProductMsg;
 // </editor-fold>
 
 /**
@@ -25,6 +35,17 @@ import org.mdubois.freeveggie.service.msg.*;
  */
 @RunWith(JMockit.class)
 public class ProductActionServiceTest {
+
+    @Mocked
+    private BusinessObjectConverter<ProductBO, UpdateProductMsg> mockUpdateProductMsgConverter;
+    @Mocked
+    private IRefProductDAO refProductDAO;
+    @Mocked
+    private IGardenDAO mockGardenDAO;
+    @Mocked
+    private BusinessObjectConverter<ProductBO, ProductMsg> mockProductMsgConverter;
+    @Mocked
+    private IProductDAO mockProductDAO;
 
     // <editor-fold defaultstate="collapsed" desc="Test create">
     @Test(expected = BusinessException.class)
@@ -47,13 +68,6 @@ public class ProductActionServiceTest {
         refProductMsg.setId(1234);
         productMsg.setReferenceProduct(refProductMsg);
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private IRefProductDAO refProductDAO;
 
             {
                 Deencapsulation.setField(productService, "refProductDAO", refProductDAO);
@@ -95,15 +109,6 @@ public class ProductActionServiceTest {
         productMsg.setReferenceProduct(refProductMsg);
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IGardenDAO mockGardenDAO;
-            @Mocked
-            private BusinessObjectConverter<ProductBO, ProductMsg> mockProductMsgConverter;
-            @Mocked
-            private IRefProductDAO refProductDAO;
-
             {
                 Deencapsulation.setField(productService, "refProductDAO", refProductDAO);
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -127,7 +132,7 @@ public class ProductActionServiceTest {
                 mockProductMsgConverter.createNew(productMsg);
                 returns(productBO);
 
-                mockProductDAO.save(with(new ProductBOMatcher(productBO)));
+                mockProductDAO.save(with(productBO, new ProductBOMatcher(productBO)));
             }
         };
         productService.create(productMsg);
@@ -144,7 +149,7 @@ public class ProductActionServiceTest {
         final PartialUserBO user = new PartialUserBO();
         user.setId(10L);
         refCityBO.setId(1);
-       
+
         final UpdateProductMsg productMsg = new UpdateProductMsg();
         productMsg.setId(12L);
         productMsg.setName("My New Product");
@@ -154,17 +159,10 @@ public class ProductActionServiceTest {
         productMsg.setReferenceProduct(refProductMsg);
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private BusinessObjectConverter<ProductBO, UpdateProductMsg> mockProductMsgConverter;
-            @Mocked
-            private IRefProductDAO refProductDAO;
-
             {
                 Deencapsulation.setField(productService, "refProductDAO", refProductDAO);
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
-                Deencapsulation.setField(productService, "updateProductMsgConverter", mockProductMsgConverter);
+                Deencapsulation.setField(productService, "updateProductMsgConverter", mockUpdateProductMsgConverter);
 
                 ProductBO productBO = new ProductBO();
                 productBO.setId(12L);
@@ -183,10 +181,9 @@ public class ProductActionServiceTest {
                 returns(refProductBO);
 
                 productBO.setName("My New Product");
-                mockProductMsgConverter.update(productBO, productMsg);
+                mockUpdateProductMsgConverter.update(productBO, productMsg);
 
-
-                mockProductDAO.update(with(new ProductBOMatcher(productBO)));
+                mockProductDAO.update(with(productBO, new ProductBOMatcher(productBO)));
             }
         };
         productService.update(productMsg);
@@ -210,9 +207,6 @@ public class ProductActionServiceTest {
         productMsg.setPictureFilename("my picture");
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 mockProductDAO.get(12L);
@@ -235,20 +229,16 @@ public class ProductActionServiceTest {
     public void blacklistNo() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -265,13 +255,9 @@ public class ProductActionServiceTest {
     public void blacklistDeleted() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -280,7 +266,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.DELETED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -297,13 +283,9 @@ public class ProductActionServiceTest {
     public void blacklistArchived() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -312,7 +294,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.ARCHIVED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -329,13 +311,9 @@ public class ProductActionServiceTest {
     public void blacklistAlreadyBlacklist() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -344,7 +322,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.BLACKLISTED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -361,16 +339,11 @@ public class ProductActionServiceTest {
     public void blacklist() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-
             {
-
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
@@ -383,14 +356,14 @@ public class ProductActionServiceTest {
                 productBO.setId(1L);
                 productBO.setStatus(Status.CREATED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
 
                 ProductBO productBOExpected = new ProductBO();
                 productBOExpected.setId(1L);
                 productBOExpected.setStatus(Status.BLACKLISTED);
 
-                mockProductDAO.update(with(new ProductBOMatcher(productBOExpected)));
+                mockProductDAO.update(with(productBOExpected, new ProductBOMatcher(productBOExpected)));
             }
         };
 
@@ -408,20 +381,16 @@ public class ProductActionServiceTest {
     public void unblacklistNo() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -438,13 +407,9 @@ public class ProductActionServiceTest {
     public void unblacklistDeleted() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -453,7 +418,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.DELETED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -470,13 +435,9 @@ public class ProductActionServiceTest {
     public void unblacklistAlreadyUnblacklist() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -485,7 +446,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.CREATED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -506,9 +467,6 @@ public class ProductActionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -524,14 +482,14 @@ public class ProductActionServiceTest {
                 productBO.setId(1L);
                 productBO.setStatus(Status.BLACKLISTED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
 
                 ProductBO productBOExpected = new ProductBO();
                 productBOExpected.setId(1L);
                 productBOExpected.setStatus(Status.CREATED);
 
-                mockProductDAO.update(with(new ProductBOMatcher(productBOExpected)));
+                mockProductDAO.update(with(productBOExpected, new ProductBOMatcher(productBOExpected)));
             }
         };
 
@@ -549,20 +507,16 @@ public class ProductActionServiceTest {
     public void removeNo() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -579,13 +533,9 @@ public class ProductActionServiceTest {
     public void removeArchived() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -594,7 +544,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.ARCHIVED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -612,13 +562,9 @@ public class ProductActionServiceTest {
     public void removeAlreadyDELETED() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -627,7 +573,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.DELETED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -644,13 +590,9 @@ public class ProductActionServiceTest {
     public void remove() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -668,15 +610,14 @@ public class ProductActionServiceTest {
                 productBO.setStatus(Status.CREATED);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
 
                 ProductBO productBOExpected = new ProductBO();
                 productBOExpected.setId(1L);
                 productBOExpected.setStatus(Status.DELETED);
 
-
-                mockProductDAO.update(with(new ProductBOMatcher(productBOExpected)));
+                mockProductDAO.update(with(productBOExpected, new ProductBOMatcher(productBOExpected)));
             }
         };
 
@@ -694,20 +635,16 @@ public class ProductActionServiceTest {
     public void reactivateNo() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -724,13 +661,9 @@ public class ProductActionServiceTest {
     public void reactivateArchived() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -739,7 +672,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.ARCHIVED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -756,13 +689,9 @@ public class ProductActionServiceTest {
     public void reactivateAlreadyActivated() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -771,7 +700,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.CREATED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -788,13 +717,9 @@ public class ProductActionServiceTest {
     public void reactivate() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -812,15 +737,14 @@ public class ProductActionServiceTest {
                 productBO.setStatus(Status.DELETED);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
 
                 ProductBO productBOExpected = new ProductBO();
                 productBOExpected.setId(1L);
                 productBOExpected.setStatus(Status.CREATED);
 
-
-                mockProductDAO.update(with(new ProductBOMatcher(productBOExpected)));
+                mockProductDAO.update(with(productBOExpected, new ProductBOMatcher(productBOExpected)));
             }
         };
 
@@ -838,20 +762,16 @@ public class ProductActionServiceTest {
     public void archiveNo() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -868,13 +788,9 @@ public class ProductActionServiceTest {
     public void archiveDeleted() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -883,7 +799,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.DELETED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -900,13 +816,9 @@ public class ProductActionServiceTest {
     public void archiveAlreadyArchive() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -915,7 +827,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.ARCHIVED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -932,16 +844,11 @@ public class ProductActionServiceTest {
     public void archive() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-
             {
-
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
@@ -957,15 +864,14 @@ public class ProductActionServiceTest {
                 productBO.setStatus(Status.CREATED);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
 
                 ProductBO productBOExpected = new ProductBO();
                 productBOExpected.setId(1L);
                 productBOExpected.setStatus(Status.ARCHIVED);
 
-
-                mockProductDAO.update(with(new ProductBOMatcher(productBOExpected)));
+                mockProductDAO.update(with(productBOExpected, new ProductBOMatcher(productBOExpected)));
             }
         };
 
@@ -983,20 +889,16 @@ public class ProductActionServiceTest {
     public void unarchiveNo() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -1013,13 +915,9 @@ public class ProductActionServiceTest {
     public void unarchiveDeleted() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -1028,7 +926,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.DELETED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -1045,13 +943,9 @@ public class ProductActionServiceTest {
     public void unarchiveAlreadyUnarchive() throws BusinessException {
         final ProductService productService = new ProductService();
 
-
         final Long pProductId = 1L;
 
         new Expectations() {
-
-            @Mocked
-            private IProductDAO mockProductDAO;
 
             {
 
@@ -1060,7 +954,7 @@ public class ProductActionServiceTest {
                 ProductBO productBO = new ProductBO();
                 productBO.setStatus(Status.CREATED);
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
             }
         };
@@ -1081,9 +975,6 @@ public class ProductActionServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -1100,15 +991,14 @@ public class ProductActionServiceTest {
                 productBO.setStatus(Status.ARCHIVED);
 
                 mockProductDAO.get(1L);
-                repeats(1);
+                times = 1;
                 returns(productBO);
 
                 ProductBO productBOExpected = new ProductBO();
                 productBOExpected.setId(1L);
                 productBOExpected.setStatus(Status.CREATED);
 
-
-                mockProductDAO.update(with(new ProductBOMatcher(productBOExpected)));
+                mockProductDAO.update(with(productBOExpected, new ProductBOMatcher(productBOExpected)));
             }
         };
 

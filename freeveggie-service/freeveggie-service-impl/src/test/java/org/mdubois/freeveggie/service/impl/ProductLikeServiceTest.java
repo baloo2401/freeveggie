@@ -8,9 +8,7 @@ import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mdubois.freeveggie.EvaluationStatus;
@@ -47,16 +45,26 @@ import org.mdubois.freeveggie.service.msg.ProductMsg;
 @RunWith(JMockit.class)
 public class ProductLikeServiceTest {
 
+    @Mocked
+    private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
+    @Mocked
+    private IUserPartialDAO mockUserPartialDAO;
+    @Mocked
+    private IProductDAO mockProductDAO;
+    @Mocked
+    private IProductLikeDAO mockProductLikeDAO;
+    @Mocked
+    private BusinessObjectConverter<ProductLikeBO, ProductLikeMsg> mockProductLikeMsgConverter;
+
     /**
      * {@link Criteria}
      */
     private static QueryCriteria<ProductLikeCriteriaColumn> criteriaStatusEqualSetted = new QueryCriteria<ProductLikeCriteriaColumn>(ProductLikeCriteriaColumn.STATUS, CriteriaOperation.EQUAL, EvaluationStatus.SETTED);
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
-
+//    @After
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
     // <editor-fold defaultstate="collapsed" desc="Unlike test">
     /**
      * Test we get an exception when we try to unlike that doesn't exist.
@@ -71,15 +79,12 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
             {
 
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
 
                 mockProductLikeDAO.get(pLikeId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -100,9 +105,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
             {
 
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
@@ -120,7 +122,7 @@ public class ProductLikeServiceTest {
                 productLikeBO.setProduct(productBO);
                 productLikeBO.setWriter(userBO);
                 productLikeBO.setStatus(EvaluationStatus.SETTED);
-                repeats(1);
+                times = 1;
                 returns(productLikeBO);
 
                 ProductLikeBO newProductLikeBO = new ProductLikeBO();
@@ -130,7 +132,7 @@ public class ProductLikeServiceTest {
                 newProductLikeBO.setWriter(userBO);
                 newProductLikeBO.setStatus(EvaluationStatus.REMOVED);
 
-                mockProductLikeDAO.save(with(new ProductLikeBOMatcher(newProductLikeBO)));
+                mockProductLikeDAO.save(with(newProductLikeBO, new ProductLikeBOMatcher(newProductLikeBO)));
             }
         };
 
@@ -150,11 +152,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
@@ -173,9 +170,8 @@ public class ProductLikeServiceTest {
                 productLikeBO.setProduct(productBO);
                 productLikeBO.setWriter(userBO);
                 productLikeBO.setStatus(EvaluationStatus.ARCHIVED);
-                repeats(1);
+                times = 1;
                 returns(productLikeBO);
-                mockProductLikeBOConverter.convert(productLikeBO);
             }
         };
 
@@ -196,7 +192,6 @@ public class ProductLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pProductId = 1L;
 
-
         final ProductLikeMsg pProductLikeMsg = new ProductLikeMsg();
         PartialUserMsg writer = new PartialUserMsg();
         writer.setId(pWriterId);
@@ -207,15 +202,12 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
 
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(null);
             }
         };
@@ -235,7 +227,6 @@ public class ProductLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pProductId = 1L;
 
-
         final ProductLikeMsg pProductLikeMsg = new ProductLikeMsg();
         ProductMsg product = new ProductMsg();
         product.setId(pProductId);
@@ -246,11 +237,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -258,7 +244,7 @@ public class ProductLikeServiceTest {
 
                 PartialUserBO userBO = new PartialUserBO();
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 mockProductDAO.get(pProductId);
@@ -281,7 +267,6 @@ public class ProductLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pProductId = 1L;
 
-
         final ProductLikeMsg pProductLikeMsg = new ProductLikeMsg();
         ProductMsg product = new ProductMsg();
         product.setId(pProductId);
@@ -292,15 +277,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -311,7 +287,7 @@ public class ProductLikeServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(pWriterId);
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 PartialUserBO owner = new PartialUserBO();
@@ -333,7 +309,6 @@ public class ProductLikeServiceTest {
                 productLikeBO.setWriter(userBO);
                 productLikeBO.setProduct(productBO);
                 returns(productLikeBO);
-                mockProductLikeBOConverter.convert(productLikeBO);
             }
         };
 
@@ -352,7 +327,6 @@ public class ProductLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pProductId = 1L;
 
-
         final ProductLikeMsg pProductLikeMsg = new ProductLikeMsg();
         ProductMsg product = new ProductMsg();
         product.setId(pProductId);
@@ -363,14 +337,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-            @Mocked
-            private BusinessObjectConverter<ProductLikeBO,ProductLikeMsg> mockProductLikeMsgConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -381,7 +347,7 @@ public class ProductLikeServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(pWriterId);
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 PartialUserBO owner = new PartialUserBO();
@@ -414,7 +380,6 @@ public class ProductLikeServiceTest {
         final Long pWriterId = 1L;
         final Long pProductId = 1L;
 
-
         final ProductLikeMsg pProductLikeMsg = new ProductLikeMsg();
         ProductMsg product = new ProductMsg();
         product.setId(pProductId);
@@ -425,14 +390,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-            @Mocked
-            private BusinessObjectConverter<ProductLikeBO,ProductLikeMsg> mockProductLikeMsgConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -443,7 +400,7 @@ public class ProductLikeServiceTest {
                 PartialUserBO userBO = new PartialUserBO();
                 userBO.setId(pWriterId);
                 mockUserPartialDAO.get(pWriterId);
-                repeats(1);
+                times = 1;
                 returns(userBO);
 
                 PartialUserBO owner = new PartialUserBO();
@@ -466,9 +423,7 @@ public class ProductLikeServiceTest {
                 newProductLikeBO.setWriter(userBO);
                 newProductLikeBO.setProduct(productBO);
 
-
                 //TODO MDU : control cration date
-
                 mockProductLikeMsgConverter.createNew(pProductLikeMsg);
                 returns(newProductLikeBO);
 
@@ -497,10 +452,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
@@ -511,11 +462,11 @@ public class ProductLikeServiceTest {
                 lTechnicalInformation.setCriterias(criterias);
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
-                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
-                repeats(1);
+                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
+                times = 1;
                 returns(null);
 
-                mockProductLikeBOConverter.convert((List)null);
+                mockProductLikeBOConverter.convert((List) null);
                 returns(null);
             }
         };
@@ -539,13 +490,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
@@ -559,7 +503,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -583,13 +527,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
@@ -603,7 +540,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -632,13 +569,6 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
@@ -647,7 +577,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -675,23 +605,15 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
                 Deencapsulation.setField(productService, "productLikeBOConverter", mockProductLikeBOConverter);
 
-
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -718,27 +640,18 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
-
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
                 Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
                 Deencapsulation.setField(productService, "productLikeBOConverter", mockProductLikeBOConverter);
 
-
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
-
 
             }
         };
@@ -765,13 +678,6 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<ProductLikeOrderColumn>(ProductLikeOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IProductDAO mockProductDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "productDAO", mockProductDAO);
@@ -781,7 +687,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByProduct(pProductId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -791,7 +697,6 @@ public class ProductLikeServiceTest {
     }
 
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Get product like write test">
     /**
      * This test control that, if the user id given in parameter is not
@@ -809,14 +714,9 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IProductLikeDAO productLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
-                Deencapsulation.setField(productService, "productLikeDAO", productLikeDAO);
+                Deencapsulation.setField(productService, "productLikeDAO", mockProductLikeDAO);
                 Deencapsulation.setField(productService, "productLikeBOConverter", mockProductLikeBOConverter);
 
                 TechnicalInformation<ProductLikeCriteriaColumn, ProductLikeOrderColumn> lTechnicalInformation = new TechnicalInformation<ProductLikeCriteriaColumn, ProductLikeOrderColumn>();
@@ -825,8 +725,8 @@ public class ProductLikeServiceTest {
                 lTechnicalInformation.getCriterias().add(criteriaStatusEqualSetted);
 
                 List<ProductLikeBO> productLikeBOs = null;
-                productLikeDAO.getProductLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
-                repeats(1);
+                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
+                times = 1;
                 returns(productLikeBOs);
 
                 mockProductLikeBOConverter.convert(productLikeBOs);
@@ -853,13 +753,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -874,7 +767,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -898,13 +791,6 @@ public class ProductLikeServiceTest {
 
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -919,7 +805,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(lTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(lTechnicalInformation, new TechnicalInformationMatcher(lTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -948,13 +834,6 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -964,7 +843,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -992,13 +871,6 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setCriterias(criterias);
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -1008,7 +880,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -1035,13 +907,6 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setPagination(new Pagination(100, 1));
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -1051,7 +916,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }
@@ -1079,13 +944,6 @@ public class ProductLikeServiceTest {
         pTechnicalInformation.setOrder(new ResultOrder<ProductLikeOrderColumn>(ProductLikeOrderColumn.CREATION_DATE, OrderWay.DESC));
         new Expectations() {
 
-            @Mocked
-            private IUserPartialDAO mockUserPartialDAO;
-            @Mocked
-            private IProductLikeDAO mockProductLikeDAO;
-
-            @Mocked
-            private Converter<ProductLikeMsg, ProductLikeBO> mockProductLikeBOConverter;
             {
 
                 Deencapsulation.setField(productService, "userPartialDAO", mockUserPartialDAO);
@@ -1095,7 +953,7 @@ public class ProductLikeServiceTest {
                 List<ProductLikeBO> productLikeBOs = new ArrayList<ProductLikeBO>();
                 ProductLikeBO productLikeBO = new ProductLikeBO();
                 productLikeBOs.add(productLikeBO);
-                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(new TechnicalInformationMatcher(pTechnicalInformation)));
+                mockProductLikeDAO.getProductLikeByWriter(pUserWriterId, with(pTechnicalInformation, new TechnicalInformationMatcher(pTechnicalInformation)));
                 returns(productLikeBOs);
                 mockProductLikeBOConverter.convert(productLikeBOs);
             }

@@ -7,7 +7,7 @@ import junit.framework.Assert;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.Mockit;
+//import mockit.Mockit;
 import mockit.integration.junit4.JMockit;
 import org.apache.commons.logging.Log;
 import org.junit.After;
@@ -25,10 +25,10 @@ public class TraceInterceptorTest {
     @Mocked
     InvocationContext mockContext;
 
-    @After
-    public void tearDown() throws Exception {
-        Mockit.restoreAllOriginalDefinitions();
-    }
+//    @After
+//    public void tearDown() throws Exception {
+//        Mockit.restoreAllOriginalDefinitions();
+//    }
 
     /**
      * Test of validate method, of class MessageValidatorInterceptor.
@@ -45,7 +45,7 @@ public class TraceInterceptorTest {
                 Deencapsulation.setField(instance, "isDebugEnable", Boolean.FALSE);
                 mockContext.proceed();
                 returns(expectedResult);
-                repeats(1);
+                times = 1;
             }
         };
 
@@ -71,12 +71,12 @@ public class TraceInterceptorTest {
 //                Deencapsulation.setField(instance, "isDebugEnable", Boolean.TRUE);
 //                mockContext.proceed();
 //                returns(expectedResult);
-//                repeats(1);
+//                times = 1;
 //
 //                Method method = this.getClass().getMethods()[0];
 //                mockContext.getMethod();
 //                returns(method);
-//                repeats(1);
+//                times = 1;
 //
 //                LOGGER.debug(any);
 //            }

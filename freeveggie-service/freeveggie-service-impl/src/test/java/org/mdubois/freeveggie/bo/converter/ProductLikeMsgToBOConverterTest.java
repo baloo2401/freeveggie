@@ -5,15 +5,13 @@ import java.util.Date;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Test;
-import org.mdubois.freeveggie.EvaluationNote;
 import org.mdubois.freeveggie.EvaluationStatus;
-import org.mdubois.freeveggie.Status;
 import org.mdubois.freeveggie.bo.ProductLikeBO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
+import org.mdubois.freeveggie.framework.utils.SystemTime;
+import org.mdubois.freeveggie.service.msg.PartialUserMsg;
 import org.mdubois.freeveggie.service.msg.ProductLikeMsg;
 import org.mdubois.freeveggie.service.msg.ProductMsg;
-import org.mdubois.freeveggie.service.msg.PartialUserMsg;
-import org.mdubois.freeveggie.framework.utils.SystemTime;
 // </editor-fold>
 
 /**
@@ -22,6 +20,9 @@ import org.mdubois.freeveggie.framework.utils.SystemTime;
  */
 public class ProductLikeMsgToBOConverterTest extends BusinessObjectConverterTest<ProductLikeBO, ProductLikeMsg> {
 
+    @Mocked
+    @SuppressWarnings("unused")
+    private final SystemTime systemTime = null;
     private PartialUserMsg userMsg = new PartialUserMsg();
     private ProductMsg productMsg = new ProductMsg();
 
@@ -60,9 +61,6 @@ public class ProductLikeMsgToBOConverterTest extends BusinessObjectConverterTest
     @Override
     public Expectations getConvertCallExpectaion() {
         return new Expectations() {
-            @Mocked
-            @SuppressWarnings("unused")
-            private final SystemTime systemTime = null;
 
             {
                 SystemTime.asDate();

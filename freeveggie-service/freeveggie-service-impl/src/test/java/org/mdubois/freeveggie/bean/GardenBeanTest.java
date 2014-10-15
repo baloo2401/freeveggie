@@ -1,12 +1,12 @@
 package org.mdubois.freeveggie.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.mdubois.freeveggie.bean.local.GardenBeanLocal;
 import mockit.Deencapsulation;
 import mockit.Expectations;
 import mockit.Mocked;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.mdubois.freeveggie.bean.local.GardenBeanLocal;
 import org.mdubois.freeveggie.criteria.GardenCommentCriteriaColumn;
 import org.mdubois.freeveggie.criteria.GardenCriteriaColumn;
 import org.mdubois.freeveggie.criteria.GardenLikeCriteriaColumn;
@@ -22,7 +22,6 @@ import org.mdubois.freeveggie.order.GardenLikeOrderColumn;
 import org.mdubois.freeveggie.order.GardenOrderColumn;
 import org.mdubois.freeveggie.service.api.IGardenService;
 import org.mdubois.freeveggie.service.api.IRightControlerService;
-import org.mdubois.freeveggie.service.impl.RightControlerService;
 import org.mdubois.freeveggie.service.msg.GardenCommentMsg;
 import org.mdubois.freeveggie.service.msg.GardenLikeMsg;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
@@ -33,6 +32,11 @@ import org.mdubois.freeveggie.service.msg.GardenMsg;
  * @author mdubois
  */
 public class GardenBeanTest {
+
+    @Mocked
+    private IGardenService gardenService;
+    @Mocked
+    private IRightControlerService rightControlerService;
 
     // <editor-fold defaultstate="collapsed" desc="Create">
     /**
@@ -51,11 +55,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -72,7 +71,6 @@ public class GardenBeanTest {
         assertEquals(expResult, result);
     }
 
-
     @Test(expected = AccessNotGrantedException.class)
     public void testCreateAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
@@ -85,11 +83,6 @@ public class GardenBeanTest {
         final Long expResult = 1234L;
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -117,11 +110,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -129,7 +117,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.create(pGardenMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -150,11 +138,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -163,7 +146,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.create(pGardenMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -190,11 +173,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -211,7 +189,7 @@ public class GardenBeanTest {
         instance.update(pContextMsg, pGardenMsg);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUpdateAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -225,11 +203,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -242,8 +215,7 @@ public class GardenBeanTest {
         instance.update(pContextMsg, pGardenMsg);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUpdateAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -257,11 +229,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -271,7 +238,6 @@ public class GardenBeanTest {
                 rightControlerService.isUserOwnerGarden(userId, pGardenId);
                 returns(false);
 
-                gardenService.update(pGardenMsg);
             }
         };
 
@@ -292,11 +258,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -307,7 +268,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.update(pGardenMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -328,11 +289,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -343,7 +299,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.update(pGardenMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -367,11 +323,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -385,8 +336,7 @@ public class GardenBeanTest {
         instance.blacklist(pContextMsg, pGardenId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testBlacklistAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -397,11 +347,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -427,11 +372,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -439,7 +379,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.blacklist(pGardenId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -458,11 +398,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -470,7 +405,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.blacklist(pGardenId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -494,11 +429,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -512,7 +442,7 @@ public class GardenBeanTest {
         instance.unblacklist(pContextMsg, pGardenId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnunblacklistAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -523,11 +453,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -552,11 +477,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -564,7 +484,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.unblacklist(pGardenId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -583,11 +503,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -595,7 +510,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.unblacklist(pGardenId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -619,11 +534,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -641,8 +551,7 @@ public class GardenBeanTest {
         instance.remove(pContextMsg, pGardenId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -653,11 +562,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -671,7 +575,7 @@ public class GardenBeanTest {
         instance.remove(pContextMsg, pGardenId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -682,11 +586,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -702,7 +601,6 @@ public class GardenBeanTest {
 
         instance.remove(pContextMsg, pGardenId);
     }
-
 
     @Test(expected = BusinessException.class)
     public void testRemovetThrowBusinessException() throws Exception {
@@ -716,11 +614,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -732,7 +625,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.remove(pGardenId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -751,11 +644,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -767,7 +655,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.remove(pGardenId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -791,11 +679,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -812,8 +695,7 @@ public class GardenBeanTest {
         instance.reactivate(pContextMsg, pGardenId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void AccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -824,11 +706,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -841,8 +718,7 @@ public class GardenBeanTest {
         instance.reactivate(pContextMsg, pGardenId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void AccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -853,11 +729,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -885,11 +756,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -900,7 +766,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.reactivate(pGardenId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -919,11 +785,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -934,7 +795,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.reactivate(pGardenId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -958,11 +819,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -976,8 +832,7 @@ public class GardenBeanTest {
         instance.archive(pContextMsg, pGardenId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testArchiveAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -988,11 +843,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1017,11 +867,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1029,7 +874,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.archive(pGardenId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1048,11 +893,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1060,7 +900,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.archive(pGardenId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1084,11 +924,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1105,7 +940,7 @@ public class GardenBeanTest {
         instance.unarchive(pContextMsg, pGardenId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1116,11 +951,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1133,7 +963,7 @@ public class GardenBeanTest {
         instance.unarchive(pContextMsg, pGardenId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1144,11 +974,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1176,11 +1001,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1191,7 +1011,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.unarchive(pGardenId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1210,11 +1030,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1225,7 +1040,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.unarchive(pGardenId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1249,11 +1064,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1267,7 +1077,7 @@ public class GardenBeanTest {
         instance.getGardenById(pContextMsg, pGardenId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetGardenByIdAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1278,11 +1088,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1307,11 +1112,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1319,7 +1119,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenById(pGardenId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1338,11 +1138,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1350,7 +1145,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenById(pGardenId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1375,11 +1170,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1393,7 +1183,7 @@ public class GardenBeanTest {
         instance.getGardenByUser(pContextMsg, pUserId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetGardenByUserAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1405,11 +1195,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1436,11 +1221,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1448,7 +1228,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByUser(pUserId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1468,11 +1248,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1480,7 +1255,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByUser(pUserId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1506,11 +1281,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1524,7 +1294,7 @@ public class GardenBeanTest {
         instance.getGardenByCity(pContextMsg, pRefCityId, pRefProductId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetGardenByCityAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1537,11 +1307,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1568,11 +1333,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1580,7 +1340,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByCity(pRefCityId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1601,11 +1361,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1613,7 +1368,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByCity(pRefCityId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1639,11 +1394,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1657,7 +1407,7 @@ public class GardenBeanTest {
         instance.getGardenByState(pContextMsg, pRefStateId, pRefProductId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetGardenByStateAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1670,11 +1420,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1701,11 +1446,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1713,7 +1453,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByState(pRefStateId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1734,11 +1474,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1746,7 +1481,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByState(pRefStateId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1772,11 +1507,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1790,7 +1520,7 @@ public class GardenBeanTest {
         instance.getGardenByRegion(pContextMsg, pRefRegionId, pRefProductId, pTechnicalInformation);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetGardenByRegionAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1803,11 +1533,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1834,11 +1559,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1846,7 +1566,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -1867,11 +1587,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1879,7 +1594,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -1905,11 +1620,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1923,8 +1633,7 @@ public class GardenBeanTest {
         instance.getGardenByCountry(pContextMsg, pRefCountryId, pRefProductId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testgetGardenByCountryAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -1937,11 +1646,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -1968,11 +1672,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -1980,7 +1679,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2001,11 +1700,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2013,7 +1707,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.getGardenByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2037,11 +1731,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2055,7 +1744,7 @@ public class GardenBeanTest {
         instance.comment(pContextMsg, pGardenCommentMsg);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2066,11 +1755,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2096,18 +1780,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.comment(pGardenCommentMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2126,18 +1805,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.comment(pGardenCommentMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2161,11 +1835,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2182,7 +1851,7 @@ public class GardenBeanTest {
         instance.removeComment(pContextMsg, pCommentId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2193,11 +1862,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2214,8 +1878,7 @@ public class GardenBeanTest {
         instance.removeComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveCommentAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2226,11 +1889,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2261,11 +1919,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2276,7 +1929,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.removeComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2295,11 +1948,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2310,7 +1958,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.removeComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2334,11 +1982,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2355,7 +1998,7 @@ public class GardenBeanTest {
         instance.reactivateComment(pContextMsg, pCommentId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testReactivateCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2366,11 +2009,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2384,7 +2022,7 @@ public class GardenBeanTest {
         instance.reactivateComment(pContextMsg, pCommentId);
     }
 
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testReactivateCommentAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2395,11 +2033,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2428,11 +2061,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2444,7 +2072,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.reactivateComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2463,11 +2091,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2479,7 +2102,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.reactivateComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2503,11 +2126,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2521,8 +2139,7 @@ public class GardenBeanTest {
         instance.archiveComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testArchiveCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2533,11 +2150,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2563,18 +2175,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
                 returns(true);
                 gardenService.archiveComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2593,18 +2200,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
                 returns(true);
                 gardenService.archiveComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2628,11 +2230,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2649,8 +2246,7 @@ public class GardenBeanTest {
         instance.unarchiveComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2661,11 +2257,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2678,8 +2269,7 @@ public class GardenBeanTest {
         instance.unarchiveComment(pContextMsg, pCommentId);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testUnarchiveCommentAccessNotGrantedExceptionV2() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2690,11 +2280,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2722,11 +2307,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2737,7 +2317,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.unarchiveComment(pCommentId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2756,11 +2336,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2771,7 +2346,7 @@ public class GardenBeanTest {
                 returns(true);
 
                 gardenService.unarchiveComment(pCommentId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2796,11 +2371,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2814,8 +2384,7 @@ public class GardenBeanTest {
         instance.getGardenComment(pContextMsg, pGardenId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetGardenCommentAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2827,11 +2396,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2857,18 +2421,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenComment(pGardenId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -2889,18 +2448,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenComment(pGardenId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -2925,11 +2479,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -2942,7 +2491,8 @@ public class GardenBeanTest {
 
         instance.getGardenCommentWrite(pContextMsg, pUserId, pTechnicalInformation);
     }
-    @Test(expected=AccessNotGrantedException.class)
+
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetGardenCommentWriteAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -2954,11 +2504,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -2984,18 +2529,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenCommentWrite(pUserId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3016,18 +2556,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenCommentWrite(pUserId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3051,11 +2586,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3069,8 +2599,7 @@ public class GardenBeanTest {
         instance.like(pContextMsg, pGardenLikeMsg);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testLikeAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3081,11 +2610,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3111,18 +2635,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.like(pGardenLikeMsg);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3141,18 +2660,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.like(pGardenLikeMsg);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3176,11 +2690,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3193,7 +2702,8 @@ public class GardenBeanTest {
 
         instance.unlike(pContextMsg, pLikeId);
     }
-    @Test(expected=AccessNotGrantedException.class)
+
+    @Test(expected = AccessNotGrantedException.class)
     public void testRemoveLikeAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3204,11 +2714,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3233,18 +2738,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.unlike(pLikeId);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3263,18 +2763,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.unlike(pLikeId);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3299,11 +2794,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3317,8 +2807,7 @@ public class GardenBeanTest {
         instance.getGardenLike(pContextMsg, pGardenId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetGardenLikeAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3330,11 +2819,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3360,18 +2844,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenLike(pGardenId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3392,18 +2871,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenLike(pGardenId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
@@ -3428,11 +2902,6 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
@@ -3446,8 +2915,7 @@ public class GardenBeanTest {
         instance.getGardenLikeWrite(pContextMsg, pUserId, pTechnicalInformation);
     }
 
-
-    @Test(expected=AccessNotGrantedException.class)
+    @Test(expected = AccessNotGrantedException.class)
     public void testGetGardenLikeWriteAccessNotGrantedException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         final Long userId = 23L;
@@ -3459,11 +2927,6 @@ public class GardenBeanTest {
         final IGardenBean instance = new GardenBeanLocal();
 
         new Expectations() {
-
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
@@ -3489,18 +2952,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenLikeWrite(pUserId, pTechnicalInformation);
-                throwsException(new BusinessException("BusinessException"));
+                result = new BusinessException("BusinessException");
             }
         };
 
@@ -3521,18 +2979,13 @@ public class GardenBeanTest {
 
         new Expectations() {
 
-            @Mocked
-            private IGardenService gardenService;
-            @Mocked
-            private IRightControlerService rightControlerService;
-
             {
                 Deencapsulation.setField(instance, rightControlerService);
                 Deencapsulation.setField(instance, gardenService);
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
                 gardenService.getGardenLikeWrite(pUserId, pTechnicalInformation);
-                throwsException(new TechnicalException("TechnicalException"));
+                result = new TechnicalException("TechnicalException");
             }
         };
 
