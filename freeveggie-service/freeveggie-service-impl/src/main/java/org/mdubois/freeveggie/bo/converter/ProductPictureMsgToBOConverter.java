@@ -18,7 +18,7 @@ public class ProductPictureMsgToBOConverter implements BusinessObjectConverter<P
         ProductPictureBO productPictureBO = new ProductPictureBO();
         productPictureBO.setCreationDate(SystemTime.asDate());
         productPictureBO.setMimeType(pProductRequestMsg.getMimeType());
-        productPictureBO.setPicture(pProductRequestMsg.getPicture());;
+        productPictureBO.setPicture(pProductRequestMsg.getPicture());
         //productPictureBO.setProduct(null); this should be done by the service
         return productPictureBO;
     }

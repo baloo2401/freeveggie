@@ -4,6 +4,7 @@ import java.util.Date;
 import org.mdubois.freeveggie.bo.ProductPictureBO;
 import org.mdubois.freeveggie.framework.msg.converter.AbstractConverter;
 import org.mdubois.freeveggie.service.msg.PictureMsg;
+import org.springframework.util.Assert;
 
 /**
  *
@@ -13,6 +14,8 @@ public class ProductPictureBOToMsgConverter extends AbstractConverter<PictureMsg
 
     @Override
     public PictureMsg doConvert(ProductPictureBO pSource) {
+        Assert.notNull(pSource.getProduct());
+
         PictureMsg msg = new PictureMsg();
         msg.setCreationDate(new Date(pSource.getCreationDate().getTime()));
         msg.setId(pSource.getId());
