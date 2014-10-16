@@ -9,17 +9,17 @@ CREATE TABLE "TJ_SEED_CALENDAR" (
 );
 
 CREATE TABLE "T_ADDRESS" (
-    adr_id bigint NOT NULL, 
+    adr_id bigint NOT NULL,
     adr_name character varying(32) NOT NULL,
-    adr_street_number character varying(32) NOT NULL, 
+    adr_street_number character varying(32) NOT NULL,
     adr_street_name character varying(128) NOT NULL,
     adr_rci_id integer,
-    adr_latitude double precision NOT NULL, 
-    adr_longitude double precision NOT NULL, 
-    adr_locality character varying(128) NOT NULL, 
+    adr_latitude double precision NOT NULL,
+    adr_longitude double precision NOT NULL,
+    adr_locality character varying(128) NOT NULL,
     adr_adm_area_l2 character varying(128) NOT NULL,
-    adr_adm_area_l1 character varying(128) NOT NULL, 
-    adr_country character varying(128) NOT NULL, 
+    adr_adm_area_l1 character varying(128) NOT NULL,
+    adr_country character varying(128) NOT NULL,
     adr_postal_code character varying(128) NOT NULL
 );
 
@@ -253,21 +253,21 @@ CREATE TABLE "T_USER" (
 
 CREATE TABLE "T_PICTURE_GARDEN"
 (
-   grp_id bigint, 
-   grp_mine_type bigint  NOT NULL, 
-   grp_grd_id bigint, 
+   grp_id bigint,
+   grp_mine_type character varying(32) NOT NULL,
+   grp_grd_id bigint,
    picture LONGVARBINARY NOT NULL,
    grp_creation_date timestamp NOT NULL
-) 
+)
 
 CREATE TABLE "T_PICTURE_PRODUCT"
 (
-   prp_id bigint, 
-   prp_mine_type bigint NOT NULL, 
-   prp_prd_id bigint, 
+   prp_id bigint,
+   prp_mine_type character varying(32) NOT NULL,
+   prp_prd_id bigint,
    picture LONGVARBINARY NOT NULL,
    prp_creation_date timestamp NOT NULL
-) 
+)
 
 CREATE SEQUENCE s_adr_seq
     START WITH 10000
@@ -308,11 +308,11 @@ CREATE SEQUENCE s_rqt_seq
 CREATE SEQUENCE s_usr_seq
     START WITH 10000
     INCREMENT BY 1;
-	
+
 CREATE SEQUENCE s_grp_seq
     START WITH 10000
     INCREMENT BY 1;
-	
+
 CREATE SEQUENCE s_prp_seq
     START WITH 10000
     INCREMENT BY 1;
@@ -412,12 +412,12 @@ ALTER TABLE "TJ_REAP_CALENDAR"
 
 ALTER TABLE "TJ_SEED_CALENDAR"
     ADD CONSTRAINT tj_seed_month_pkey PRIMARY KEY (rpc_id, rmn_id);
-		
+
 ALTER TABLE "T_PICTURE_GARDEN"
-  ADD CONSTRAINT t_garden_picuture_pkey PRIMARY KEY (grp_id); 
-  
+  ADD CONSTRAINT t_garden_picuture_pkey PRIMARY KEY (grp_id);
+
 ALTER TABLE "T_PICTURE_PRODUCT"
-  ADD CONSTRAINT t_product_picuture_pkey PRIMARY KEY (prp_id); 
+  ADD CONSTRAINT t_product_picuture_pkey PRIMARY KEY (prp_id);
 
 ALTER TABLE "T_RELATIONSHIP"
     ADD CONSTRAINT unq_t_relationship_user_id_one_user_id_two UNIQUE (rlt_usr_id_sender, rlt_usr_id_recipient);
@@ -556,9 +556,9 @@ ALTER TABLE "T_USER"
 
 ALTER TABLE "T_USER"
     ADD CONSTRAINT fk_t_user_rus_id FOREIGN KEY (usr_rus_id) REFERENCES "T_REF_USER_STATUS"(rus_id);
-   
+
 ALTER TABLE "T_PICTURE_GARDEN"
    ADD CONSTRAINT fk_T_PICTURE_GARDEN_grd_id FOREIGN KEY (grp_grd_id) REFERENCES "T_GARDEN" (grd_id);
-   
+
 ALTER TABLE "T_PICTURE_PRODUCT"
    ADD CONSTRAINT fk_T_PICTURE_PRODUCT_grd_id FOREIGN KEY (prp_prd_id) REFERENCES "T_GARDEN" (grd_id);
