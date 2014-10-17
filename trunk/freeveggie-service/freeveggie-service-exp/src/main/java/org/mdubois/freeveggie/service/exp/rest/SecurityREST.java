@@ -27,7 +27,7 @@ import org.mdubois.freeveggie.service.msg.UserMsg;
 @Produces({"application/json"})
 @RequestScoped
 @WebServiceExceptionHandler
-public class SecurityREST extends FreeveggieREST{
+public class SecurityREST extends FreeveggieREST {
 
     /**
      * {@link IProductBean}
@@ -46,7 +46,7 @@ public class SecurityREST extends FreeveggieREST{
         authentificationMsg.setPassword(password);
         try {
             return securityBean.controlPassword(authentificationMsg);
-        } catch (BusinessException be){
+        } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
@@ -62,9 +62,7 @@ public class SecurityREST extends FreeveggieREST{
         authentificationMsg.setPassword(password);
         return securityBean.controlTempPassword(authentificationMsg);
     }
-    
-    
-    
+
     @POST
     @Path("changePassword")
     @Consumes({"application/json"})
@@ -72,7 +70,7 @@ public class SecurityREST extends FreeveggieREST{
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             securityBean.changePassword(context, pChangePasswordMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
@@ -108,7 +106,11 @@ public class SecurityREST extends FreeveggieREST{
     @Produces({"application/json"})
     public String generateTempPassword(
             @QueryParam("email") final String pEmail) throws BusinessException {
-        securityBean.generateTempPassword(pEmail);
-        return Boolean.toString(true);
+        try {
+            securityBean.generateTempPassword(pEmail);
+            return Boolean.toString(true);
+        } catch (BusinessException be) {
+            throw new BusinessWebException(be);
+        }
     }
 }
