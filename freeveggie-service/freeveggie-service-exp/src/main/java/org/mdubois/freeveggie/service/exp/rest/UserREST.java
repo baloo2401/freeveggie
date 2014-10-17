@@ -14,7 +14,6 @@ import javax.ws.rs.QueryParam;
 import org.mdubois.freeveggie.bean.ISubscriptionBean;
 import org.mdubois.freeveggie.bean.IUserBean;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
-import org.mdubois.freeveggie.framework.msg.BooleanMsg;
 import org.mdubois.freeveggie.framework.security.ContextMsg;
 import org.mdubois.freeveggie.service.exp.exception.BusinessWebException;
 import org.mdubois.freeveggie.service.exp.interceptors.WebServiceExceptionHandler;
@@ -36,7 +35,7 @@ public class UserREST extends FreeveggieREST {
      */
     @EJB
     private IUserBean userBean;
-    
+
     /**
      * {@link ISubscriptionBean}
      */
@@ -50,7 +49,7 @@ public class UserREST extends FreeveggieREST {
             @PathParam("id") final Long userId) throws BusinessException {
         return userBean.getUserById(userId);
     }
-    
+
     @POST
     @Consumes({"application/json"})
     public void addUser(CreateAccountMsg pCreateAccountrMsg) {
@@ -60,27 +59,26 @@ public class UserREST extends FreeveggieREST {
             throw new BusinessWebException(be);
         }
     }
-    
-    
+
     @PUT
     @Consumes({"application/json"})
-    public void updateUser(UserMsg pUserMsg, 
-        @HeaderParam("userId") Long pContextUserId) {
+    public void updateUser(UserMsg pUserMsg,
+            @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             userBean.update(context, pUserMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @GET
     @Path("validate")
     @Produces({"application/json"})
-    public String getUserById(
+    public String validateCode(
             @QueryParam("code") final String pCode) throws BusinessException {
         return Boolean.toString(userBean.validate(pCode));
     }
-    
+
 }

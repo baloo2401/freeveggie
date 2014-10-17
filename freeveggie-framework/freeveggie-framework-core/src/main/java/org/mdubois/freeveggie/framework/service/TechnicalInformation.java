@@ -3,6 +3,8 @@ package org.mdubois.freeveggie.framework.service;
 // <editor-fold defaultstate="collapsed" desc="Imports">
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.mdubois.freeveggie.framework.service.criteria.CriteriaColumn;
 import org.mdubois.freeveggie.framework.service.criteria.QueryCriteria;
@@ -16,6 +18,7 @@ import org.mdubois.freeveggie.framework.service.order.ResultOrder;
  * @author Mickael Dubois
  */
 public class TechnicalInformation<T extends CriteriaColumn, V extends OrderColumn> {
+
     /**
      *
      */
@@ -53,11 +56,11 @@ public class TechnicalInformation<T extends CriteriaColumn, V extends OrderColum
         this.pagination = pPagination;
     }
 
-    public void addCriteria(QueryCriteria<T> criteria){
-    	if(criterias == null){
-    		criterias = new ArrayList<QueryCriteria<T>>();
-    	}
-    	criterias.add(criteria);
+    public void addCriteria(QueryCriteria<T> criteria) {
+        if (criterias == null) {
+            criterias = new ArrayList<QueryCriteria<T>>();
+        }
+        criterias.add(criteria);
     }
 
     @Override
@@ -65,4 +68,13 @@ public class TechnicalInformation<T extends CriteriaColumn, V extends OrderColum
         return ToStringBuilder.reflectionToString(this);
     }
 
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 }

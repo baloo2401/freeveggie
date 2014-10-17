@@ -1,11 +1,14 @@
 package org.mdubois.freeveggie.framework.service;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 // </editor-fold>
 
 /**
  * This class is made to execute a request and have the reponse paginated.
+ *
  * @author Mickael Dubois
  */
 public class Pagination {
@@ -19,21 +22,24 @@ public class Pagination {
      */
     private int nbPerPage;
 
-    public Pagination(){
-    	
+    public Pagination() {
+
     }
+
     /**
      * Constructor.
+     *
      * @param pNbPerPage - The number of result per page
      * @param pPageNumber - The page number we want to see
      */
-    public Pagination(final int pNbPerPage, final int pPageNumber){
+    public Pagination(final int pNbPerPage, final int pPageNumber) {
         this.nbPerPage = pNbPerPage;
         this.pageNumber = pPageNumber;
     }
 
     /**
      * Get the number of page per result.
+     *
      * @return - The number of result.
      */
     public int getNbPerPage() {
@@ -42,14 +48,25 @@ public class Pagination {
 
     /**
      * Get the page number.
+     *
      * @return - The page number
      */
     public int getPageNumber() {
         return pageNumber;
     }
-	
-	@Override
+
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 }
