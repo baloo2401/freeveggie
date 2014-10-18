@@ -36,59 +36,59 @@ public class ProductRequestREST extends FreeveggieREST {
      */
     @EJB
     private IProductBean productBean;
-    
+
     @GET
     @Path("{productResquestId}")
     @Produces({"application/json"})
-    public ProductRequestMsg getProductRequestId(
-    		@HeaderParam("userId") Long pJSONContext,
+    public ProductRequestMsg getProductRequestById(
+            @HeaderParam("userId") Long pJSONContext,
             @PathParam("productResquestId") Long pProductResquestId) {
         try {
             ContextMsg context = createContext(pJSONContext);
             return productBean.getProductRequestById(context, pProductResquestId);
         } catch (BusinessException be) {
-            return null;
+            throw new BusinessWebException(be);
         }
     }
-    
+
     @POST
     @Consumes({"application/json"})
     public void addProductRequest(ProductRequestMsg pProductRequestMsg,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             productBean.send(context, pProductRequestMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @POST
     @Path("accept/{productRequestId}")
     @Consumes({"application/json"})
-    public void accept(String pMessage, 
+    public void acceptRequest(String pMessage,
             @PathParam("productRequestId") Long pProductRequestId,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
-            productBean.accept(context, pProductRequestId,pMessage);
+
+            productBean.accept(context, pProductRequestId, pMessage);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @POST
     @Path("refuse/{productRequestId}")
     @Consumes({"application/json"})
-    public void refuseRequest(String pMessage, 
+    public void refuseRequest(String pMessage,
             @PathParam("productRequestId") Long pProductRequestId,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
-            productBean.refuse(context, pProductRequestId,pMessage);
+
+            productBean.refuse(context, pProductRequestId, pMessage);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
@@ -144,7 +144,6 @@ public class ProductRequestREST extends FreeveggieREST {
             throw new BusinessWebException(be);
         }
     }
-    
 
     @GET
     @Path("product/{productId}")
