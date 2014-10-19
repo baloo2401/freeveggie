@@ -15,14 +15,14 @@ import org.mdubois.freeveggie.bo.PartialUserBO;
 import org.mdubois.freeveggie.bo.ProductBO;
 import org.mdubois.freeveggie.bo.ProductCommentBO;
 import org.mdubois.freeveggie.bo.ProductLikeBO;
-import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
 import org.mdubois.freeveggie.dao.api.IGardenCommentDAO;
 import org.mdubois.freeveggie.dao.api.IGardenDAO;
 import org.mdubois.freeveggie.dao.api.IGardenLikeDAO;
 import org.mdubois.freeveggie.dao.api.IProductCommentDAO;
 import org.mdubois.freeveggie.dao.api.IProductDAO;
 import org.mdubois.freeveggie.dao.api.IProductLikeDAO;
-import org.mdubois.freeveggie.dao.api.IRelationShipDAO;
+import org.mdubois.freeveggie.dao.api.IRelationshipDAO;
 import org.mdubois.freeveggie.dao.api.IUserPartialDAO;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.security.UserRole;
@@ -42,7 +42,7 @@ public class RightControlerServiceTest {
     @Mocked
     private IUserPartialDAO userPartialDAO;
     @Mocked
-    private IRelationShipDAO relationShipDAO;
+    private IRelationshipDAO relationshipDAO;
     @Mocked
     private IGardenLikeDAO gardenLikeDAO;
     @Mocked
@@ -592,26 +592,26 @@ public class RightControlerServiceTest {
         final IRightControlerService rightControlerService = new RightControlerService();
 
         final Long pUserId = 123L;
-        final Long pRelationShipId = 1233L;
+        final Long pRelationshipId = 1233L;
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(rightControlerService, relationShipDAO);
+                Deencapsulation.setField(rightControlerService, relationshipDAO);
 
-                RelationShipBO relationShipBO = new RelationShipBO();
-                relationShipBO.setId(pRelationShipId);
+                RelationshipBO relationshipBO = new RelationshipBO();
+                relationshipBO.setId(pRelationshipId);
                 PartialUserBO partiUserBO = new PartialUserBO();
                 partiUserBO.setId(pUserId);
 
-                relationShipBO.setRecipient(partiUserBO);
+                relationshipBO.setRecipient(partiUserBO);
 
-                relationShipDAO.get(pRelationShipId);
-                returns(relationShipBO);
+                relationshipDAO.get(pRelationshipId);
+                returns(relationshipBO);
             }
         };
 
-        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationShipId);
+        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationshipId);
         Assert.assertEquals(true, result);
     }
 
@@ -620,26 +620,26 @@ public class RightControlerServiceTest {
         final IRightControlerService rightControlerService = new RightControlerService();
 
         final Long pUserId = 123L;
-        final Long pRelationShipId = 1233L;
+        final Long pRelationshipId = 1233L;
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(rightControlerService, relationShipDAO);
+                Deencapsulation.setField(rightControlerService, relationshipDAO);
 
-                RelationShipBO relationShipBO = new RelationShipBO();
-                relationShipBO.setId(pRelationShipId);
+                RelationshipBO relationshipBO = new RelationshipBO();
+                relationshipBO.setId(pRelationshipId);
                 PartialUserBO partiUserBO = new PartialUserBO();
                 partiUserBO.setId(1234L);
 
-                relationShipBO.setRecipient(partiUserBO);
+                relationshipBO.setRecipient(partiUserBO);
 
-                relationShipDAO.get(pRelationShipId);
-                returns(relationShipBO);
+                relationshipDAO.get(pRelationshipId);
+                returns(relationshipBO);
             }
         };
 
-        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationShipId);
+        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationshipId);
         Assert.assertEquals(false, result);
     }
 
@@ -648,19 +648,19 @@ public class RightControlerServiceTest {
         final IRightControlerService rightControlerService = new RightControlerService();
 
         final Long pUserId = 123L;
-        final Long pRelationShipId = 1233L;
+        final Long pRelationshipId = 1233L;
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(rightControlerService, relationShipDAO);
+                Deencapsulation.setField(rightControlerService, relationshipDAO);
 
-                relationShipDAO.get(pRelationShipId);
+                relationshipDAO.get(pRelationshipId);
                 returns(null);
             }
         };
 
-        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationShipId);
+        boolean result = rightControlerService.isUserOwnerRelationship(pUserId, pRelationshipId);
         Assert.assertEquals(false, result);
     }
 

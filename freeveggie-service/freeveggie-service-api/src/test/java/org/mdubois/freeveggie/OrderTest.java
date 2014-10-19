@@ -17,7 +17,7 @@ import org.mdubois.freeveggie.order.RefCountryOrderColumn;
 import org.mdubois.freeveggie.order.RefProductOrderColumn;
 import org.mdubois.freeveggie.order.RefRegionOrderColumn;
 import org.mdubois.freeveggie.order.RefStateOrderColumn;
-import org.mdubois.freeveggie.order.RelationShipOrderColumn;
+import org.mdubois.freeveggie.order.RelationshipOrderColumn;
 import org.mdubois.freeveggie.order.UserOrderColumn;
 
 /**
@@ -129,12 +129,12 @@ public class OrderTest {
     }
 
     @Test
-    public void testRelationShipOrderColumn() {
+    public void testRelationshipOrderColumn() {
 
-        Assert.assertEquals("_type", RelationShipOrderColumn.TYPE.getOrderedColumn());
-        Assert.assertEquals("recipient", RelationShipOrderColumn.RECIPIENT.getOrderedColumn());
-        Assert.assertEquals("_status", RelationShipOrderColumn.STATUS.getOrderedColumn());
-        Assert.assertEquals("creationDate", RelationShipOrderColumn.CREATION_DATE.getOrderedColumn());
+        Assert.assertEquals("_type", RelationshipOrderColumn.TYPE.getOrderedColumn());
+        Assert.assertEquals("recipient", RelationshipOrderColumn.RECIPIENT.getOrderedColumn());
+        Assert.assertEquals("_status", RelationshipOrderColumn.STATUS.getOrderedColumn());
+        Assert.assertEquals("creationDate", RelationshipOrderColumn.CREATION_DATE.getOrderedColumn());
     }
 
     @Test

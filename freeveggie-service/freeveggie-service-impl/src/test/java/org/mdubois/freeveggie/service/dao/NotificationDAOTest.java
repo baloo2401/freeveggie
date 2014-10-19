@@ -17,7 +17,7 @@ import org.mdubois.freeveggie.bo.PartialUserBO;
 import org.mdubois.freeveggie.bo.ProductBO;
 import org.mdubois.freeveggie.bo.ProductRequestBO;
 import org.mdubois.freeveggie.bo.RefProductBO;
-import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
 import org.mdubois.freeveggie.bo.UserBO;
 import org.mdubois.freeveggie.dao.api.INotificationDAO;
 import org.mdubois.freeveggie.dao.impl.NotificationDAO;
@@ -157,7 +157,7 @@ public class NotificationDAOTest {
         recipient.setId(123L);
         recipient.setEmail(email);
         recipient.setUsername(login);
-        RelationShipBO relationshipBO = new RelationShipBO();
+        RelationshipBO relationshipBO = new RelationshipBO();
         relationshipBO.setSender(requester);
         relationshipBO.setRecipient(recipient);
         relationshipBO.setRequest("request");

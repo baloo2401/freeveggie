@@ -2,7 +2,7 @@ package org.mdubois.freeveggie.dao.api;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
 import org.mdubois.freeveggie.bo.ProductRequestBO;
-import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
 import org.mdubois.freeveggie.bo.UserBO;
 // </editor-fold>
 
@@ -36,7 +36,7 @@ public interface INotificationDAO {
 
     /**
      * Send a email to inform that a relationship request as been made.
-     * @param pRelationShipBO - The {@link RelationShipBO}
+     * @param pRelationshipBO - The {@link RelationshipBO}
      */
-    void sendRelationshipRequestNotice(final RelationShipBO pRelationShipBO);
+    void sendRelationshipRequestNotice(final RelationshipBO pRelationshipBO);
 }

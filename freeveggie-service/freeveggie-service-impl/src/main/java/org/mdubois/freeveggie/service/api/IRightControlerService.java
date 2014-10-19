@@ -79,10 +79,10 @@ public interface IRightControlerService {
     /**
      * Return true if the relationship as been send to this user.
      * @param pIdUser - The {@link PartialUserBO} id to test.
-     * @param pIdProductLike - The {@link RelationShipBO} id to test.
+     * @param pIdProductLike - The {@link RelationshipBO} id to test.
      * @return True if the given user is the recipient of the relationship, False otherwise
      */
-    boolean isUserOwnerRelationship(Long pUserId, Long pRelationShipId);
+    boolean isUserOwnerRelationship(Long pUserId, Long pRelationshipId);
 
     /**
      * Return true if the picture from a product is own by the user, False otherwise

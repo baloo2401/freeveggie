@@ -64,10 +64,10 @@ public class RightControlerService implements IRightControlerService {
     @Inject
     private IGardenPictureDAO gardenPictureDAO;
     /**
-     * {@link IRelationShipDAO}
+     * {@link IRelationshipDAO}
      */
     @Inject
-    private IRelationShipDAO relationShipDAO;
+    private IRelationshipDAO relationshipDAO;
 
     /**
      * {@inheritDoc}
@@ -159,10 +159,10 @@ public class RightControlerService implements IRightControlerService {
      * {@inheritDoc}
      */
     @Override
-    public boolean isUserOwnerRelationship(Long pUserId, Long pRelationShipId) {
-        RelationShipBO relationShipBO = relationShipDAO.get(pRelationShipId);
-        return relationShipBO != null
-                && relationShipBO.getRecipient().getId().equals(pUserId);
+    public boolean isUserOwnerRelationship(Long pUserId, Long pRelationshipId) {
+        RelationshipBO relationshipBO = relationshipDAO.get(pRelationshipId);
+        return relationshipBO != null
+                && relationshipBO.getRecipient().getId().equals(pUserId);
     }
 
     /**

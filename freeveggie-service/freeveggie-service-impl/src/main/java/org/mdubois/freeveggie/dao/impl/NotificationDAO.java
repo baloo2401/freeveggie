@@ -12,7 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.mdubois.freeveggie.bo.ProductRequestBO;
-import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
 import org.mdubois.freeveggie.bo.UserBO;
 import org.mdubois.freeveggie.dao.api.INotificationDAO;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
@@ -215,13 +215,13 @@ public class NotificationDAO implements INotificationDAO {
      * {@inheritDoc}
      */
     @Override
-    public void sendRelationshipRequestNotice(RelationShipBO pRelationShipBO) {
+    public void sendRelationshipRequestNotice(RelationshipBO pRelationshipBO) {
         Object[] arguments = new Object[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_NB_PARAM];
-        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_1] = pRelationShipBO.getSender().getUsername();
-        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_2] = pRelationShipBO.getType();
-        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_3] = pRelationShipBO.getRequest();
-        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_4] = pRelationShipBO.getId();
-        sendNotice(pRelationShipBO.getRecipient().getEmail(),
+        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_1] = pRelationshipBO.getSender().getUsername();
+        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_2] = pRelationshipBO.getType();
+        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_3] = pRelationshipBO.getRequest();
+        arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_4] = pRelationshipBO.getId();
+        sendNotice(pRelationshipBO.getRecipient().getEmail(),
                 FRIENDSHIP_REQUEST_EMAIL_SUBJECT, MessageFormat.format(
                 FRIENDSHIP_REQUEST_EMAIL_MESSAGE, arguments));
     }

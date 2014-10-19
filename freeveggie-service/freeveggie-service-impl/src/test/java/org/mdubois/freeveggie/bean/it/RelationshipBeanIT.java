@@ -11,39 +11,38 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mdubois.freeveggie.RelationshipType;
-import org.mdubois.freeveggie.bean.IRelationShipBean;
+import org.mdubois.freeveggie.bean.IRelationshipBean;
 import org.mdubois.freeveggie.framework.exception.MessageValidationException;
 import org.mdubois.freeveggie.framework.security.ContextMsg;
 import org.mdubois.freeveggie.framework.security.UserContext;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
-import org.mdubois.freeveggie.service.msg.RelationShipMsg;
-// </editor-fold>
+import org.mdubois.freeveggie.service.msg.RelationshipMsg;
 
 /**
  *
  * @author mdubois
  */
-public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
+public class RelationshipBeanIT extends AbstractBeanIntegrationTest {
 
-    private IRelationShipBean relationShipBean;
+    private IRelationshipBean relationshipBean;
 
     @Before
     @Override
     public void setUp() throws Throwable {
         super.setUp();
-        Object bean = container.getContext().lookup("java:global/classes/RelationShipBeanLocal");
-        relationShipBean = (IRelationShipBean) bean;
+        Object bean = container.getContext().lookup("java:global/classes/RelationshipBeanLocal");
+        relationshipBean = (IRelationshipBean) bean;
     }
 
     /**
      * Test of getRefCitiesByCountry method, of class ReferenceBean.
      */
     @Test(expected = MessageValidationException.class)
-    public void testGetRelationShip() throws Exception {
+    public void testGetRelationship() throws Exception {
         ContextMsg pContextMsg = null;
         Long pUserId = null;
         List expResult = null;
-        List result = relationShipBean.getRelationShip(pContextMsg, pUserId, null);
+        List result = relationshipBean.getRelationship(pContextMsg, pUserId, null);
         assertEquals(expResult, result);
     }
 
@@ -51,12 +50,12 @@ public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
      * Test of getRefCitiesByCountry method, of class ReferenceBean.
      */
     @Test
-    public void testGetRelationShip2() throws Exception {
+    public void testGetRelationship2() throws Exception {
         ContextMsg pContextMsg = new ContextMsg();
         pContextMsg.setUser(new UserContext());
         pContextMsg.getUser().setId(1L);
         Long pUserId = 2L;
-        List result = relationShipBean.getRelationShip(pContextMsg, pUserId, null);
+        List result = relationshipBean.getRelationship(pContextMsg, pUserId, null);
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isEmpty());
     }
@@ -82,11 +81,11 @@ public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
         pContextMsgUser2.setUser(new UserContext());
         pContextMsgUser2.getUser().setId(2L);
 
-        List relationships = relationShipBean.getRelationShip(pContextMsg, 1L, null);
+        List relationships = relationshipBean.getRelationship(pContextMsg, 1L, null);
         Assert.assertNotNull(relationships);
         Assert.assertTrue(relationships.isEmpty());
 
-        RelationShipMsg pRelationshipMsg = new RelationShipMsg();
+        RelationshipMsg pRelationshipMsg = new RelationshipMsg();
         pRelationshipMsg.setRequest("request message");
         pRelationshipMsg.setType(RelationshipType.FRIEND);
         PartialUserMsg sender = new PartialUserMsg();
@@ -97,13 +96,13 @@ public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
         pRelationshipMsg.setRecipient(recipient);
 
         //Create a request
-        Long result = relationShipBean.create(pContextMsg, pRelationshipMsg);
+        Long result = relationshipBean.create(pContextMsg, pRelationshipMsg);
 
         //Refuse the request
-        relationShipBean.refuse(pContextMsgUser2, result, "no");
+        relationshipBean.refuse(pContextMsgUser2, result, "no");
 
         //Get the request
-        relationships = relationShipBean.getRelationShip(pContextMsg, 1L, null);
+        relationships = relationshipBean.getRelationship(pContextMsg, 1L, null);
         assertEquals(1, relationships.size());
 
         //Delete relationship after test
@@ -112,17 +111,17 @@ public class RelationShipBeanIT extends AbstractBeanIntegrationTest {
         stmt.close();
 
         //Get the relationships
-        relationships = relationShipBean.getRelationShip(pContextMsg, 1L, null);
+        relationships = relationshipBean.getRelationship(pContextMsg, 1L, null);
         assertNull(relationships);
 
         //Create the relationship
-        result = relationShipBean.create(pContextMsg, pRelationshipMsg);
+        result = relationshipBean.create(pContextMsg, pRelationshipMsg);
 
         //Validate it
-        relationShipBean.validate(pContextMsgUser2, result, "sure");
+        relationshipBean.validate(pContextMsgUser2, result, "sure");
 
         //Get the request
-        relationships = relationShipBean.getRelationShip(pContextMsg, 1L, null);
+        relationships = relationshipBean.getRelationship(pContextMsg, 1L, null);
         assertEquals(1, relationships.size());
 
         //Delete relationship after test

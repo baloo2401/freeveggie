@@ -6,16 +6,16 @@ import java.util.Map;
 import java.util.TreeMap;
 import javax.annotation.ManagedBean;
 import javax.interceptor.Interceptors;
-import org.mdubois.freeveggie.bo.RelationShipBO;
-import static org.mdubois.freeveggie.bo.RelationShipBO.QueryNamedConstant.GET_RELATIONSHIP;
-import org.mdubois.freeveggie.criteria.RelationShipCriteriaColumn;
-import org.mdubois.freeveggie.dao.api.IRelationShipDAO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
+import static org.mdubois.freeveggie.bo.RelationshipBO.QueryNamedConstant.GET_RELATIONSHIP;
+import org.mdubois.freeveggie.criteria.RelationshipCriteriaColumn;
+import org.mdubois.freeveggie.dao.api.IRelationshipDAO;
 import org.mdubois.freeveggie.framework.dao.ReadWriteDAO;
 import org.mdubois.freeveggie.framework.interceptor.DAOInterceptor;
 import org.mdubois.freeveggie.framework.service.TechnicalInformation;
 import org.mdubois.freeveggie.framework.service.order.OrderWay;
 import org.mdubois.freeveggie.framework.service.order.ResultOrder;
-import org.mdubois.freeveggie.order.RelationShipOrderColumn;
+import org.mdubois.freeveggie.order.RelationshipOrderColumn;
 
 // </editor-fold>
 
@@ -25,22 +25,22 @@ import org.mdubois.freeveggie.order.RelationShipOrderColumn;
  */
 @ManagedBean
 @Interceptors({ DAOInterceptor.class })
-public class RelationShipDAO extends ReadWriteDAO<RelationShipBO, Long>
-		implements IRelationShipDAO {
+public class RelationshipDAO extends ReadWriteDAO<RelationshipBO, Long>
+		implements IRelationshipDAO {
 
 	/**
-	 * The default {@link RelationShipBO} result search ordering.
+	 * The default {@link RelationshipBO} result search ordering.
 	 */
-	private static final RelationShipOrderColumn DEFAULT_ORDER_COLUM = RelationShipOrderColumn.CREATION_DATE;
+	private static final RelationshipOrderColumn DEFAULT_ORDER_COLUM = RelationshipOrderColumn.CREATION_DATE;
 	private static final OrderWay DEFAULT_ORDER_WAY = OrderWay.ASC;
-	private static final ResultOrder<RelationShipOrderColumn> DEFAULT_ORDER = new ResultOrder<RelationShipOrderColumn>(
+	private static final ResultOrder<RelationshipOrderColumn> DEFAULT_ORDER = new ResultOrder<RelationshipOrderColumn>(
 			DEFAULT_ORDER_COLUM, DEFAULT_ORDER_WAY);
 
 	/** {@inheritDoc } */
 	@Override
-	public List<RelationShipBO> getRelationShip(
+	public List<RelationshipBO> getRelationship(
 			final Long pIdUserPartialBO,
-			final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechnicalInformation) {
+			final TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechnicalInformation) {
 		Map<String, Object> parameters = new TreeMap<String, Object>();
 		parameters.put("sender", pIdUserPartialBO);
 		parameters.put("recipient", pIdUserPartialBO);
@@ -50,12 +50,12 @@ public class RelationShipDAO extends ReadWriteDAO<RelationShipBO, Long>
 
 	/** {@inheritDoc } */
 	@Override
-	public ResultOrder<RelationShipOrderColumn> getDefaultOrder() {
+	public ResultOrder<RelationshipOrderColumn> getDefaultOrder() {
 		return DEFAULT_ORDER;
 	}
 
 	@Override
-	protected Class<RelationShipBO> getType() {
-		return RelationShipBO.class;
+	protected Class<RelationshipBO> getType() {
+		return RelationshipBO.class;
 	}
 }
