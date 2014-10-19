@@ -19,7 +19,7 @@
         <class>org.mdubois.freeveggie.bo.RefProductBO</class>
         <class>org.mdubois.freeveggie.bo.RefRegionBO</class>
         <class>org.mdubois.freeveggie.bo.RefStateBO</class>
-        <class>org.mdubois.freeveggie.bo.RelationShipBO</class>
+        <class>org.mdubois.freeveggie.bo.RelationshipBO</class>
         <class>org.mdubois.freeveggie.bo.SubscriptionBO</class>
         <class>org.mdubois.freeveggie.bo.UserBO</class>
         <class>org.mdubois.freeveggie.bo.PartialUserBO</class>
@@ -57,7 +57,7 @@
         <class>org.mdubois.freeveggie.bo.RefProductBO</class>
         <class>org.mdubois.freeveggie.bo.RefRegionBO</class>
         <class>org.mdubois.freeveggie.bo.RefStateBO</class>
-        <class>org.mdubois.freeveggie.bo.RelationShipBO</class>
+        <class>org.mdubois.freeveggie.bo.RelationshipBO</class>
         <class>org.mdubois.freeveggie.bo.SubscriptionBO</class>
         <class>org.mdubois.freeveggie.bo.UserBO</class>
         <class>org.mdubois.freeveggie.bo.PartialUserBO</class>

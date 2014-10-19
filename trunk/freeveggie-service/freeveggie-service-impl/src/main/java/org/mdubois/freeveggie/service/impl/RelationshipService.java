@@ -6,9 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 import org.mdubois.freeveggie.RelationshipStatus;
 import org.mdubois.freeveggie.bo.PartialUserBO;
-import org.mdubois.freeveggie.bo.RelationShipBO;
-import org.mdubois.freeveggie.criteria.RelationShipCriteriaColumn;
-import org.mdubois.freeveggie.dao.api.IRelationShipDAO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
+import org.mdubois.freeveggie.criteria.RelationshipCriteriaColumn;
+import org.mdubois.freeveggie.dao.api.IRelationshipDAO;
 import org.mdubois.freeveggie.dao.api.IUserPartialDAO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
@@ -17,9 +17,9 @@ import org.mdubois.freeveggie.framework.service.TechnicalInformation;
 import org.mdubois.freeveggie.framework.service.criteria.CriteriaOperation;
 import org.mdubois.freeveggie.framework.service.criteria.QueryCriteria;
 import org.mdubois.freeveggie.framework.utils.CriteriaUtils;
-import org.mdubois.freeveggie.order.RelationShipOrderColumn;
-import org.mdubois.freeveggie.service.api.IRelationShipService;
-import org.mdubois.freeveggie.service.msg.RelationShipMsg;
+import org.mdubois.freeveggie.order.RelationshipOrderColumn;
+import org.mdubois.freeveggie.service.api.IRelationshipService;
+import org.mdubois.freeveggie.service.msg.RelationshipMsg;
 
 // </editor-fold>
 
@@ -27,33 +27,33 @@ import org.mdubois.freeveggie.service.msg.RelationShipMsg;
  * 
  * @author Mickael Dubois
  */
-public class RelationShipService implements IRelationShipService {
+public class RelationshipService implements IRelationshipService {
 
 	// <editor-fold defaultstate="collapsed" desc="DAO Resource's">
 	/**
-	 * {@link IRelationShipDAO}
+	 * {@link IRelationshipDAO}
 	 */
 	@Inject
-	private IRelationShipDAO relationShipDAO;
+	private IRelationshipDAO relationshipDAO;
 	/**
-	 * {@link IRelationShipDAO}
+	 * {@link IRelationshipDAO}
 	 */
 	@Inject
 	private IUserPartialDAO userPartialDAO;
 	// </editor-fold>
 	// <editor-fold defaultstate="collapsed" desc="Converters">
 	/**
-	 * {@link Converter<RelationShipBO,RelationShipMsg>}
+	 * {@link Converter<RelationshipBO,RelationshipMsg>}
 	 */
 	// TODO : Converter does not exist
 	@Inject
-	private BusinessObjectConverter<RelationShipBO, RelationShipMsg> relationshipMsgConverter;
+	private BusinessObjectConverter<RelationshipBO, RelationshipMsg> relationshipMsgConverter;
 	/**
-	 * {@link Converter<RelationShipBO,RelationShipMsg>}
+	 * {@link Converter<RelationshipBO,RelationshipMsg>}
 	 */
 	// TODO : Converter does not exist
 	@Inject
-	private Converter<RelationShipMsg, RelationShipBO> relationshipBOConverter;
+	private Converter<RelationshipMsg, RelationshipBO> relationshipBOConverter;
 	// </editor-fold>
 	// <editor-fold defaultstate="collapsed" desc="Constants">
 	private static final List<RelationshipStatus> RELATIONSHIP_STATUS_DEFAULT = new ArrayList<RelationshipStatus>();
@@ -64,8 +64,8 @@ public class RelationShipService implements IRelationShipService {
 	/**
 	 * Criteria relationship status equal pending
 	 */
-	private static final QueryCriteria<RelationShipCriteriaColumn> CRITERIA_RELATIONSHIP_STATUS_EQUAL_PENDING_OR_VALIDATED = new QueryCriteria<RelationShipCriteriaColumn>(
-			RelationShipCriteriaColumn.STATUS, CriteriaOperation.IN,
+	private static final QueryCriteria<RelationshipCriteriaColumn> CRITERIA_RELATIONSHIP_STATUS_EQUAL_PENDING_OR_VALIDATED = new QueryCriteria<RelationshipCriteriaColumn>(
+			RelationshipCriteriaColumn.STATUS, CriteriaOperation.IN,
 			RELATIONSHIP_STATUS_DEFAULT);
 
 	// </editor-fold>
@@ -73,52 +73,52 @@ public class RelationShipService implements IRelationShipService {
 	// <editor-fold defaultstate="collapsed" desc="Action method's">
 	/** {@inheritDoc} */
 	@Override
-	public Long create(RelationShipMsg pRelationShipMsg)
+	public Long create(RelationshipMsg pRelationshipMsg)
 			throws BusinessException {
-		PartialUserBO senderUserBO = userPartialDAO.get(pRelationShipMsg
+		PartialUserBO senderUserBO = userPartialDAO.get(pRelationshipMsg
 				.getSender().getId());
 
 		if (senderUserBO == null) {
 			throw new BusinessException(
 					"Try to create relationship on an inexisting user");
 		}
-		PartialUserBO recipientUserBO = userPartialDAO.get(pRelationShipMsg
+		PartialUserBO recipientUserBO = userPartialDAO.get(pRelationshipMsg
 				.getRecipient().getId());
 		if (recipientUserBO == null) {
 			throw new BusinessException(
 					"Try to create relationship on an inexisting user");
 		}
 
-		List<RelationShipBO> existingRelationships = relationShipDAO
-				.getRelationShip(senderUserBO.getId(), null);
+		List<RelationshipBO> existingRelationships = relationshipDAO
+				.getRelationship(senderUserBO.getId(), null);
 		if (existingRelationships != null) {
-			for (RelationShipBO existingRelationship : existingRelationships) {
+			for (RelationshipBO existingRelationship : existingRelationships) {
 				if (existingRelationship.getRecipient().getId()
-						.equals(pRelationShipMsg.getRecipient().getId())) {
+						.equals(pRelationshipMsg.getRecipient().getId())) {
 					throw new BusinessException("Relationship already exist");
 				} else if (existingRelationship.getSender().getId()
-						.equals(pRelationShipMsg.getRecipient().getId())) {
+						.equals(pRelationshipMsg.getRecipient().getId())) {
 					throw new BusinessException("Relationship already exist");
 				}
 			}
 		}
-		RelationShipBO relationShipBO = relationshipMsgConverter
-				.createNew(pRelationShipMsg);
-		relationShipBO.setRecipient(recipientUserBO);
-		relationShipBO.setSender(senderUserBO);
+		RelationshipBO relationshipBO = relationshipMsgConverter
+				.createNew(pRelationshipMsg);
+		relationshipBO.setRecipient(recipientUserBO);
+		relationshipBO.setSender(senderUserBO);
 
-		return relationShipDAO.save(relationShipBO);
+		return relationshipDAO.save(relationshipBO);
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public boolean validate(Long pRelationShipId, String pMessage)
+	public boolean validate(Long pRelationshipId, String pMessage)
 			throws BusinessException {
-		RelationShipBO relationShipBO = relationShipDAO.get(pRelationShipId);
-		if (relationShipBO != null) {
-			relationShipBO.setStatus(RelationshipStatus.VALIDED);
-			relationShipBO.setAnswer(pMessage);
-			relationShipDAO.update(relationShipBO);
+		RelationshipBO relationshipBO = relationshipDAO.get(pRelationshipId);
+		if (relationshipBO != null) {
+			relationshipBO.setStatus(RelationshipStatus.VALIDED);
+			relationshipBO.setAnswer(pMessage);
+			relationshipDAO.update(relationshipBO);
 			return true;
 		} else {
 			throw new BusinessException(
@@ -128,12 +128,12 @@ public class RelationShipService implements IRelationShipService {
 
 	/** {@inheritDoc} */
 	@Override
-	public boolean refuse(Long pRelationShipId, String pMessage)
+	public boolean refuse(Long pRelationshipId, String pMessage)
 			throws BusinessException {
-		RelationShipBO relationShipBO = relationShipDAO.get(pRelationShipId);
-		if (relationShipBO != null) {
-			relationShipBO.setStatus(RelationshipStatus.REFUSED);
-			relationShipDAO.update(relationShipBO);
+		RelationshipBO relationshipBO = relationshipDAO.get(pRelationshipId);
+		if (relationshipBO != null) {
+			relationshipBO.setStatus(RelationshipStatus.REFUSED);
+			relationshipDAO.update(relationshipBO);
 			return true;
 		} else {
 			throw new BusinessException("Try to refuse an unknown relationship");
@@ -145,38 +145,38 @@ public class RelationShipService implements IRelationShipService {
 	// <editor-fold defaultstate="collapsed" desc="Get method's">
 	/** {@inheritDoc} */
 	@Override
-	public List<RelationShipMsg> getRelationShip(
+	public List<RelationshipMsg> getRelationship(
 			Long pUserId,
-			TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechnicalInformation)
+			TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechnicalInformation)
 			throws BusinessException {
-		return relationshipBOConverter.convert(relationShipDAO.getRelationShip(
+		return relationshipBOConverter.convert(relationshipDAO.getRelationship(
 				pUserId, getCleanCriteriaBO(pTechnicalInformation)));
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public RelationShipMsg getRelationShipById(Long pRelationshipId)
+	public RelationshipMsg getRelationshipById(Long pRelationshipId)
 			throws BusinessException {
-		RelationShipBO relationShipBO = relationShipDAO.get(pRelationshipId);
-		if (relationShipBO == null) {
+		RelationshipBO relationshipBO = relationshipDAO.get(pRelationshipId);
+		if (relationshipBO == null) {
 			throw new BusinessException("Try to get an unknow relationship");
 		}
-		return relationshipBOConverter.convert(relationShipBO);
+		return relationshipBOConverter.convert(relationshipBO);
 	}
 
 	// </editor-fold>
 
 	// <editor-fold defaultstate="collapsed" desc="Private method's">
-	private TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> getCleanCriteriaBO(
-			final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechnicalInformation) {
-		TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> toReturn = new TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn>();
+	private TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> getCleanCriteriaBO(
+			final TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechnicalInformation) {
+		TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> toReturn = new TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn>();
 
 		if (pTechnicalInformation != null) {
 			toReturn.setCriterias(pTechnicalInformation.getCriterias());
 			toReturn.setOrder(pTechnicalInformation.getOrder());
 			toReturn.setPagination(pTechnicalInformation.getPagination());
 			if (!CriteriaUtils.isCriteriaPresent(toReturn.getCriterias(),
-					RelationShipCriteriaColumn.STATUS)) {
+					RelationshipCriteriaColumn.STATUS)) {
 				toReturn.addCriteria(CRITERIA_RELATIONSHIP_STATUS_EQUAL_PENDING_OR_VALIDATED);
 			}
 		} else {

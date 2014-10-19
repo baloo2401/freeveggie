@@ -7,8 +7,8 @@ import mockit.Expectations;
 import mockit.Mocked;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import org.mdubois.freeveggie.bean.local.RelationShipBeanLocal;
-import org.mdubois.freeveggie.criteria.RelationShipCriteriaColumn;
+import org.mdubois.freeveggie.bean.local.RelationshipBeanLocal;
+import org.mdubois.freeveggie.criteria.RelationshipCriteriaColumn;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
@@ -16,20 +16,20 @@ import org.mdubois.freeveggie.framework.security.ContextMsg;
 import org.mdubois.freeveggie.framework.security.UserContext;
 import org.mdubois.freeveggie.framework.security.UserRole;
 import org.mdubois.freeveggie.framework.service.TechnicalInformation;
-import org.mdubois.freeveggie.order.RelationShipOrderColumn;
-import org.mdubois.freeveggie.service.api.IRelationShipService;
+import org.mdubois.freeveggie.order.RelationshipOrderColumn;
+import org.mdubois.freeveggie.service.api.IRelationshipService;
 import org.mdubois.freeveggie.service.api.IRightControlerService;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
-import org.mdubois.freeveggie.service.msg.RelationShipMsg;
+import org.mdubois.freeveggie.service.msg.RelationshipMsg;
 
 /**
  *
  * @author mdubois
  */
-public class RelationShipBeanTest {
+public class RelationshipBeanTest {
 
     @Mocked
-    private IRelationShipService relationShipService;
+    private IRelationshipService relationshipService;
     @Mocked
     private IRightControlerService rightControlerService;
 
@@ -44,28 +44,28 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final RelationShipMsg pRelationShipMsg = new RelationShipMsg();
+        final RelationshipMsg pRelationshipMsg = new RelationshipMsg();
         PartialUserMsg userMsg = new PartialUserMsg();
         userMsg.setId(userId);
-        pRelationShipMsg.setSender(userMsg);
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        pRelationshipMsg.setSender(userMsg);
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final Long expResult = 1234L;
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                relationShipService.create(pRelationShipMsg);
+                relationshipService.create(pRelationshipMsg);
                 returns(expResult);
             }
         };
 
-        Long result = instance.create(pContextMsg, pRelationShipMsg);
+        Long result = instance.create(pContextMsg, pRelationshipMsg);
         assertEquals(expResult, result);
     }
 
@@ -76,17 +76,17 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(124L);
         pContextMsg.setUser(userContext);
-        final RelationShipMsg pRelationShipMsg = new RelationShipMsg();
+        final RelationshipMsg pRelationshipMsg = new RelationshipMsg();
         PartialUserMsg userMsg = new PartialUserMsg();
         userMsg.setId(userId);
-        pRelationShipMsg.setSender(userMsg);
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        pRelationshipMsg.setSender(userMsg);
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final Long expResult = 1234L;
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
@@ -94,7 +94,7 @@ public class RelationShipBeanTest {
             }
         };
 
-        instance.create(pContextMsg, pRelationShipMsg);
+        instance.create(pContextMsg, pRelationshipMsg);
     }
 
     @Test(expected = AccessNotGrantedException.class)
@@ -104,17 +104,17 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(124L);
         pContextMsg.setUser(userContext);
-        final RelationShipMsg pRelationShipMsg = new RelationShipMsg();
+        final RelationshipMsg pRelationshipMsg = new RelationshipMsg();
         PartialUserMsg userMsg = new PartialUserMsg();
         userMsg.setId(userId);
-        pRelationShipMsg.setSender(userMsg);
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        pRelationshipMsg.setSender(userMsg);
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final Long expResult = 1234L;
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
@@ -122,7 +122,7 @@ public class RelationShipBeanTest {
             }
         };
 
-        instance.create(pContextMsg, pRelationShipMsg);
+        instance.create(pContextMsg, pRelationshipMsg);
     }
 
     @Test(expected = BusinessException.class)
@@ -132,27 +132,27 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final RelationShipMsg pRelationShipMsg = new RelationShipMsg();
+        final RelationshipMsg pRelationshipMsg = new RelationshipMsg();
         PartialUserMsg userMsg = new PartialUserMsg();
         userMsg.setId(userId);
-        pRelationShipMsg.setSender(userMsg);
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        pRelationshipMsg.setSender(userMsg);
+        final IRelationshipBean instance = new RelationshipBeanLocal();
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                relationShipService.create(pRelationShipMsg);
+                relationshipService.create(pRelationshipMsg);
                 result = new BusinessException("BusinessException");
             }
         };
 
-        instance.create(pContextMsg, pRelationShipMsg);
+        instance.create(pContextMsg, pRelationshipMsg);
     }
 
     @Test(expected = TechnicalException.class)
@@ -162,27 +162,27 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final RelationShipMsg pRelationShipMsg = new RelationShipMsg();
+        final RelationshipMsg pRelationshipMsg = new RelationshipMsg();
         PartialUserMsg userMsg = new PartialUserMsg();
         userMsg.setId(userId);
-        pRelationShipMsg.setSender(userMsg);
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        pRelationshipMsg.setSender(userMsg);
+        final IRelationshipBean instance = new RelationshipBeanLocal();
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                relationShipService.create(pRelationShipMsg);
+                relationshipService.create(pRelationshipMsg);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
-        instance.create(pContextMsg, pRelationShipMsg);
+        instance.create(pContextMsg, pRelationshipMsg);
     }
     // </editor-fold>
 
@@ -197,29 +197,29 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final boolean expResult = true;
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(true);
 
-                relationShipService.validate(pRelationShipId, message);
+                relationshipService.validate(pRelationshipId, message);
                 returns(expResult);
             }
         };
 
-        boolean result = instance.validate(pContextMsg, pRelationShipId, message);
+        boolean result = instance.validate(pContextMsg, pRelationshipId, message);
         assertEquals(expResult, result);
     }
 
@@ -230,25 +230,25 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(false);
             }
         };
 
-        boolean result = instance.validate(pContextMsg, pRelationShipId, message);
+        boolean result = instance.validate(pContextMsg, pRelationshipId, message);
     }
 
     @Test(expected = AccessNotGrantedException.class)
@@ -258,14 +258,14 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
@@ -273,7 +273,7 @@ public class RelationShipBeanTest {
             }
         };
 
-        boolean result = instance.validate(pContextMsg, pRelationShipId, message);
+        boolean result = instance.validate(pContextMsg, pRelationshipId, message);
     }
 
     @Test(expected = BusinessException.class)
@@ -284,28 +284,28 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(true);
 
-                relationShipService.validate(pRelationShipId, message);
+                relationshipService.validate(pRelationshipId, message);
                 result = new BusinessException("BusinessException");
             }
         };
 
-        instance.validate(pContextMsg, pRelationShipId, message);
+        instance.validate(pContextMsg, pRelationshipId, message);
     }
 
     @Test(expected = TechnicalException.class)
@@ -315,28 +315,28 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(true);
 
-                relationShipService.validate(pRelationShipId, message);
+                relationshipService.validate(pRelationshipId, message);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
-        instance.validate(pContextMsg, pRelationShipId, message);
+        instance.validate(pContextMsg, pRelationshipId, message);
     }
     // </editor-fold>
 
@@ -351,29 +351,29 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final boolean expResult = true;
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(true);
 
-                relationShipService.refuse(pRelationShipId, message);
+                relationshipService.refuse(pRelationshipId, message);
                 returns(expResult);
             }
         };
 
-        boolean result = instance.refuse(pContextMsg, pRelationShipId, message);
+        boolean result = instance.refuse(pContextMsg, pRelationshipId, message);
         assertEquals(expResult, result);
     }
 
@@ -384,25 +384,25 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(false);
             }
         };
 
-        instance.refuse(pContextMsg, pRelationShipId, message);
+        instance.refuse(pContextMsg, pRelationshipId, message);
     }
 
     @Test(expected = AccessNotGrantedException.class)
@@ -412,14 +412,14 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
@@ -427,7 +427,7 @@ public class RelationShipBeanTest {
             }
         };
 
-        instance.refuse(pContextMsg, pRelationShipId, message);
+        instance.refuse(pContextMsg, pRelationshipId, message);
     }
 
     @Test(expected = BusinessException.class)
@@ -438,28 +438,28 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(true);
 
-                relationShipService.refuse(pRelationShipId, message);
+                relationshipService.refuse(pRelationshipId, message);
                 result = new BusinessException("BusinessException");
             }
         };
 
-        instance.refuse(pContextMsg, pRelationShipId, message);
+        instance.refuse(pContextMsg, pRelationshipId, message);
     }
 
     @Test(expected = TechnicalException.class)
@@ -469,80 +469,80 @@ public class RelationShipBeanTest {
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
         final String message = "message";
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                rightControlerService.isUserOwnerRelationship(userId, pRelationShipId);
+                rightControlerService.isUserOwnerRelationship(userId, pRelationshipId);
                 returns(true);
 
-                relationShipService.refuse(pRelationShipId, message);
+                relationshipService.refuse(pRelationshipId, message);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
-        instance.refuse(pContextMsg, pRelationShipId, message);
+        instance.refuse(pContextMsg, pRelationshipId, message);
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="GetRelationShip">
+    // <editor-fold defaultstate="collapsed" desc="GetRelationship">
     /**
      * Test of validate method, of class GardenBean.
      */
     @Test
-    public void testGetRelationShip() throws Exception {
-        final List<RelationShipMsg> expResult = new ArrayList<RelationShipMsg>();
+    public void testGetRelationship() throws Exception {
+        final List<RelationshipMsg> expResult = new ArrayList<RelationshipMsg>();
         final ContextMsg pContextMsg = new ContextMsg();
         UserContext userContext = new UserContext();
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
-        final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechInfo = new TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn>();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
+        final TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechInfo = new TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn>();
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                relationShipService.getRelationShip(pRelationShipId, pTechInfo);
+                relationshipService.getRelationship(pRelationshipId, pTechInfo);
                 returns(expResult);
             }
         };
 
-        List<RelationShipMsg> result = instance.getRelationShip(pContextMsg, pRelationShipId, pTechInfo);
+        List<RelationshipMsg> result = instance.getRelationship(pContextMsg, pRelationshipId, pTechInfo);
         assertEquals(expResult, result);
     }
 
     @Test(expected = AccessNotGrantedException.class)
-    public void testGetRelationShipAccessNotGranted() throws Exception {
+    public void testGetRelationshipAccessNotGranted() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         UserContext userContext = new UserContext();
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
-        final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechInfo = new TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn>();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
+        final TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechInfo = new TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn>();
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
@@ -550,63 +550,63 @@ public class RelationShipBeanTest {
             }
         };
 
-        instance.getRelationShip(pContextMsg, pRelationShipId, pTechInfo);
+        instance.getRelationship(pContextMsg, pRelationshipId, pTechInfo);
     }
 
     @Test(expected = BusinessException.class)
-    public void testGetRelationShipThrowBusinessException() throws Exception {
+    public void testGetRelationshipThrowBusinessException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         UserContext userContext = new UserContext();
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
-        final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechInfo = new TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn>();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
+        final TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechInfo = new TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn>();
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                relationShipService.getRelationShip(pRelationShipId, pTechInfo);
+                relationshipService.getRelationship(pRelationshipId, pTechInfo);
                 result = new BusinessException("BusinessException");
             }
         };
 
-        instance.getRelationShip(pContextMsg, pRelationShipId, pTechInfo);
+        instance.getRelationship(pContextMsg, pRelationshipId, pTechInfo);
     }
 
     @Test(expected = TechnicalException.class)
-    public void testGetRelationShipThrowTechnicalException() throws Exception {
+    public void testGetRelationshipThrowTechnicalException() throws Exception {
         final ContextMsg pContextMsg = new ContextMsg();
         UserContext userContext = new UserContext();
         final Long userId = 123L;
         userContext.setId(userId);
         pContextMsg.setUser(userContext);
-        final Long pRelationShipId = 85965L;
-        final IRelationShipBean instance = new RelationShipBeanLocal();
-        final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechInfo = new TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn>();
+        final Long pRelationshipId = 85965L;
+        final IRelationshipBean instance = new RelationshipBeanLocal();
+        final TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechInfo = new TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn>();
 
         new Expectations() {
 
             {
-                Deencapsulation.setField(instance, relationShipService);
+                Deencapsulation.setField(instance, relationshipService);
                 Deencapsulation.setField(instance, rightControlerService);
 
                 rightControlerService.isUserInRole(anyLong, UserRole.USER);
                 returns(true);
 
-                relationShipService.getRelationShip(pRelationShipId, pTechInfo);
+                relationshipService.getRelationship(pRelationshipId, pTechInfo);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
-        instance.getRelationShip(pContextMsg, pRelationShipId, pTechInfo);
+        instance.getRelationship(pContextMsg, pRelationshipId, pTechInfo);
     }
     // </editor-fold>
 }

@@ -12,7 +12,7 @@ import org.mdubois.freeveggie.criteria.ProductCriteriaColumn;
 import org.mdubois.freeveggie.criteria.ProductLikeCriteriaColumn;
 import org.mdubois.freeveggie.criteria.ProductRequestCriteriaColumn;
 import org.mdubois.freeveggie.criteria.RefProductCriteriaColumn;
-import org.mdubois.freeveggie.criteria.RelationShipCriteriaColumn;
+import org.mdubois.freeveggie.criteria.RelationshipCriteriaColumn;
 import org.mdubois.freeveggie.criteria.UserCriteriaColumn;
 
 /**
@@ -90,11 +90,11 @@ public class CriteriaTest {
     }
 
     @Test
-    public void testRelationShipCriteriaColumn() {
+    public void testRelationshipCriteriaColumn() {
 
-        Assert.assertEquals("_type", RelationShipCriteriaColumn.TYPE.getCriteriaColumn());
-        Assert.assertEquals("_status", RelationShipCriteriaColumn.STATUS.getCriteriaColumn());
-        Assert.assertEquals("creationDate", RelationShipCriteriaColumn.CREATION_DATE.getCriteriaColumn());
+        Assert.assertEquals("_type", RelationshipCriteriaColumn.TYPE.getCriteriaColumn());
+        Assert.assertEquals("_status", RelationshipCriteriaColumn.STATUS.getCriteriaColumn());
+        Assert.assertEquals("creationDate", RelationshipCriteriaColumn.CREATION_DATE.getCriteriaColumn());
     }
 
     @Test

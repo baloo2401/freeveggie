@@ -13,7 +13,7 @@ import org.mdubois.freeveggie.framework.test.MessageTest;
  *
  * @author mdubois
  */
-public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
+public class RelationshipMsgTest extends MessageTest<RelationshipMsg> {
 
     public RelationshipMsgTest() {
     }
@@ -23,7 +23,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test(expected = MessageValidationException.class)
     public void testValidate1() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         instance.validate();
     }
 
@@ -32,7 +32,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test(expected = MessageValidationException.class)
     public void testValidate2() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         instance.setRequest("The message request");
         instance.setType(RelationshipType.FRIEND);
         PartialUserMsg sender = new PartialUserMsg();
@@ -46,7 +46,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test(expected = MessageValidationException.class)
     public void testValidate3() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         instance.setRequest("The message request");
         instance.setType(RelationshipType.FRIEND);
         PartialUserMsg recipent = new PartialUserMsg();
@@ -60,7 +60,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test(expected = MessageValidationException.class)
     public void testValidate4() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         instance.setRequest("The message request");
         PartialUserMsg sender = new PartialUserMsg();
         sender.setId(123L);
@@ -76,7 +76,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test(expected = MessageValidationException.class)
     public void testValidate5() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         instance.setType(RelationshipType.FRIEND);
         PartialUserMsg sender = new PartialUserMsg();
         sender.setId(123L);
@@ -92,7 +92,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test(expected = MessageValidationException.class)
     public void testValidate6() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         //Message to short
         instance.setRequest("1234");
         instance.setType(RelationshipType.FRIEND);
@@ -110,7 +110,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test(expected = MessageValidationException.class)
     public void testValidate7() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         //Message to long
         instance.setRequest("requestrequestrequestrequestrequestrequest"
                 + "requestrequestrequestrequestrequestrequest"
@@ -140,7 +140,7 @@ public class RelationshipMsgTest extends MessageTest<RelationShipMsg> {
      */
     @Test
     public void testValidate() throws MessageValidationException {
-        RelationShipMsg instance = new RelationShipMsg();
+        RelationshipMsg instance = new RelationshipMsg();
         instance.setRequest("The message request");
         instance.setType(RelationshipType.FRIEND);
         PartialUserMsg sender = new PartialUserMsg();

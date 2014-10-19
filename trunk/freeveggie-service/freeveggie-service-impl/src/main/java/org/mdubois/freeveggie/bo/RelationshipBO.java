@@ -5,8 +5,8 @@ import java.util.Date;
 import javax.persistence.*;
 import org.mdubois.freeveggie.RelationshipStatus;
 import org.mdubois.freeveggie.RelationshipType;
-import static org.mdubois.freeveggie.bo.RelationShipBO.QueryNamedConstant.GET_RELATIONSHIP;
-import static org.mdubois.freeveggie.bo.RelationShipBO.QueryNamedConstant.GET_RELATIONSHIP_QUERY;
+import static org.mdubois.freeveggie.bo.RelationshipBO.QueryNamedConstant.GET_RELATIONSHIP;
+import static org.mdubois.freeveggie.bo.RelationshipBO.QueryNamedConstant.GET_RELATIONSHIP_QUERY;
 import org.mdubois.freeveggie.framework.bo.BusinessObject;
 // </editor-fold>
 
@@ -22,7 +22,7 @@ uniqueConstraints =
 @NamedQueries(value = {
     @NamedQuery(name = GET_RELATIONSHIP, query = GET_RELATIONSHIP_QUERY)
 })
-public class RelationShipBO extends BusinessObject<Long> {
+public class RelationshipBO extends BusinessObject<Long> {
 
     /*
      * Default serialVersionUID.
@@ -246,14 +246,14 @@ public class RelationShipBO extends BusinessObject<Long> {
     public static final class QueryNamedConstant {
 
         /*
-         * The name of getRelationShip query.
+         * The name of getRelationship query.
          */
-        public static final String GET_RELATIONSHIP = "RelationShipBO.getRelationShip";
+        public static final String GET_RELATIONSHIP = "RelationshipBO.getRelationship";
 
         /*
-         * The getRelationShip query.
+         * The getRelationship query.
          */
-        public static final String GET_RELATIONSHIP_QUERY = "SELECT e FROM RelationShipBO e WHERE (e.sender.id = :sender OR e.recipient.id =:recipient)";
+        public static final String GET_RELATIONSHIP_QUERY = "SELECT e FROM RelationshipBO e WHERE (e.sender.id = :sender OR e.recipient.id =:recipient)";
 
         /*
          * Default constructor.

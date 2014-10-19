@@ -3,22 +3,22 @@ package org.mdubois.freeveggie;
 import org.mdubois.freeveggie.framework.msg.MessageEnum;
 
 /**
- * The status of a {@link RelationShipBO}
+ * The status of a {@link RelationshipBO}
  *
  * @author Mickael Dubois
  */
 public enum RelationshipStatus implements MessageEnum {
 
     /**
-     * The {@link RelationShipBO} have been send and are waiting for an answer.
+     * The {@link RelationshipBO} have been send and are waiting for an answer.
      */
     PENDING(2),
     /**
-     * The {@link RelationShipBO} have been validated.
+     * The {@link RelationshipBO} have been validated.
      */
     VALIDED(3),
     /**
-     * The {@link RelationShipBO} have been refused.
+     * The {@link RelationshipBO} have been refused.
      */
     REFUSED(4),
     /**
@@ -31,15 +31,15 @@ public enum RelationshipStatus implements MessageEnum {
     private int value;
 
     /**
-     * The {@link RelationShipBO} have been send and are waiting for an answer.
+     * The {@link RelationshipBO} have been send and are waiting for an answer.
      */
     private static final int PENDING_RELATIONSHIP_STATUS = 2;
     /**
-     * The {@link RelationShipBO} have been validated.
+     * The {@link RelationshipBO} have been validated.
      */
     private static final int VALIDED_RELATIONSHIP_STATUS = 3;
     /**
-     * The {@link RelationShipBO} have been refused.
+     * The {@link RelationshipBO} have been refused.
      */
     private static final int REFUSED_RELATIONSHIP_STATUS = 4;
 

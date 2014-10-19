@@ -10,7 +10,7 @@ import org.mdubois.freeveggie.framework.test.BusinessObjectTest;
  *
  * @author mdubois
  */
-public class RelationshipBOTest extends BusinessObjectTest<RelationShipBO> {
+public class RelationshipBOTest extends BusinessObjectTest<RelationshipBO> {
 
     @Override
     protected Map<Class, Object> getMessageAndBusinessObjectUsed() {

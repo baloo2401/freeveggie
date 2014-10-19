@@ -5,10 +5,10 @@ import org.mdubois.freeveggie.framework.service.order.OrderColumn;
 // </editor-fold>
 
 /**
- * List of the {@link RelationShipBO} ordering possibility.
+ * List of the {@link RelationshipBO} ordering possibility.
  * @author Mickael Dubois
  */
-public enum RelationShipOrderColumn implements OrderColumn {
+public enum RelationshipOrderColumn implements OrderColumn {
 
     /**
      * Ordering by the recipient name.
@@ -33,9 +33,9 @@ public enum RelationShipOrderColumn implements OrderColumn {
 
     /**
      * Constructor.
-     * @param pOrderedColum - The expression language from  {@link RelationShipBO} to the column search.
+     * @param pOrderedColum - The expression language from  {@link RelationshipBO} to the column search.
      */
-    RelationShipOrderColumn(final String pOrderedColum) {
+    RelationshipOrderColumn(final String pOrderedColum) {
         this.orderedColum = pOrderedColum;
     }
 

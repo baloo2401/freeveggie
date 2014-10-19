@@ -7,18 +7,17 @@ import mockit.Mocked;
 import org.junit.Test;
 import org.mdubois.freeveggie.RelationshipStatus;
 import org.mdubois.freeveggie.RelationshipType;
-import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
 import org.mdubois.freeveggie.framework.bo.converter.BusinessObjectConverter;
 import org.mdubois.freeveggie.framework.utils.SystemTime;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
-import org.mdubois.freeveggie.service.msg.RelationShipMsg;
-// </editor-fold>
+import org.mdubois.freeveggie.service.msg.RelationshipMsg;
 
 /**
  *
  * @author Mickael Dubois
  */
-public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTest<RelationShipBO, RelationShipMsg> {
+public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTest<RelationshipBO, RelationshipMsg> {
 
     @Mocked
     @SuppressWarnings("unused")
@@ -36,8 +35,8 @@ public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTes
     }
 
     @Override
-    public RelationShipBO getNewBusinessObject() {
-        RelationShipBO bo = new RelationShipBO();
+    public RelationshipBO getNewBusinessObject() {
+        RelationshipBO bo = new RelationshipBO();
         bo.setRequest("request");
         bo.setType(RelationshipType.FRIEND);
         bo.setCreationDate(NOW);
@@ -47,8 +46,8 @@ public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTes
     }
 
     @Override
-    public RelationShipMsg getNewMessage() {
-        RelationShipMsg msg = new RelationShipMsg();
+    public RelationshipMsg getNewMessage() {
+        RelationshipMsg msg = new RelationshipMsg();
         msg.setRecipient(recipient);
         msg.setRequest("request");
         msg.setSender(sender);
@@ -57,7 +56,7 @@ public class RelationshipMsgToBOConverterTest extends BusinessObjectConverterTes
     }
 
     @Override
-    public BusinessObjectConverter<RelationShipBO, RelationShipMsg> getConverter() {
+    public BusinessObjectConverter<RelationshipBO, RelationshipMsg> getConverter() {
         return converter;
     }
 

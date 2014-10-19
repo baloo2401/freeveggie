@@ -5,10 +5,10 @@ import org.mdubois.freeveggie.framework.service.criteria.CriteriaColumn;
 // </editor-fold>
 
 /**
- * List of the {@link RelationShipBO} ordering possibility.
+ * List of the {@link RelationshipBO} ordering possibility.
  * @author Mickael Dubois
  */
-public enum RelationShipCriteriaColumn implements CriteriaColumn {
+public enum RelationshipCriteriaColumn implements CriteriaColumn {
 
 
     /**
@@ -30,9 +30,9 @@ public enum RelationShipCriteriaColumn implements CriteriaColumn {
 
     /**
      * Constructor.
-     * @param pOrderedColum - The expression language from  {@link RelationShipBO} to the column search.
+     * @param pOrderedColum - The expression language from  {@link RelationshipBO} to the column search.
      */
-    RelationShipCriteriaColumn(final String pCriteriaColumn) {
+    RelationshipCriteriaColumn(final String pCriteriaColumn) {
         this.criteriaColum = pCriteriaColumn;
     }
 

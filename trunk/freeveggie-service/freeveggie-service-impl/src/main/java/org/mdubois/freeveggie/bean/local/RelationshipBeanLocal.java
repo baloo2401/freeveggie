@@ -8,8 +8,8 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import org.mdubois.freeveggie.bean.IRelationShipBean;
-import org.mdubois.freeveggie.criteria.RelationShipCriteriaColumn;
+import org.mdubois.freeveggie.bean.IRelationshipBean;
+import org.mdubois.freeveggie.criteria.RelationshipCriteriaColumn;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.interceptor.MessageValidatorInterceptor;
@@ -17,28 +17,28 @@ import org.mdubois.freeveggie.framework.interceptor.TraceInterceptor;
 import org.mdubois.freeveggie.framework.security.ContextMsg;
 import org.mdubois.freeveggie.framework.security.UserRole;
 import org.mdubois.freeveggie.framework.service.TechnicalInformation;
-import org.mdubois.freeveggie.order.RelationShipOrderColumn;
-import org.mdubois.freeveggie.service.api.IRelationShipService;
+import org.mdubois.freeveggie.order.RelationshipOrderColumn;
+import org.mdubois.freeveggie.service.api.IRelationshipService;
 import org.mdubois.freeveggie.service.api.IRightControlerService;
-import org.mdubois.freeveggie.service.msg.RelationShipMsg;
+import org.mdubois.freeveggie.service.msg.RelationshipMsg;
 
 // </editor-fold>
 /**
  * This class is a service. This class represent all the method that involve
- * {@link RelationShipBO}.
+ * {@link RelationshipBO}.
  *
  * @author Mickael Dubois
  */
 @Stateless
 @Interceptors({MessageValidatorInterceptor.class, TraceInterceptor.class})
-@Local(IRelationShipBean.class)
-public class RelationShipBeanLocal implements IRelationShipBean {
+@Local(IRelationshipBean.class)
+public class RelationshipBeanLocal implements IRelationshipBean {
 
     /**
-     * {@link IRelationShipService}
+     * {@link IRelationshipService}
      */
     @Inject
-    private IRelationShipService relationShipService;
+    private IRelationshipService relationshipService;
     /**
      * {@link IRightControlerService}
      */
@@ -50,12 +50,12 @@ public class RelationShipBeanLocal implements IRelationShipBean {
      */
     @Override
     public Long create(final ContextMsg pContextMsg,
-            final RelationShipMsg pRelationShipMsg) throws BusinessException {
+            final RelationshipMsg pRelationshipMsg) throws BusinessException {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)) {
             if (pContextMsg.getUser().getId()
-                    .equals(pRelationShipMsg.getSender().getId())) {
-                return relationShipService.create(pRelationShipMsg);
+                    .equals(pRelationshipMsg.getSender().getId())) {
+                return relationshipService.create(pRelationshipMsg);
             } else {
                 throw new AccessNotGrantedException();
             }
@@ -69,13 +69,13 @@ public class RelationShipBeanLocal implements IRelationShipBean {
      */
     @Override
     public boolean validate(final ContextMsg pContextMsg,
-            final Long pRelationShipId, final String pMessage)
+            final Long pRelationshipId, final String pMessage)
             throws BusinessException {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)) {
             if (rightControlerService.isUserOwnerRelationship(pContextMsg
-                    .getUser().getId(), pRelationShipId)) {
-                return relationShipService.validate(pRelationShipId, pMessage);
+                    .getUser().getId(), pRelationshipId)) {
+                return relationshipService.validate(pRelationshipId, pMessage);
             } else {
                 throw new AccessNotGrantedException();
             }
@@ -89,13 +89,13 @@ public class RelationShipBeanLocal implements IRelationShipBean {
      */
     @Override
     public boolean refuse(final ContextMsg pContextMsg,
-            final Long pRelationShipId, final String pMessage)
+            final Long pRelationshipId, final String pMessage)
             throws BusinessException {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)) {
             if (rightControlerService.isUserOwnerRelationship(pContextMsg
-                    .getUser().getId(), pRelationShipId)) {
-                return relationShipService.refuse(pRelationShipId, pMessage);
+                    .getUser().getId(), pRelationshipId)) {
+                return relationshipService.refuse(pRelationshipId, pMessage);
             } else {
                 throw new AccessNotGrantedException();
             }
@@ -108,14 +108,14 @@ public class RelationShipBeanLocal implements IRelationShipBean {
      * {@inheritDoc}
      */
     @Override
-    public List<RelationShipMsg> getRelationShip(
+    public List<RelationshipMsg> getRelationship(
             final ContextMsg pContextMsg,
             final Long pUserId,
-            final TechnicalInformation<RelationShipCriteriaColumn, RelationShipOrderColumn> pTechnicalInformation)
+            final TechnicalInformation<RelationshipCriteriaColumn, RelationshipOrderColumn> pTechnicalInformation)
             throws BusinessException {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)) {
-            return relationShipService.getRelationShip(pUserId,
+            return relationshipService.getRelationship(pUserId,
                     pTechnicalInformation);
         } else {
             throw new AccessNotGrantedException();

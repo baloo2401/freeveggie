@@ -3,7 +3,7 @@ package org.mdubois.freeveggie;
 import org.mdubois.freeveggie.framework.msg.MessageEnum;
 
 /**
-* Type of {@link RelationShipBO}.
+* Type of {@link RelationshipBO}.
 * @author Mickael Dubois
 */
 public enum RelationshipType implements MessageEnum{

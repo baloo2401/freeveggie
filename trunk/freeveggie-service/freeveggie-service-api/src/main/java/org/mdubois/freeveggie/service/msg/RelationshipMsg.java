@@ -17,7 +17,7 @@ import org.mdubois.freeveggie.framework.msg.Required;
  * @author Mickael DuMsgis
  */
 @XmlRootElement
-public class RelationShipMsg extends Message {
+public class RelationshipMsg extends Message {
 
     /**
      * The database id

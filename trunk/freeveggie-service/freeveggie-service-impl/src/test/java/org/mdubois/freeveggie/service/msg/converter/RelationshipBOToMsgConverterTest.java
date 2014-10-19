@@ -8,17 +8,17 @@ import org.junit.Test;
 import org.mdubois.freeveggie.RelationshipStatus;
 import org.mdubois.freeveggie.RelationshipType;
 import org.mdubois.freeveggie.bo.PartialUserBO;
-import org.mdubois.freeveggie.bo.RelationShipBO;
+import org.mdubois.freeveggie.bo.RelationshipBO;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.service.msg.PartialUserMsg;
-import org.mdubois.freeveggie.service.msg.RelationShipMsg;
+import org.mdubois.freeveggie.service.msg.RelationshipMsg;
 import org.unitils.reflectionassert.ReflectionAssert;
 
 /**
  *
  * @author Mickael Dubois
  */
-public class RelationShipBOToMsgConverterTest extends AbstractConverterTest<RelationShipMsg, RelationShipBO> {
+public class RelationshipBOToMsgConverterTest extends AbstractConverterTest<RelationshipMsg, RelationshipBO> {
 
     @Mocked
     private Converter<PartialUserMsg, PartialUserBO> mockPartialUserBOToMsgConverter;
@@ -28,36 +28,36 @@ public class RelationShipBOToMsgConverterTest extends AbstractConverterTest<Rela
     @Test
     public void testConvertFull() {
 
-        final RelationShipBO relationShipBO = getBusinessObject();
-        RelationShipMsg expectedResult = getExpectedMessage();
-        final RelationShipBOToMsgConverter converter = getConverter();
+        final RelationshipBO relationshipBO = getBusinessObject();
+        RelationshipMsg expectedResult = getExpectedMessage();
+        final RelationshipBOToMsgConverter converter = getConverter();
         final PartialUserBO partialUserBO = new PartialUserBO();
 
-        relationShipBO.setRecipient(partialUserBO);
-        relationShipBO.setSender(partialUserBO);
+        relationshipBO.setRecipient(partialUserBO);
+        relationshipBO.setSender(partialUserBO);
 
         new Expectations() {
 
             {
                 Deencapsulation.setField(converter, "partialUserBOToMsgConverter", mockPartialUserBOToMsgConverter);
 
-                mockPartialUserBOToMsgConverter.convert(relationShipBO.getSender());
+                mockPartialUserBOToMsgConverter.convert(relationshipBO.getSender());
                 returns(null);
 
-                mockPartialUserBOToMsgConverter.convert(relationShipBO.getRecipient());
+                mockPartialUserBOToMsgConverter.convert(relationshipBO.getRecipient());
                 returns(null);
 
             }
         };
 
-        RelationShipMsg result = converter.convert(relationShipBO);
+        RelationshipMsg result = converter.convert(relationshipBO);
 
         ReflectionAssert.assertLenientEquals(expectedResult, result);
     }
 
     @Override
-    public RelationShipMsg getExpectedMessage() {
-        RelationShipMsg expResult = new RelationShipMsg();
+    public RelationshipMsg getExpectedMessage() {
+        RelationshipMsg expResult = new RelationshipMsg();
         expResult.setId(10L);
         expResult.setAnswer("answer");
         expResult.setCreationDate(NOW);
@@ -69,20 +69,20 @@ public class RelationShipBOToMsgConverterTest extends AbstractConverterTest<Rela
     }
 
     @Override
-    public RelationShipBO getBusinessObject() {
-        RelationShipBO pRelationShipBO = new RelationShipBO();
-        pRelationShipBO.setId(10L);
-        pRelationShipBO.setAnswer("answer");
-        pRelationShipBO.setCreationDate(NOW);
-        pRelationShipBO.setRequest("request");
-        pRelationShipBO.setStatus(RelationshipStatus.PENDING);
-        pRelationShipBO.setType(RelationshipType.FRIEND);
+    public RelationshipBO getBusinessObject() {
+        RelationshipBO pRelationshipBO = new RelationshipBO();
+        pRelationshipBO.setId(10L);
+        pRelationshipBO.setAnswer("answer");
+        pRelationshipBO.setCreationDate(NOW);
+        pRelationshipBO.setRequest("request");
+        pRelationshipBO.setStatus(RelationshipStatus.PENDING);
+        pRelationshipBO.setType(RelationshipType.FRIEND);
 
-        return pRelationShipBO;
+        return pRelationshipBO;
     }
 
     @Override
-    public RelationShipBOToMsgConverter getConverter() {
-        return new RelationShipBOToMsgConverter();
+    public RelationshipBOToMsgConverter getConverter() {
+        return new RelationshipBOToMsgConverter();
     }
 }
