@@ -49,41 +49,40 @@ public class GardenREST extends FreeveggieREST {
             @HeaderParam("userId") Long pContextUserId,
             @PathParam("gardenId") Long pGardenId) {
         try {
-                ContextMsg context = createContext(pContextUserId);
-            
+            ContextMsg context = createContext(pContextUserId);
+
             return gardenBean.getGardenById(context, pGardenId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @POST
     @Consumes({"application/json"})
     public IdMsg addGarden(GardenMsg pGardenMsg,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             return new IdMsg(gardenBean.create(context, pGardenMsg));
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @PUT
     @Consumes({"application/json"})
     public void updateGarden(GardenMsg pGardenMsg,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             gardenBean.update(context, pGardenMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
-    
+
     @DELETE
     @Path("{gardenId}")
     public void deleteGardenById(
@@ -91,85 +90,13 @@ public class GardenREST extends FreeveggieREST {
             @PathParam("gardenId") Long pGardenId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             gardenBean.remove(context, pGardenId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
-    @GET
-    @Path("city/{refCityId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<GardenMsg> getGardenByCity(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refCityId") Integer pRefCityId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<GardenCriteriaColumn, GardenOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, GardenCriteriaColumn.class, GardenOrderColumn.class);
 
-            return gardenBean.getGardenByCity(context, pRefCityId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
-    @GET
-    @Path("region/{refRegionId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<GardenMsg> getGardenByRegion(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refRegionId") Integer pRefRegionId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<GardenCriteriaColumn, GardenOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, GardenCriteriaColumn.class, GardenOrderColumn.class);
-
-            return gardenBean.getGardenByRegion(context, pRefRegionId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
-    @GET
-    @Path("state/{refStateId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<GardenMsg> getGardenByState(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refStateId") Integer pRefStateId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<GardenCriteriaColumn, GardenOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, GardenCriteriaColumn.class, GardenOrderColumn.class);
-
-            return gardenBean.getGardenByState(context, pRefStateId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
-    @GET
-    @Path("country/{refCountryId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<GardenMsg> getGardenByCountry(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refCountryId") Integer pRefCountryId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<GardenCriteriaColumn, GardenOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, GardenCriteriaColumn.class, GardenOrderColumn.class);
-
-            return gardenBean.getGardenByCountry(context, pRefCountryId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
     @GET
     @Path("search/{latitudeUp}/{latitudeDown}/{longitudeUp}/{longitudeDown}/refproduct/{refProductId}")
     @Produces({"application/json"})
@@ -186,12 +113,12 @@ public class GardenREST extends FreeveggieREST {
         searchMsg.setLatitudeUp(pLatitudeUp);
         searchMsg.setLongitudeDown(pLongitudeDown);
         searchMsg.setLongitudeUp(pLongitudeUp);
-        if(pRefProductId != null && pRefProductId > 0){
+        if (pRefProductId != null && pRefProductId > 0) {
             searchMsg.setRefProductId(pRefProductId);
         }
         return gardenBean.searchGarden(context, searchMsg);
     }
-    
+
     @GET
     @Path("user/{userId}")
     @Produces({"application/json"})

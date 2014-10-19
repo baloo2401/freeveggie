@@ -49,40 +49,39 @@ public class ProductREST extends FreeveggieREST {
             @PathParam("productId") Long pProductId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             return productBean.getProductById(context, pProductId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @POST
     @Consumes({"application/json"})
     public IdMsg addProduct(ProductMsg pProductMsg,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             return new IdMsg(productBean.create(context, pProductMsg));
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @PUT
     @Consumes({"application/json"})
     public void updateProduct(UpdateProductMsg pUpdateProductMsg,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             productBean.update(context, pUpdateProductMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
-    
+
     @DELETE
     @Path("{productId}")
     public void deleteProductById(
@@ -90,85 +89,13 @@ public class ProductREST extends FreeveggieREST {
             @PathParam("productId") Long pProductId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             productBean.remove(context, pProductId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
-    @GET
-    @Path("city/{refCityId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<ProductMsg> getProductByCity(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refCityId") Integer pRefCityId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, ProductCriteriaColumn.class, ProductOrderColumn.class);
 
-            return productBean.getProductByCity(context, pRefCityId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
-    @GET
-    @Path("region/{refRegionId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<ProductMsg> getProductByRegion(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refRegionId") Integer pRefRegionId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, ProductCriteriaColumn.class, ProductOrderColumn.class);
-
-            return productBean.getProductByRegion(context, pRefRegionId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
-    @GET
-    @Path("state/{refStateId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<ProductMsg> getProductByState(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refStateId") Integer pRefStateId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, ProductCriteriaColumn.class, ProductOrderColumn.class);
-
-            return productBean.getProductByState(context, pRefStateId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
-    @GET
-    @Path("country/{refCountryId}/refproduct/{refProductId}")
-    @Produces({"application/json"})
-    public List<ProductMsg> getProductByCountry(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("refCountryId") Integer pRefCountryId,
-            @PathParam("refProductId") Integer pRefProductId,
-            @QueryParam("technicalInformation") String pJSONTechnicalInformation) {
-        try {
-            ContextMsg context = createContext(pContextUserId);
-            TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTech = JSONUtils.getTechnicalInformation(pJSONTechnicalInformation, ProductCriteriaColumn.class, ProductOrderColumn.class);
-
-            return productBean.getProductByCountry(context, pRefCountryId, pRefProductId, pTech);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
     @GET
     @Path("user/{userId}")
     @Produces({"application/json"})
@@ -185,7 +112,7 @@ public class ProductREST extends FreeveggieREST {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @GET
     @Path("garden/{gardenId}")
     @Produces({"application/json"})

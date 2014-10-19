@@ -457,10 +457,11 @@ public interface IProductBean {
      * Add a picture to a product
      *
      * @param pContextMsg - The {@link ContextMsg} of the service call
-     * @param abstractPictureMsg - The product picture to add
+     * @param pictureMsg - The product picture to add
+     * @return The image id
      * @throws BusinessException In case of any business issue
      */
-    Long addPicture(final ContextMsg pContextMsg, final PictureMsg abstractPictureMsg) throws BusinessException;
+    Long addPicture(final ContextMsg pContextMsg, final PictureMsg pictureMsg) throws BusinessException;
 
     /**
      * Get a picture to a product

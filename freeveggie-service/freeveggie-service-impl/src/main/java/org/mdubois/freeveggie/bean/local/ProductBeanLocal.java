@@ -2,12 +2,10 @@ package org.mdubois.freeveggie.bean.local;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
 import java.util.List;
-
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
-
 import org.mdubois.freeveggie.bean.IProductBean;
 import org.mdubois.freeveggie.criteria.ProductCommentCriteriaColumn;
 import org.mdubois.freeveggie.criteria.ProductCriteriaColumn;
@@ -27,10 +25,10 @@ import org.mdubois.freeveggie.order.ProductRequestOrderColumn;
 import org.mdubois.freeveggie.service.api.IProductService;
 import org.mdubois.freeveggie.service.api.IRightControlerService;
 import org.mdubois.freeveggie.service.impl.RightControlerService;
+import org.mdubois.freeveggie.service.msg.PictureMsg;
 import org.mdubois.freeveggie.service.msg.ProductCommentMsg;
 import org.mdubois.freeveggie.service.msg.ProductLikeMsg;
 import org.mdubois.freeveggie.service.msg.ProductMsg;
-import org.mdubois.freeveggie.service.msg.PictureMsg;
 import org.mdubois.freeveggie.service.msg.ProductRequestMsg;
 import org.mdubois.freeveggie.service.msg.UpdateProductMsg;
 
@@ -81,7 +79,7 @@ public class ProductBeanLocal implements IProductBean {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)
                 && rightControlerService.isUserOwnerProduct(pContextMsg
-                .getUser().getId(), pUpdateProductMsg.getId())) {
+                        .getUser().getId(), pUpdateProductMsg.getId())) {
             return productService.update(pUpdateProductMsg);
         } else {
             throw new AccessNotGrantedException();
@@ -125,7 +123,7 @@ public class ProductBeanLocal implements IProductBean {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)
                 && rightControlerService.isUserOwnerProduct(pContextMsg
-                .getUser().getId(), pProductId)) {
+                        .getUser().getId(), pProductId)) {
             return productService.remove(pProductId);
         } else {
             throw new AccessNotGrantedException();
@@ -142,7 +140,7 @@ public class ProductBeanLocal implements IProductBean {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)
                 && rightControlerService.isUserOwnerProduct(pContextMsg
-                .getUser().getId(), pProductId)) {
+                        .getUser().getId(), pProductId)) {
             return productService.reactivate(pProductId);
         } else {
             throw new AccessNotGrantedException();
@@ -174,7 +172,7 @@ public class ProductBeanLocal implements IProductBean {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)
                 && rightControlerService.isUserOwnerProduct(pContextMsg
-                .getUser().getId(), pProductId)) {
+                        .getUser().getId(), pProductId)) {
             return productService.unarchive(pProductId);
         } else {
             throw new AccessNotGrantedException();
@@ -332,9 +330,9 @@ public class ProductBeanLocal implements IProductBean {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)
                 && rightControlerService.isUserOwnerProductComment(pContextMsg
-                .getUser().getId(), pProductCommentId)
+                        .getUser().getId(), pProductCommentId)
                 || rightControlerService.isUserInRole(pContextMsg.getUser()
-                .getId(), UserRole.SUPERADMIN)) {
+                        .getId(), UserRole.SUPERADMIN)) {
             return productService.removeComment(pProductCommentId);
         } else {
             throw new AccessNotGrantedException();
@@ -350,7 +348,7 @@ public class ProductBeanLocal implements IProductBean {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)
                 && rightControlerService.isUserOwnerProductComment(pContextMsg
-                .getUser().getId(), pProductCommentId)) {
+                        .getUser().getId(), pProductCommentId)) {
             return productService.reactivateComment(pProductCommentId);
         } else {
             throw new AccessNotGrantedException();
@@ -380,7 +378,7 @@ public class ProductBeanLocal implements IProductBean {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER)
                 && rightControlerService.isUserOwnerProductComment(pContextMsg
-                .getUser().getId(), pProductCommentId)) {
+                        .getUser().getId(), pProductCommentId)) {
             return productService.unarchiveComment(pProductCommentId);
         } else {
             throw new AccessNotGrantedException();
@@ -567,14 +565,13 @@ public class ProductBeanLocal implements IProductBean {
             throw new AccessNotGrantedException();
         }
     }
-    
 
     @Override
-    public Long addPicture(final ContextMsg pContextMsg, final PictureMsg pAbstractPictureMsg) throws BusinessException {
+    public Long addPicture(final ContextMsg pContextMsg, final PictureMsg pPictureMsg) throws BusinessException {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER) && rightControlerService.isUserOwnerProduct(pContextMsg
-                .getUser().getId(), pAbstractPictureMsg.getObjId())) {
-            return productService.addPicture(pAbstractPictureMsg);
+                        .getUser().getId(), pPictureMsg.getObjId())) {
+            return productService.addPicture(pPictureMsg);
         } else {
             throw new AccessNotGrantedException();
         }
@@ -604,7 +601,7 @@ public class ProductBeanLocal implements IProductBean {
     public void removePicture(final ContextMsg pContextMsg, final Long pProductPictureId) throws BusinessException {
         if (rightControlerService.isUserInRole(pContextMsg.getUser().getId(),
                 UserRole.USER) && rightControlerService.isUserOwnerProductPicture(pContextMsg
-                .getUser().getId(), pProductPictureId)) {
+                        .getUser().getId(), pProductPictureId)) {
             productService.removePicture(pProductPictureId);
         } else {
             throw new AccessNotGrantedException();

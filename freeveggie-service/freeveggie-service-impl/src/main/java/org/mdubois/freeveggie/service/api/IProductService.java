@@ -51,10 +51,10 @@ public interface IProductService {
     boolean update(final UpdateProductMsg pUpdateProductMsg) throws BusinessException;
 
     /**
-     * Blacklist a {@link ProductBO}. run The blacklist will make this {@link ProductBO}
-     * not visible to any other user because of trust issues or because to many
-     * user complain about the {@link ProductBO}. An update is possible only on
-     * product that have status to created.
+     * Blacklist a {@link ProductBO}. run The blacklist will make this
+     * {@link ProductBO} not visible to any other user because of trust issues
+     * or because to many user complain about the {@link ProductBO}. An update
+     * is possible only on product that have status to created.
      *
      * @param pProductId - The product to blacklist
      * @return <codeTrue</code> if the update run successfully,
@@ -135,7 +135,7 @@ public interface IProductService {
      * @param pUserId - The given {@link UserPartialBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link ProductMsg}
+     * @return A {@link List} of {@link ProductMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductMsg> getProductByUser(final Long pUserId, final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation) throws BusinessException;
@@ -148,22 +148,22 @@ public interface IProductService {
      * @param pGardenId - The given {@link UserGardenBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link ProductMsg}
+     * @return A {@link List} of {@link ProductMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductMsg> getProductByGarden(final Long pGardenId, final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation) throws BusinessException;
 
-    
     /**
-     * Get all {@link ProductMsg} of a {@link RefCityBO} having a given {@link RefProductBO}.If
-     * the technical information doesn't ask for the opposite the service return
-     * only product that have their status to CREATED.
+     * Get all {@link ProductMsg} of a {@link RefCityBO} having a given
+     * {@link RefProductBO}.If the technical information doesn't ask for the
+     * opposite the service return only product that have their status to
+     * CREATED.
      *
      * @param pRefCityId - The {@link RefCityBO} city
      * @param pProductRefId - The given {@link RefProductBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link ProductMsg}
+     * @return A {@link List} of {@link ProductMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductMsg> getProductByCity(final Integer pRefCityId, final Integer pProductRefId, final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation) throws BusinessException;
@@ -177,7 +177,7 @@ public interface IProductService {
      * @param pProductRefId - The given {@link RefProductBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link ProductMsg}
+     * @return A {@link List} of {@link ProductMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductMsg> getProductByRegion(final Integer pRefRegionId, final Integer pProductRefId, final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation) throws BusinessException;
@@ -191,7 +191,7 @@ public interface IProductService {
      * @param pProductRefId - The given {@link RefProductBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link ProductMsg}
+     * @return A {@link List} of {@link ProductMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductMsg> getProductByState(final Integer pRefStateId, final Integer pProductRefId, final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation) throws BusinessException;
@@ -205,7 +205,7 @@ public interface IProductService {
      * @param pProductRefId - The given {@link RefProductBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link ProductMsg}
+     * @return A {@link List} of {@link ProductMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductMsg> getProductByCountry(final Integer pRefCountryId, final Integer pProductRefId, final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation) throws BusinessException;
@@ -264,27 +264,29 @@ public interface IProductService {
     boolean unarchiveComment(final Long pProductCommentId) throws BusinessException;
 
     /**
-     * Get all {@link  ProductCommentMsg} of a write on a given {@link ProductBO}.
-     * If the technical information doesn't ask for the opposite the service
-     * return only comment that have their status to SETTED.
+     * Get all {@link  ProductCommentMsg} of a write on a given
+     * {@link ProductBO}. If the technical information doesn't ask for the
+     * opposite the service return only comment that have their status to
+     * SETTED.
      *
      * @param pProductId - The given product
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link  ProductCommentMsg}
+     * @return A {@link List} of {@link  ProductCommentMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductCommentMsg> getProductComment(final Long pProductId, final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation) throws BusinessException;
 
     /**
-     * Get all {@link ProductCommentMsg} of a write by a given {@link UserPartialBO}.
-     * If the technical information doesn't ask for the opposite the service
-     * return only comment that have their status to SETTED.
+     * Get all {@link ProductCommentMsg} of a write by a given
+     * {@link UserPartialBO}. If the technical information doesn't ask for the
+     * opposite the service return only comment that have their status to
+     * SETTED.
      *
      * @param pUserWriterId - The given {@link UserPartialBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link  ProductCommentMsg}
+     * @return A {@link List} of {@link  ProductCommentMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductCommentMsg> getProductCommentWrite(final Long pUserWriterId, final TechnicalInformation<ProductCommentCriteriaColumn, ProductCommentOrderColumn> pTechnicalInformation) throws BusinessException;
@@ -317,7 +319,7 @@ public interface IProductService {
      * @param pProductId - The given {@link ProductBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link  ProductLikeMsg}
+     * @return A {@link List} of {@link  ProductLikeMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductLikeMsg> getProductLike(final Long pProductId, final TechnicalInformation<ProductLikeCriteriaColumn, ProductLikeOrderColumn> pTechnicalInformation) throws BusinessException;
@@ -330,13 +332,14 @@ public interface IProductService {
      * @param pUserWriterId - The given {@link UserPartialBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link  ProductLikeMsg}
+     * @return A {@link List} of {@link  ProductLikeMsg}
      * @throws BusinessException In case of any business issue
      */
     List<ProductLikeMsg> getProductLikeWrite(final Long pUserWriterId, final TechnicalInformation<ProductLikeCriteriaColumn, ProductLikeOrderColumn> pTechnicalInformation) throws BusinessException;
 
     /**
      * Create a {@link ProductRequestMsg}
+     *
      * @param pProductRequestMsg - The {@link ProductRequestMsg} to create
      * @return - The id of the {@link ProductRequestMsg} created
      * @throws BusinessException In case of any business issue
@@ -345,7 +348,9 @@ public interface IProductService {
 
     /**
      * Accept a pending {@link ProductRequestMsg}
-     * @param pProductRequestMsgId - The id of the {@link ProductRequestMsg} to accept
+     *
+     * @param pProductRequestMsgId - The id of the {@link ProductRequestMsg} to
+     * accept
      * @param pMessage - The answering message
      * @throws BusinessException In case of any business issue
      */
@@ -353,7 +358,9 @@ public interface IProductService {
 
     /**
      * Refuse a pending {@link ProductRequestMsg}
-     * @param pProductRequestMsgId - The id of the {@link ProductRequestMsg} to refuse
+     *
+     * @param pProductRequestMsgId - The id of the {@link ProductRequestMsg} to
+     * refuse
      * @param pMessage - The answering message
      * @throws BusinessException In case of any business issue
      */
@@ -363,39 +370,41 @@ public interface IProductService {
      * Get a {@link ProductRequestMsg} using the id.
      *
      * @param id - The id of the database to retrieve.
-     * @return The {@link ProductRequestMsg} or null if the id doesn't represent a
-     * product
+     * @return The {@link ProductRequestMsg} or null if the id doesn't represent
+     * a product
      * @throws BusinessException In case of any business issue
      */
     ProductRequestMsg getProductRequestById(final Long id) throws BusinessException;
-    
+
     /**
      * Get all {@link ProductRequestBO} of a given {@link ProductBO}.
      *
      * @param pProductId - The given {@link ProductBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link {@link ProductRequestBO}
+     * @return A {@link List} of {@link {@link ProductRequestBO}
      */
     List<ProductRequestMsg> getProductRequestByProduct(final Long pProductId, final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation) throws BusinessException;
 
     /**
-     * Get all {@link ProductRequestBO} made on all {@link ProductBO} of a given {@link GardenBO}.
+     * Get all {@link ProductRequestBO} made on all {@link ProductBO} of a given
+     * {@link GardenBO}.
      *
      * @param pGardenId - The given {@link GardenBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link {@link ProductRequestBO}
+     * @return A {@link List} of {@link {@link ProductRequestBO}
      */
     List<ProductRequestMsg> getProductRequestByGarden(final Long pGardenId, final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation) throws BusinessException;
 
     /**
-     * Get all {@link ProductRequestBO} receive by a given {@link UserPartialBO}.
+     * Get all {@link ProductRequestBO} receive by a given
+     * {@link UserPartialBO}.
      *
      * @param pUserPartialId - The given {@link UserPartialBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link {@link ProductRequestBO}
+     * @return A {@link List} of {@link {@link ProductRequestBO}
      */
     List<ProductRequestMsg> getProductRequestReceive(final Long pUserPartialId, final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation) throws BusinessException;
 
@@ -405,30 +414,38 @@ public interface IProductService {
      * @param pUserPartialId - The given {@link UserPartialBO}
      * @param pTechnicalInformation - The {@link TechnicalInformation} to
      * respect
-     * @return A  {@link List} of {@link {@link ProductRequestBO}
+     * @return A {@link List} of {@link {@link ProductRequestBO}
      */
     List<ProductRequestMsg> getProductRequestSend(final Long pUserPartialId, final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation) throws BusinessException;
 
-        /**
+    /**
      * Add a picture to a product
+     *
      * @param abstractPictureMsg - The product picture to add
+     * @return The picture id
      * @throws BusinessException In case of any business issue
      */
     Long addPicture(PictureMsg abstractPictureMsg) throws BusinessException;
+
     /**
      * Get a picture to a product
+     *
      * @param productPictureId - The product picture id to get
      * @throws BusinessException In case of any business issue
      */
     PictureMsg getPicture(Long productPictureId) throws BusinessException;
+
     /**
      * Get all picture off a product
+     *
      * @param productId - The product id to look for
      * @throws BusinessException In case of any business issue
      */
     List<PictureMsg> getPictureByProduct(Long productId) throws BusinessException;
+
     /**
      * Remove a picture to a product
+     *
      * @param productPictureId - The product picture id to remove
      * @throws BusinessException In case of any business issue
      */
