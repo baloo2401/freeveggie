@@ -3,7 +3,6 @@ package org.mdubois.freeveggie.service.exp.rest;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -48,15 +47,14 @@ public class PictureREST extends FreeveggieREST {
             @HeaderParam("userId") Long pContextUserId,
             @PathParam("gardenId") Long pGardenId) {
         try {
-                ContextMsg context = createContext(pContextUserId);
-            
+            ContextMsg context = createContext(pContextUserId);
+
             return gardenBean.getPictureByGarden(context, pGardenId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
-    
+
     @GET
     @Path("product/{productId}")
     @Produces({"application/json"})
@@ -64,40 +62,9 @@ public class PictureREST extends FreeveggieREST {
             @HeaderParam("userId") Long pContextUserId,
             @PathParam("productId") Long pProductId) {
         try {
-                ContextMsg context = createContext(pContextUserId);
-            
-            return productBean.getPictureByProduct(context, pProductId);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
+            ContextMsg context = createContext(pContextUserId);
 
-    @GET
-    @Path("garden/id/{pictureId}")
-    @Produces({"application/json"})
-    public PictureMsg getGardenPicture(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("pictureId") Long pPictureId) {
-        try {
-                ContextMsg context = createContext(pContextUserId);
-            
-            return gardenBean.getPicture(context, pPictureId);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
-    
-    @GET
-    @Path("product/id/{pictureId}")
-    @Produces({"application/json"})
-    public PictureMsg getProductPicture(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("pictureId") Long pPictureId) {
-        try {
-                ContextMsg context = createContext(pContextUserId);
-            
-            return productBean.getPicture(context, pPictureId);
+            return productBean.getPictureByProduct(context, pProductId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
@@ -108,63 +75,31 @@ public class PictureREST extends FreeveggieREST {
     @Produces({"application/json"})
     public void addGardenPicture(
             @HeaderParam("userId") Long pContextUserId,
-            @PathParam("gardenId") Long pPictureId,
-            @QueryParam("pictureMsg") PictureMsg pAbstractPictureMsg) {
+            @PathParam("gardenId") Long pGardenId,
+            @QueryParam("pictureMsg") PictureMsg pPictureMsg) {
         try {
-                ContextMsg context = createContext(pContextUserId);
-            
-            gardenBean.addPicture(context, pAbstractPictureMsg);
+            ContextMsg context = createContext(pContextUserId);
+
+            gardenBean.addPicture(context, pPictureMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
-    
+
     @POST
     @Path("product/{productId}")
     @Produces({"application/json"})
     public void addProductPicture(
             @HeaderParam("userId") Long pContextUserId,
-            @PathParam("productId") Long pPictureId,
-            @QueryParam("pictureMsg") PictureMsg pAbstractPictureMsg) {
+            @PathParam("productId") Long pProductId,
+            @QueryParam("pictureMsg") PictureMsg pPictureMsg) {
         try {
-                ContextMsg context = createContext(pContextUserId);
-            
-            productBean.addPicture(context, pAbstractPictureMsg);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
-    
+            ContextMsg context = createContext(pContextUserId);
 
-    @DELETE
-    @Path("garden/id/{pictureId}")
-    @Produces({"application/json"})
-    public void deleteGardenPicture(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("pictureId") Long pPictureId) {
-        try {
-                ContextMsg context = createContext(pContextUserId);
-            
-            gardenBean.removePicture(context, pPictureId);
+            productBean.addPicture(context, pPictureMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
-    
-    @DELETE
-    @Path("product/id/{pictureId}")
-    @Produces({"application/json"})
-    public void deleteProductPicture(
-            @HeaderParam("userId") Long pContextUserId,
-            @PathParam("pictureId") Long pPictureId) {
-        try {
-                ContextMsg context = createContext(pContextUserId);
-            
-            productBean.removePicture(context, pPictureId);
-        } catch (BusinessException be) {
-            throw new BusinessWebException(be);
-        }
-    }
+
 }
