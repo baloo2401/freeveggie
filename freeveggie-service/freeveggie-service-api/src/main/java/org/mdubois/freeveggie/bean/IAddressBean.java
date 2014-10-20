@@ -30,17 +30,19 @@ public interface IAddressBean {
      * @throws BusinessException - In case of any business related error
      */
     void update(final ContextMsg pContextMsg, final Long pAddressId, final AddressMsg pAddressMsg) throws BusinessException;
-    
+
     /**
      * Get an address by id
+     *
      * @param pContextMsg - The {@link ContextMsg} of the service call
      * @param pAddressId - The address id
      * @throws BusinessException - In case of any business related error
      */
     AddressMsg getAddressById(final ContextMsg pContextMsg, final Long pAddressId) throws BusinessException;
-    
+
     /**
      * Get an user home address by the user home address
+     *
      * @param pContextMsg - The {@link ContextMsg} of the service call
      * @param pUserId - The user id
      * @throws BusinessException - In case of any business related error
