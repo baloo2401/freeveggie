@@ -4,7 +4,6 @@ import java.io.IOException;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.JavaType;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
-import org.mdubois.freeveggie.framework.service.Pagination;
 import org.mdubois.freeveggie.framework.service.TechnicalInformation;
 import org.mdubois.freeveggie.framework.service.criteria.CriteriaColumn;
 import org.mdubois.freeveggie.framework.service.order.OrderColumn;
@@ -40,28 +39,6 @@ public class JSONUtils {
             }
         } else {
             return new TechnicalInformation<T, V>();
-        }
-
-    }
-
-    /**
-     * Create a {@link Pagination} from JSON String.
-     *
-     * @param pPagination - The JSON string to convert
-     * @return A {@link Pagination}
-     * @throws BusinessException - If the JSON String is not applicable to a
-     * {@link Pagination}
-     */
-    public static Pagination getPagination(final String pPagination) throws BusinessException {
-        if (StringUtils.isNotEmpty(pPagination)) {
-            try {
-                Pagination pagination = FreeveggieMapper.getInstance().readValue(pPagination, Pagination.class);
-                return pagination;
-            } catch (IOException ex) {
-                throw new BusinessException("Couldn't parse JSON string: " + pPagination, ex);
-            }
-        } else {
-            return null;
         }
 
     }

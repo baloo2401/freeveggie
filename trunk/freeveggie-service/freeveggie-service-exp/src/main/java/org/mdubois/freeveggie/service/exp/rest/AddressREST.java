@@ -41,14 +41,14 @@ public class AddressREST extends FreeveggieREST {
             @HeaderParam("userId") Long pContextUserId,
             @PathParam("AddressId") Long pAddressId) {
         try {
-                ContextMsg context = createContext(pContextUserId);
-            
+            ContextMsg context = createContext(pContextUserId);
+
             return addressBean.getAddressById(context, pAddressId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @POST
     @Consumes({"application/json"})
     public IdMsg addAddress(AddressMsg pAddressMsg) {
@@ -58,20 +58,20 @@ public class AddressREST extends FreeveggieREST {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @PUT
     @Consumes({"application/json"})
     public void updateAddress(AddressMsg pAddressMsg,
             @HeaderParam("userId") Long pContextUserId) {
         try {
             ContextMsg context = createContext(pContextUserId);
-            
+
             addressBean.update(context, pAddressMsg.getId(), pAddressMsg);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);
         }
     }
-    
+
     @GET
     @Path("user/{userId}")
     @Produces({"application/json"})
@@ -79,8 +79,8 @@ public class AddressREST extends FreeveggieREST {
             @HeaderParam("userId") Long pContextUserId,
             @PathParam("userId") Long pAddressId) {
         try {
-                ContextMsg context = createContext(pContextUserId);
-            
+            ContextMsg context = createContext(pContextUserId);
+
             return addressBean.getUserHomeAddressByUserId(context, pAddressId);
         } catch (BusinessException be) {
             throw new BusinessWebException(be);

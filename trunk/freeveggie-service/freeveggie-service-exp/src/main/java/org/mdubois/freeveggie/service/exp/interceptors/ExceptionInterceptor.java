@@ -4,10 +4,10 @@ package org.mdubois.freeveggie.service.exp.interceptors;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.ws.rs.core.Response;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
+import org.mdubois.freeveggie.service.exp.exception.AuthorizationWebException;
 import org.mdubois.freeveggie.service.exp.exception.BusinessWebException;
 import org.mdubois.freeveggie.service.exp.exception.TechnicalWebException;
 // </editor-fold>
@@ -28,16 +28,20 @@ public class ExceptionInterceptor {
      * @throws Exception when the invocation parameters are not valid
      */
     @AroundInvoke
-    public final Object validate(final InvocationContext ctx) throws Exception {
+    public final Object translateException(final InvocationContext ctx) throws Exception {
         try {
             return ctx.proceed();
-        } catch (AccessNotGrantedException ange){
-            throw new BusinessWebException(ange, Response.Status.UNAUTHORIZED);
-        }catch(BusinessException be) {
-            throw new BusinessWebException(be, Response.Status.BAD_REQUEST);
-        } catch(TechnicalException te) {
+        } catch (AccessNotGrantedException ange) {
+            throw new AuthorizationWebException(ange);
+        } catch (BusinessException be) {
+            throw new BusinessWebException(be);
+        } catch (IllegalArgumentException be) {
+            throw new BusinessWebException(be);
+        } catch (TechnicalException te) {
+            throw new TechnicalWebException(te);
+        } catch (RuntimeException te) {
             throw new TechnicalWebException(te);
         }
-        
+
     }
 }

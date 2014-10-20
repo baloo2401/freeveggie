@@ -10,13 +10,13 @@ import javax.ws.rs.core.Response;
  *
  * @author Mickael Dubois
  */
-public class BusinessWebException extends WebApplicationException {
+public class AuthorizationWebException extends WebApplicationException {
 
     /**
      * Default constructor.
      */
-    public BusinessWebException() {
-        super(Response.Status.BAD_REQUEST);
+    public AuthorizationWebException() {
+        super(Response.Status.UNAUTHORIZED);
     }
 
     /**
@@ -24,8 +24,8 @@ public class BusinessWebException extends WebApplicationException {
      *
      * @param pMessage The exception message to set
      */
-    public BusinessWebException(final String pMessage) {
-        super(Response.status(Response.Status.BAD_REQUEST)
+    public AuthorizationWebException(final String pMessage) {
+        super(Response.status(Response.Status.UNAUTHORIZED)
                 .entity(pMessage).type(MediaType.TEXT_PLAIN).build());
     }
 
@@ -34,8 +34,8 @@ public class BusinessWebException extends WebApplicationException {
      *
      * @param pException The original exception
      */
-    public BusinessWebException(final Throwable pException) {
-        super(Response.status(Response.Status.BAD_REQUEST)
+    public AuthorizationWebException(final Throwable pException) {
+        super(Response.status(Response.Status.UNAUTHORIZED)
                 .entity(pException.getMessage()).type(MediaType.TEXT_PLAIN).build());
     }
 
