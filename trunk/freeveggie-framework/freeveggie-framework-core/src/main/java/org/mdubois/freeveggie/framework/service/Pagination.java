@@ -1,9 +1,7 @@
 package org.mdubois.freeveggie.framework.service;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.mdubois.freeveggie.framework.msg.ExtendedSerializable;
 // </editor-fold>
 
 /**
@@ -11,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *
  * @author Mickael Dubois
  */
-public class Pagination {
+public class Pagination extends ExtendedSerializable {
 
     /**
      * The page number we want as a result.
@@ -53,20 +51,5 @@ public class Pagination {
      */
     public int getPageNumber() {
         return pageNumber;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
     }
 }
