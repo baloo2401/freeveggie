@@ -4,9 +4,7 @@ package org.mdubois.freeveggie.framework.service.criteria;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.mdubois.freeveggie.framework.msg.ExtendedSerializable;
 import org.mdubois.freeveggie.framework.msg.MessageEnum;
 // </editor-fold>
 
@@ -16,7 +14,7 @@ import org.mdubois.freeveggie.framework.msg.MessageEnum;
  * @param <T> The based criteria object
  * @author Mickael Dubois
  */
-public class QueryCriteria<T extends CriteriaColumn> {
+public class QueryCriteria<T extends CriteriaColumn> extends ExtendedSerializable {
 
     /**
      * The database criteria column.
@@ -126,18 +124,4 @@ public class QueryCriteria<T extends CriteriaColumn> {
         return instruction.toString();
     }
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
 }
