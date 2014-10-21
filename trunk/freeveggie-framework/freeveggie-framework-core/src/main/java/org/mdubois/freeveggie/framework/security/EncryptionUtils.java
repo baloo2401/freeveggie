@@ -2,17 +2,10 @@ package org.mdubois.freeveggie.framework.security;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
 import java.math.BigInteger;
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang.StringUtils;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
 // </editor-fold>
@@ -98,39 +91,6 @@ public final class EncryptionUtils {
             }
         }
         return false;
-    }
-
-    public static byte[] hexToBytes(String str) {
-        if (str == null) {
-            return null;
-        } else if (str.length() < 2) {
-            return null;
-        } else {
-            int len = str.length() / 2;
-            byte[] buffer = new byte[len];
-            for (int i = 0; i < len; i++) {
-                buffer[i] = (byte) Integer.parseInt(str.substring(i * 2, i * 2 + 2), 16);
-            }
-            return buffer;
-        }
-
-    }
-
-    public static String bytesToHex(byte[] data) {
-        if (data == null) {
-            return null;
-        } else {
-            int len = data.length;
-            String str = "";
-            for (int i = 0; i < len; i++) {
-                if ((data[i] & 0xFF) < 16) {
-                    str = str + "0" + java.lang.Integer.toHexString(data[i] & 0xFF);
-                } else {
-                    str = str + java.lang.Integer.toHexString(data[i] & 0xFF);
-                }
-            }
-            return str.toUpperCase();
-        }
     }
 
     /**

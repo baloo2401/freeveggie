@@ -4,19 +4,29 @@ package org.mdubois.freeveggie.framework.msg;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.mdubois.freeveggie.framework.exception.MessageValidationException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
-import org.mdubois.freeveggie.framework.msg.validator.*;
+import org.mdubois.freeveggie.framework.msg.validator.EmailConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.FalseConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.IntegerValueConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.LengthConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.MessageConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.NotBlankConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.NotEmptyConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.RequiredConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.StringValueConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.TrueConstraintValidator;
+import org.mdubois.freeveggie.framework.msg.validator.ZipCodeConstraintValidator;
 // </editor-fold>
 
 /**
@@ -24,7 +34,7 @@ import org.mdubois.freeveggie.framework.msg.validator.*;
  *
  * @author Mickael Dubois
  */
-public abstract class Message implements Serializable {
+public abstract class Message extends ExtendedSerializable {
 
     // <editor-fold defaultstate="collapsed" desc="Exception message constants">
     /**
@@ -73,11 +83,6 @@ public abstract class Message implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
     /**
      * Get the list of field that are not valid.
      *
@@ -96,8 +101,8 @@ public abstract class Message implements Serializable {
             //we cretate an emtpy list of the annoted field
             Map<Method, List<MessageConstraintValidator<? extends Annotation>>> annotatedField = new HashMap<Method, List<MessageConstraintValidator<? extends Annotation>>>();
             //for every field of this class
-            for (PropertyDescriptor propertyDescriptor :
-                    Introspector.getBeanInfo(messageClass, Message.class).getPropertyDescriptors()) {
+            for (PropertyDescriptor propertyDescriptor
+                    : Introspector.getBeanInfo(messageClass, Message.class).getPropertyDescriptors()) {
                 //we create an empty list of contraints
                 List<MessageConstraintValidator<? extends Annotation>> constraints = new ArrayList<MessageConstraintValidator<? extends Annotation>>();
 
@@ -150,15 +155,5 @@ public abstract class Message implements Serializable {
             }
         }
         return toReturn;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
     }
 }
