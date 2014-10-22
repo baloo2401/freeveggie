@@ -80,7 +80,8 @@ public class SecurityService implements ISecurityService {
 
     @Override
     public Boolean changePassword(ChangePasswordMsg pChangePasswordMsg) throws BusinessException {
-        if (!PasswordValidator.isValid(pChangePasswordMsg.getNewPassword())) {
+        if (PasswordValidator.isValid(pChangePasswordMsg.getNewPassword())
+                && PasswordValidator.isValid(pChangePasswordMsg.getOldPassword())) {
             UserBO userBO = userDAO.get(pChangePasswordMsg.getUserId());
             if (userBO != null) {
                 UserBO userBOFromControl = authenticationDAO.controlPassword(

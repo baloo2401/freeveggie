@@ -23,6 +23,7 @@ import org.mdubois.freeveggie.framework.service.order.ResultOrder;
 import org.mdubois.freeveggie.order.GardenOrderColumn;
 import org.mdubois.freeveggie.service.exp.exception.BusinessWebException;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
+import org.mdubois.freeveggie.service.msg.SearchMsg;
 
 /**
  *
@@ -38,6 +39,107 @@ public class GardenRESTTest {
     @Before
     public void setUp() {
         Deencapsulation.setField(service, gardenBean);
+    }
+
+    @Test
+    public void testSearchGarden() throws BusinessException {
+        Double latUp = null;
+        Double latDown = null;
+        Double longUp = null;
+        Double longDown = null;
+        Integer productId = null;
+        final SearchMsg pGardenMsg = new SearchMsg();
+        final Long pContextUserId = null;
+        new Expectations() {
+            {
+                ContextMsg pContextMsg = new ContextMsg();
+                UserContext userContext = new UserContext();
+                pContextMsg.setUser(userContext);
+                gardenBean.searchGarden(pContextMsg, pGardenMsg);
+                returns(null);
+            }
+        };
+        service.searchGarden(pContextUserId, latUp, latDown, longUp, longDown, productId);
+    }
+
+    @Test
+    public void testSearchGardenFull() throws BusinessException {
+        Double latUp = 1.0;
+        Double latDown = 2.0;
+        Double longUp = 3.0;
+        Double longDown = 4.0;
+        Integer productId = 10;
+        final SearchMsg pGardenMsg = new SearchMsg();
+        pGardenMsg.setLatitudeDown(latDown);
+        pGardenMsg.setLatitudeUp(latUp);
+        pGardenMsg.setLongitudeDown(longDown);
+        pGardenMsg.setLongitudeUp(longUp);
+        pGardenMsg.setRefProductId(productId);
+        final Long pContextUserId = null;
+        new Expectations() {
+            {
+                ContextMsg pContextMsg = new ContextMsg();
+                UserContext userContext = new UserContext();
+                pContextMsg.setUser(userContext);
+                gardenBean.searchGarden(pContextMsg, pGardenMsg);
+                returns(null);
+            }
+        };
+        service.searchGarden(pContextUserId, latUp, latDown, longUp, longDown, productId);
+    }
+
+    @Test
+    public void testSearchGardenFullWithReturn() throws BusinessException {
+        Double latUp = 1.0;
+        Double latDown = 2.0;
+        Double longUp = 3.0;
+        Double longDown = 4.0;
+        Integer productId = 10;
+        final SearchMsg pGardenMsg = new SearchMsg();
+        pGardenMsg.setLatitudeDown(latDown);
+        pGardenMsg.setLatitudeUp(latUp);
+        pGardenMsg.setLongitudeDown(longDown);
+        pGardenMsg.setLongitudeUp(longUp);
+        pGardenMsg.setRefProductId(productId);
+        final Long pContextUserId = null;
+        final List<GardenMsg> gardens = new ArrayList<GardenMsg>();
+        new Expectations() {
+            {
+                ContextMsg pContextMsg = new ContextMsg();
+                UserContext userContext = new UserContext();
+                pContextMsg.setUser(userContext);
+                gardenBean.searchGarden(pContextMsg, pGardenMsg);
+                returns(gardens);
+            }
+        };
+        Assert.assertEquals(gardens, service.searchGarden(pContextUserId, latUp, latDown, longUp, longDown, productId));
+    }
+
+    @Test(expected = BusinessWebException.class)
+    public void testSearchGardenFullThrowException() throws BusinessException {
+        Double latUp = 1.0;
+        Double latDown = 2.0;
+        Double longUp = 3.0;
+        Double longDown = 4.0;
+        Integer productId = 10;
+        final SearchMsg pGardenMsg = new SearchMsg();
+        pGardenMsg.setLatitudeDown(latDown);
+        pGardenMsg.setLatitudeUp(latUp);
+        pGardenMsg.setLongitudeDown(longDown);
+        pGardenMsg.setLongitudeUp(longUp);
+        pGardenMsg.setRefProductId(productId);
+        final Long pContextUserId = null;
+        final List<GardenMsg> gardens = new ArrayList<GardenMsg>();
+        new Expectations() {
+            {
+                ContextMsg pContextMsg = new ContextMsg();
+                UserContext userContext = new UserContext();
+                pContextMsg.setUser(userContext);
+                gardenBean.searchGarden(pContextMsg, pGardenMsg);
+                result = new BusinessException(anyString);
+            }
+        };
+        Assert.assertEquals(gardens, service.searchGarden(pContextUserId, latUp, latDown, longUp, longDown, productId));
     }
 
     @Test
