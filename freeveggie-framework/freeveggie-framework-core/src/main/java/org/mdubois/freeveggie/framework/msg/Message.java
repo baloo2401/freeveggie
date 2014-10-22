@@ -76,7 +76,7 @@ public abstract class Message extends ExtendedSerializable {
         try {
             listOfError = getErrorField(this);
         } catch (Exception ex) {
-            throw new TechnicalException(ex);
+            throw new TechnicalException("Can not validate message", ex);
         }
         if (listOfError.size() > 0) {
             throw new MessageValidationException(String.format(INPUT_MESSAGE_NOT_VALID, listOfError.toString()));
