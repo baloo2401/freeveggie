@@ -35,7 +35,7 @@ public class JSONUtils {
                 TechnicalInformation<T, V> technicalInformation = FreeveggieMapper.getInstance().readValue(pJSONTechnicalInformation, javaType);
                 return technicalInformation;
             } catch (IOException ex) {
-                throw new BusinessException("Couldn't parse JSON string: " + pJSONTechnicalInformation, ex);
+                throw new BusinessException("Couldn't parse JSON string: " + pJSONTechnicalInformation);
             }
         } else {
             return new TechnicalInformation<T, V>();

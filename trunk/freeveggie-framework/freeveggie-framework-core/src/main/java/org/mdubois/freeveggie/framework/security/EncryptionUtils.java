@@ -51,7 +51,7 @@ public final class EncryptionUtils {
             md5 = new BigInteger(1, digest.digest()).toString(16);
 
         } catch (NoSuchAlgorithmException e) {
-            throw new TechnicalException(e);
+            throw new TechnicalException("Can not generate MD5 hash", e);
         }
         return md5;
     }

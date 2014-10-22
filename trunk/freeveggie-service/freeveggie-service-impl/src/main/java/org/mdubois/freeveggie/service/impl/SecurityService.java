@@ -11,7 +11,6 @@ import org.mdubois.freeveggie.dao.api.IAuthenticationDAO;
 import org.mdubois.freeveggie.dao.api.INotificationDAO;
 import org.mdubois.freeveggie.dao.api.IUserDAO;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
-import org.mdubois.freeveggie.framework.exception.TechnicalException;
 import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.framework.security.EncryptionUtils;
 import org.mdubois.freeveggie.framework.security.PasswordValidator;
@@ -51,9 +50,6 @@ public class SecurityService implements ISecurityService {
     private Converter<UserMsg, UserBO> userBOToMsgConverter;
 
     // </editor-fold>
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UserMsg controlPassword(AuthenticationMsg pAuthentificationMsg) throws BusinessException {
         UserBO userBO = authenticationDAO.controlPassword(
@@ -79,12 +75,12 @@ public class SecurityService implements ISecurityService {
     public UserMsg controlTempPassword(AuthenticationMsg pAuthentificationMsg) {
         return userBOToMsgConverter.convert(authenticationDAO
                 .controlTempPassword(pAuthentificationMsg.getLogin(),
-                pAuthentificationMsg.getPassword()));
+                        pAuthentificationMsg.getPassword()));
     }
 
     @Override
     public Boolean changePassword(ChangePasswordMsg pChangePasswordMsg) throws BusinessException {
-        if(!PasswordValidator.isValid(pChangePasswordMsg.getNewPassword())){
+        if (!PasswordValidator.isValid(pChangePasswordMsg.getNewPassword())) {
             UserBO userBO = userDAO.get(pChangePasswordMsg.getUserId());
             if (userBO != null) {
                 UserBO userBOFromControl = authenticationDAO.controlPassword(
@@ -101,7 +97,7 @@ public class SecurityService implements ISecurityService {
             } else {
                 throw new BusinessException("Try to change password of an inexisting user");
             }
-        }else {
+        } else {
             throw new BusinessException("Unvalid password : A password need to have at least 8 charactere and have no space");
         }
     }

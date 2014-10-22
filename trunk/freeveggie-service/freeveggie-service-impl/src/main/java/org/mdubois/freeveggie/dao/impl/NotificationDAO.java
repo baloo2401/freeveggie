@@ -61,7 +61,6 @@ public class NotificationDAO implements INotificationDAO {
     private static final Integer LOST_PASSWORD_EMAIL_PARAM_2 = 1;
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="The lost password email">
     /**
      * The lost password email subject.
@@ -85,7 +84,7 @@ public class NotificationDAO implements INotificationDAO {
      */
     private static final Integer ACCOUNT_CREATION_PARAM_1 = 0;
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="The friend ship request">
     /**
      * The friend ship request subject.
@@ -119,7 +118,7 @@ public class NotificationDAO implements INotificationDAO {
      */
     private static final Integer FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_4 = 3;
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="The product request">
     /**
      * The product request subject.
@@ -161,7 +160,7 @@ public class NotificationDAO implements INotificationDAO {
      */
     private static final Integer PRODUCT_REQUEST_EMAIL_MESSAGE_PARAM_6 = 5;
     // </editor-fold>
-    
+
     /**
      * {@link Session}
      */
@@ -223,7 +222,7 @@ public class NotificationDAO implements INotificationDAO {
         arguments[FRIENDSHIP_REQUEST_EMAIL_MESSAGE_PARAM_4] = pRelationshipBO.getId();
         sendNotice(pRelationshipBO.getRecipient().getEmail(),
                 FRIENDSHIP_REQUEST_EMAIL_SUBJECT, MessageFormat.format(
-                FRIENDSHIP_REQUEST_EMAIL_MESSAGE, arguments));
+                        FRIENDSHIP_REQUEST_EMAIL_MESSAGE, arguments));
     }
 
     private void sendNotice(final String pEmail, final String pObject,
@@ -240,7 +239,7 @@ public class NotificationDAO implements INotificationDAO {
             // Send message
             Transport.send(message);
         } catch (MessagingException ex) {
-            throw new TechnicalException(ex);
+            throw new TechnicalException("Unable to send notice message to " + pEmail, ex);
         }
     }
 }

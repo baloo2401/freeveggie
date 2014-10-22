@@ -32,7 +32,7 @@ public class RequiredConstraintValidator implements MessageConstraintValidator<R
                     Method getter = objectClass.getMethod("get" + StringUtils.capitalize(annotationInstance.field()));
                     return getter.invoke(pValue) != null;
                 } catch (Exception ex) {
-                    throw new TechnicalException(ex);
+                    throw new TechnicalException("Cannot get value for field " + annotationInstance.field(), ex);
                 }
 
             }
