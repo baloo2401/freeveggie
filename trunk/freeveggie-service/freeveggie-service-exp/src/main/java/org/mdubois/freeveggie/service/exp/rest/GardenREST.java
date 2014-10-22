@@ -107,16 +107,20 @@ public class GardenREST extends FreeveggieREST {
             @PathParam("longitudeUp") Double pLongitudeUp,
             @PathParam("longitudeDown") Double pLongitudeDown,
             @PathParam("refProductId") Integer pRefProductId) throws BusinessException {
-        ContextMsg context = createContext(pContextUserId);
-        SearchMsg searchMsg = new SearchMsg();
-        searchMsg.setLatitudeDown(pLatitudeDown);
-        searchMsg.setLatitudeUp(pLatitudeUp);
-        searchMsg.setLongitudeDown(pLongitudeDown);
-        searchMsg.setLongitudeUp(pLongitudeUp);
-        if (pRefProductId != null && pRefProductId > 0) {
-            searchMsg.setRefProductId(pRefProductId);
+        try {
+            ContextMsg context = createContext(pContextUserId);
+            SearchMsg searchMsg = new SearchMsg();
+            searchMsg.setLatitudeDown(pLatitudeDown);
+            searchMsg.setLatitudeUp(pLatitudeUp);
+            searchMsg.setLongitudeDown(pLongitudeDown);
+            searchMsg.setLongitudeUp(pLongitudeUp);
+            if (pRefProductId != null && pRefProductId > 0) {
+                searchMsg.setRefProductId(pRefProductId);
+            }
+            return gardenBean.searchGarden(context, searchMsg);
+        } catch (BusinessException be) {
+            throw new BusinessWebException(be);
         }
-        return gardenBean.searchGarden(context, searchMsg);
     }
 
     @GET

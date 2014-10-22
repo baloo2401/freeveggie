@@ -14,7 +14,7 @@ import org.mdubois.freeveggie.service.msg.UserMsg;
  */
 public interface ISecurityService {
 
-     /**
+    /**
      * Control that the password match the login.
      *
      * @param pLogin - The login to check
@@ -23,7 +23,7 @@ public interface ISecurityService {
      */
     UserMsg controlPassword(@Required final AuthenticationMsg pAuthentificationMsg) throws BusinessException;
 
-     /**
+    /**
      * Control that the temporary password match the login.
      *
      * @param pLogin - The login to check
@@ -34,8 +34,10 @@ public interface ISecurityService {
 
     /**
      * Change a user password.
+     *
      * @param pChangePasswordMsg - The change password information
      * @return TRUE if the change work, FALSE otherwise.
+     * @throws org.mdubois.freeveggie.framework.exception.BusinessException
      */
     public Boolean changePassword(ChangePasswordMsg pChangePasswordMsg) throws BusinessException;
 
@@ -66,9 +68,11 @@ public interface ISecurityService {
     boolean isExistingEmail(@Required final String pEmail);
 
     /**
-     * Save a temporary password. Send a email to the user to inform him of a new password.
+     * Save a temporary password. Send a email to the user to inform him of a
+     * new password.
      *
-     * @param pEmail - The user email address you want to save a temp password for
+     * @param pEmail - The user email address you want to save a temp password
+     * for
      * @throws org.mdubois.freeveggie.framework.exception.BusinessException
      */
     void generateTempPassword(@Required final String pEmail) throws BusinessException;

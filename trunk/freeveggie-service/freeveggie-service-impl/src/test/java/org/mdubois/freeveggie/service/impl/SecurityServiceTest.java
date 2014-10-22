@@ -22,6 +22,7 @@ import org.mdubois.freeveggie.framework.msg.converter.Converter;
 import org.mdubois.freeveggie.framework.security.EncryptionUtils;
 import org.mdubois.freeveggie.service.api.ISecurityService;
 import org.mdubois.freeveggie.service.msg.AuthenticationMsg;
+import org.mdubois.freeveggie.service.msg.ChangePasswordMsg;
 import org.mdubois.freeveggie.service.msg.UserMsg;
 // </editor-fold>
 
@@ -42,6 +43,133 @@ public class SecurityServiceTest {
     private INotificationDAO notificationDAO;
     @Mocked
     private UUID uuid;
+
+    @Test
+    public void teschangePassword() throws BusinessException {
+        final ISecurityService securityService = new SecurityService();
+
+        ChangePasswordMsg changePasswordMsg = new ChangePasswordMsg();
+        final String newPassword = "password11234";
+        final String oldPassword = "password23456";
+        final Long userID = 12569L;
+
+        changePasswordMsg.setUserId(userID);
+        changePasswordMsg.setOldPassword(oldPassword);
+        changePasswordMsg.setNewPassword(newPassword);
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(securityService, userDAO);
+                Deencapsulation.setField(securityService, authenticationDAO);
+
+                userDAO.get(userID);
+                final UserBO userBO = new UserBO();
+                userBO.setUsername("user");
+                returns(userBO);
+
+                authenticationDAO.controlPassword(userBO.getUsername(), oldPassword);
+                returns(userBO);
+
+                userDAO.save(userBO);
+                returns(123L);
+            }
+        };
+
+        securityService.changePassword(changePasswordMsg);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void teschangePasswordCantAuthenticate() throws BusinessException {
+        final ISecurityService securityService = new SecurityService();
+
+        ChangePasswordMsg changePasswordMsg = new ChangePasswordMsg();
+        final String newPassword = "password11234";
+        final String oldPassword = "password23456";
+        final Long userID = 12569L;
+
+        changePasswordMsg.setUserId(userID);
+        changePasswordMsg.setOldPassword(oldPassword);
+        changePasswordMsg.setNewPassword(newPassword);
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(securityService, userDAO);
+                Deencapsulation.setField(securityService, authenticationDAO);
+
+                userDAO.get(userID);
+                final UserBO userBO = new UserBO();
+                userBO.setUsername("user");
+                returns(userBO);
+
+                authenticationDAO.controlPassword(userBO.getUsername(), oldPassword);
+                returns(null);
+            }
+        };
+
+        securityService.changePassword(changePasswordMsg);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void teschangePasswordNoUser() throws BusinessException {
+        final ISecurityService securityService = new SecurityService();
+
+        ChangePasswordMsg changePasswordMsg = new ChangePasswordMsg();
+        final String newPassword = "password11234";
+        final String oldPassword = "password23456";
+        final Long userID = 12569L;
+
+        changePasswordMsg.setUserId(userID);
+        changePasswordMsg.setOldPassword(oldPassword);
+        changePasswordMsg.setNewPassword(newPassword);
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(securityService, userDAO);
+
+                userDAO.get(userID);
+                returns(null);
+            }
+        };
+
+        securityService.changePassword(changePasswordMsg);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void teschangePasswordBadNewPassword() throws BusinessException {
+        final ISecurityService securityService = new SecurityService();
+
+        ChangePasswordMsg changePasswordMsg = new ChangePasswordMsg();
+        final String login = "login";
+        final String newPassword = "passwo";
+        final String oldPassword = "password1234";
+        final Long userID = 12569L;
+
+        changePasswordMsg.setUserId(userID);
+        changePasswordMsg.setOldPassword(oldPassword);
+        changePasswordMsg.setNewPassword(newPassword);
+
+        securityService.changePassword(changePasswordMsg);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void teschangePasswordBadOldPassword() throws BusinessException {
+        final ISecurityService securityService = new SecurityService();
+
+        ChangePasswordMsg changePasswordMsg = new ChangePasswordMsg();
+        final String login = "login";
+        final String newPassword = "password123456";
+        final String oldPassword = "passwor";
+        final Long userID = 12569L;
+
+        changePasswordMsg.setUserId(userID);
+        changePasswordMsg.setOldPassword(oldPassword);
+        changePasswordMsg.setNewPassword(newPassword);
+
+        securityService.changePassword(changePasswordMsg);
+    }
 
     @Test(expected = BusinessException.class)
     public void testControlPasswordNoUser() throws BusinessException {
