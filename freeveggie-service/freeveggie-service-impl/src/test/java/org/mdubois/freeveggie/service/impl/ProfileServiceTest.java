@@ -101,13 +101,14 @@ public class ProfileServiceTest {
                 Deencapsulation.setField(profileService, profileDAO);
                 Deencapsulation.setField(profileService, converter);
 
-                ProfileBO profileBO = new ProfileBO();
-
                 profileDAO.get(userId);
+                returns(null);
+
+                ProfileBO profileBO = new ProfileBO();
+                converter.createNew(profileMsg);
                 returns(profileBO);
 
-                converter.update(profileBO, profileMsg);
-                profileDAO.update(profileBO);
+                profileDAO.save(profileBO);
             }
         };
 
@@ -181,6 +182,29 @@ public class ProfileServiceTest {
 
                 profilBOConverter.convert(userBO.getProfile());
                 returns(null);
+            }
+        };
+
+        profileService.getProfilById(userId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void getProfilByIdNoUser() throws BusinessException {
+        final IProfileService profileService = new ProfileService();
+        final Long userId = 12765L;
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(profileService, profileDAO);
+                Deencapsulation.setField(profileService, userDAO);
+                Deencapsulation.setField(profileService, profilBOConverter);
+
+                UserBO userBO = new UserBO();
+
+                userDAO.get(userId);
+                returns(null);
+
             }
         };
 

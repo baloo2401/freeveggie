@@ -55,9 +55,6 @@ public class ProductBeanLocal implements IProductBean {
     @Inject
     private IRightControlerService rightControlerService;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Long create(final ContextMsg pContextMsg,
             final ProductMsg pProductMsg) throws BusinessException {
@@ -70,9 +67,6 @@ public class ProductBeanLocal implements IProductBean {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean update(final ContextMsg pContextMsg,
             final UpdateProductMsg pUpdateProductMsg) throws BusinessException {
@@ -86,9 +80,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean blacklist(final ContextMsg pContextMsg, final Long pProductId)
             throws BusinessException {
@@ -100,9 +91,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean unblacklist(final ContextMsg pContextMsg,
             final Long pProductId) throws BusinessException {
@@ -114,9 +102,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean remove(final ContextMsg pContextMsg, final Long pProductId)
             throws BusinessException {
@@ -131,9 +116,6 @@ public class ProductBeanLocal implements IProductBean {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean reactivate(final ContextMsg pContextMsg,
             final Long pProductId) throws BusinessException {
@@ -148,9 +130,6 @@ public class ProductBeanLocal implements IProductBean {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean archive(final ContextMsg pContextMsg, final Long pProductId)
             throws BusinessException {
@@ -163,9 +142,6 @@ public class ProductBeanLocal implements IProductBean {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean unarchive(final ContextMsg pContextMsg, final Long pProductId)
             throws BusinessException {
@@ -179,9 +155,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ProductMsg getProductById(final ContextMsg pContextMsg,
             final Long productId) throws BusinessException {
@@ -194,9 +167,6 @@ public class ProductBeanLocal implements IProductBean {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductMsg> getProductByUser(
             final ContextMsg pContextMsg,
@@ -212,9 +182,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductMsg> getProductByGarden(
             final ContextMsg pContextMsg,
@@ -230,9 +197,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductMsg> getProductByCity(
             final ContextMsg pContextMsg,
@@ -249,9 +213,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductMsg> getProductByRegion(
             final ContextMsg pContextMsg,
@@ -268,9 +229,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductMsg> getProductByState(
             final ContextMsg pContextMsg,
@@ -287,9 +245,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductMsg> getProductByCountry(
             final ContextMsg pContextMsg,
@@ -306,9 +261,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Long comment(final ContextMsg pContextMsg,
             final ProductCommentMsg pProductCommentMsg)
@@ -321,9 +273,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean removeComment(final ContextMsg pContextMsg,
             final Long pProductCommentId) throws BusinessException {
@@ -339,9 +288,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean reactivateComment(final ContextMsg pContextMsg,
             final Long pProductCommentId) throws BusinessException {
@@ -355,9 +301,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean archiveComment(final ContextMsg pContextMsg,
             final Long pProductCommentId) throws BusinessException {
@@ -369,9 +312,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean unarchiveComment(final ContextMsg pContextMsg,
             final Long pProductCommentId) throws BusinessException {
@@ -385,9 +325,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductCommentMsg> getProductComment(
             final ContextMsg pContextMsg,
@@ -404,9 +341,6 @@ public class ProductBeanLocal implements IProductBean {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductCommentMsg> getProductCommentWrite(
             final ContextMsg pContextMsg,
@@ -422,9 +356,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Long like(final ContextMsg pContextMsg,
             final ProductLikeMsg pProductLikeMsg) throws BusinessException {
@@ -436,9 +367,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void unlike(final ContextMsg pContextMsg, final Long pProductLikeId)
             throws BusinessException {
@@ -450,9 +378,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductLikeMsg> getProductLike(
             final ContextMsg pContextMsg,
@@ -468,9 +393,6 @@ public class ProductBeanLocal implements IProductBean {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ProductLikeMsg> getProductLikeWrite(
             final ContextMsg pContextMsg,

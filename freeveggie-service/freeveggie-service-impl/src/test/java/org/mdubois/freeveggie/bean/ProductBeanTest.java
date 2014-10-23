@@ -10,6 +10,7 @@ import org.mdubois.freeveggie.bean.local.ProductBeanLocal;
 import org.mdubois.freeveggie.criteria.ProductCommentCriteriaColumn;
 import org.mdubois.freeveggie.criteria.ProductCriteriaColumn;
 import org.mdubois.freeveggie.criteria.ProductLikeCriteriaColumn;
+import org.mdubois.freeveggie.criteria.ProductRequestCriteriaColumn;
 import org.mdubois.freeveggie.framework.exception.AccessNotGrantedException;
 import org.mdubois.freeveggie.framework.exception.BusinessException;
 import org.mdubois.freeveggie.framework.exception.TechnicalException;
@@ -20,12 +21,15 @@ import org.mdubois.freeveggie.framework.service.TechnicalInformation;
 import org.mdubois.freeveggie.order.ProductCommentOrderColumn;
 import org.mdubois.freeveggie.order.ProductLikeOrderColumn;
 import org.mdubois.freeveggie.order.ProductOrderColumn;
+import org.mdubois.freeveggie.order.ProductRequestOrderColumn;
 import org.mdubois.freeveggie.service.api.IProductService;
 import org.mdubois.freeveggie.service.api.IRightControlerService;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
+import org.mdubois.freeveggie.service.msg.PictureMsg;
 import org.mdubois.freeveggie.service.msg.ProductCommentMsg;
 import org.mdubois.freeveggie.service.msg.ProductLikeMsg;
 import org.mdubois.freeveggie.service.msg.ProductMsg;
+import org.mdubois.freeveggie.service.msg.ProductRequestMsg;
 import org.mdubois.freeveggie.service.msg.UpdateProductMsg;
 
 // </editor-fold>
@@ -36,7 +40,7 @@ import org.mdubois.freeveggie.service.msg.UpdateProductMsg;
 public class ProductBeanTest {
 
     @Mocked
-    private IProductService gardenService;
+    private IProductService productService;
     @Mocked
     private IRightControlerService rightControlerService;
     // <editor-fold defaultstate="collapsed" desc="Create">
@@ -61,15 +65,15 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerGarden(userId, gardenId);
                 returns(true);
 
-                gardenService.create(pProductMsg);
+                productService.create(pProductMsg);
                 returns(expResult);
             }
         };
@@ -93,9 +97,9 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
 
             }
@@ -122,14 +126,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerGarden(userId, gardenId);
                 returns(true);
 
-                gardenService.create(pProductMsg);
+                productService.create(pProductMsg);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -156,15 +160,15 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerGarden(userId, gardenId);
                 returns(true);
 
-                gardenService.create(pProductMsg);
+                productService.create(pProductMsg);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -194,14 +198,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.update(pProductMsg);
+                productService.update(pProductMsg);
             }
         };
 
@@ -224,8 +228,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
 
             }
@@ -250,8 +254,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
@@ -279,14 +283,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.update(pProductMsg);
+                productService.update(pProductMsg);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -310,14 +314,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.update(pProductMsg);
+                productService.update(pProductMsg);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -344,11 +348,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(true);
 
-                gardenService.blacklist(pProductId);
+                productService.blacklist(pProductId);
             }
         };
 
@@ -369,8 +373,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(false);
 
             }
@@ -393,11 +397,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(true);
 
-                gardenService.blacklist(pProductId);
+                productService.blacklist(pProductId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -419,11 +423,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(true);
 
-                gardenService.blacklist(pProductId);
+                productService.blacklist(pProductId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -450,11 +454,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(true);
 
-                gardenService.unblacklist(pProductId);
+                productService.unblacklist(pProductId);
             }
         };
 
@@ -475,8 +479,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(false);
             }
         };
@@ -498,11 +502,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(true);
 
-                gardenService.unblacklist(pProductId);
+                productService.unblacklist(pProductId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -524,11 +528,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM, UserRole.SUPERADMIN);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM, UserRole.SUPERADMIN);
                 returns(true);
 
-                gardenService.unblacklist(pProductId);
+                productService.unblacklist(pProductId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -555,15 +559,15 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.remove(pProductId);
+                productService.remove(pProductId);
             }
         };
 
@@ -584,9 +588,9 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -608,9 +612,9 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
@@ -635,15 +639,15 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.remove(pProductId);
+                productService.remove(pProductId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -665,15 +669,15 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.remove(pProductId);
+                productService.remove(pProductId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -700,14 +704,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.reactivate(pProductId);
+                productService.reactivate(pProductId);
             }
         };
 
@@ -728,8 +732,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -751,8 +755,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
@@ -777,14 +781,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.reactivate(pProductId);
+                productService.reactivate(pProductId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -806,14 +810,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.reactivate(pProductId);
+                productService.reactivate(pProductId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -840,11 +844,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(true);
 
-                gardenService.archive(pProductId);
+                productService.archive(pProductId);
             }
         };
 
@@ -865,8 +869,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(false);
             }
         };
@@ -888,11 +892,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(true);
 
-                gardenService.archive(pProductId);
+                productService.archive(pProductId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -914,11 +918,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(true);
 
-                gardenService.archive(pProductId);
+                productService.archive(pProductId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -945,14 +949,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.unarchive(pProductId);
+                productService.unarchive(pProductId);
             }
         };
 
@@ -973,8 +977,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -996,8 +1000,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
@@ -1022,14 +1026,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.unarchive(pProductId);
+                productService.unarchive(pProductId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1051,14 +1055,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProduct(userId, pProductId);
                 returns(true);
 
-                gardenService.unarchive(pProductId);
+                productService.unarchive(pProductId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -1085,11 +1089,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductById(pProductId);
+                productService.getProductById(pProductId);
             }
         };
 
@@ -1110,8 +1114,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -1133,11 +1137,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductById(pProductId);
+                productService.getProductById(pProductId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1159,16 +1163,561 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductById(pProductId);
+                productService.getProductById(pProductId);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
         instance.getProductById(pContextMsg, pProductId);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getProductRequestById">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetProductRequestById() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestById(pProductRequestId);
+            }
+        };
+
+        instance.getProductRequestById(pContextMsg, pProductRequestId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetProductRequestByIdAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+            }
+        };
+
+        instance.getProductRequestById(pContextMsg, pProductRequestId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetProductRequestByIdThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestById(pProductRequestId);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getProductRequestById(pContextMsg, pProductRequestId);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetProductRequestByIdThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestById(pProductRequestId);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getProductRequestById(pContextMsg, pProductRequestId);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getProductRequestByGarden">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetProductRequestByGarden() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestByGarden(pGardenId, pTechnicalInformation);
+            }
+        };
+
+        instance.getProductRequestByGarden(pContextMsg, pGardenId, pTechnicalInformation);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetProductRequestByGardenAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.getProductRequestByGarden(pContextMsg, pGardenId, pTechnicalInformation);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetProductRequestByGardenThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestByGarden(pGardenId, pTechnicalInformation);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getProductRequestByGarden(pContextMsg, pGardenId, pTechnicalInformation);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetProductRequestByGardenThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestByGarden(pGardenId, pTechnicalInformation);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getProductRequestByGarden(pContextMsg, pGardenId, pTechnicalInformation);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getProductRequestByProduct">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetProductRequestByProduct() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestByProduct(pProductId, pTechnicalInformation);
+            }
+        };
+
+        instance.getProductRequestByProduct(pContextMsg, pProductId, pTechnicalInformation);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetProductRequestByProductAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.getProductRequestByProduct(pContextMsg, pProductId, pTechnicalInformation);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetProductRequestByProductThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestByProduct(pProductId, pTechnicalInformation);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getProductRequestByProduct(pContextMsg, pProductId, pTechnicalInformation);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetProductRequestByProductThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestByProduct(pProductId, pTechnicalInformation);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getProductRequestByProduct(pContextMsg, pProductId, pTechnicalInformation);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getProductRequestReceive">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetProductRequestReceive() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestReceive(pUserId, pTechnicalInformation);
+            }
+        };
+
+        instance.getProductRequestReceive(pContextMsg, pUserId, pTechnicalInformation);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetProductRequestReceiveAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.getProductRequestReceive(pContextMsg, pUserId, pTechnicalInformation);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetProductRequestReceiveThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestReceive(pUserId, pTechnicalInformation);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getProductRequestReceive(pContextMsg, pUserId, pTechnicalInformation);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetProductRequestReceiveThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestReceive(pUserId, pTechnicalInformation);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getProductRequestReceive(pContextMsg, pUserId, pTechnicalInformation);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getProductRequest">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetProductRequestSend() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestSend(pUserId, pTechnicalInformation);
+            }
+        };
+
+        instance.getProductRequestSend(pContextMsg, pUserId, pTechnicalInformation);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetProductRequestSendAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.getProductRequestSend(pContextMsg, pUserId, pTechnicalInformation);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetProductRequestSendThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestSend(pUserId, pTechnicalInformation);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getProductRequestSend(pContextMsg, pUserId, pTechnicalInformation);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetProductRequestSendThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pUserId = 123990L;
+        final TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductRequestCriteriaColumn, ProductRequestOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductRequestSend(pUserId, pTechnicalInformation);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getProductRequestSend(pContextMsg, pUserId, pTechnicalInformation);
     }
     // </editor-fold>
 
@@ -1191,11 +1740,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByUser(pUserId, pTechnicalInformation);
+                productService.getProductByUser(pUserId, pTechnicalInformation);
             }
         };
 
@@ -1217,8 +1766,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
 
             }
@@ -1242,11 +1791,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByUser(pUserId, pTechnicalInformation);
+                productService.getProductByUser(pUserId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1269,16 +1818,126 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByUser(pUserId, pTechnicalInformation);
+                productService.getProductByUser(pUserId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
         instance.getProductByUser(pContextMsg, pUserId, pTechnicalInformation);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getProductByGarden">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetProductByGarden() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductByGarden(pGardenId, pTechnicalInformation);
+            }
+        };
+
+        instance.getProductByGarden(pContextMsg, pGardenId, pTechnicalInformation);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetProductByGardenAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.getProductByGarden(pContextMsg, pGardenId, pTechnicalInformation);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetProductByGardenThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductByGarden(pGardenId, pTechnicalInformation);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getProductByGarden(pContextMsg, pGardenId, pTechnicalInformation);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetProductByGardenThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pGardenId = 123990L;
+        final TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn> pTechnicalInformation = new TechnicalInformation<ProductCriteriaColumn, ProductOrderColumn>();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getProductByGarden(pGardenId, pTechnicalInformation);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getProductByGarden(pContextMsg, pGardenId, pTechnicalInformation);
     }
     // </editor-fold>
 
@@ -1302,11 +1961,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
+                productService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
             }
         };
 
@@ -1329,8 +1988,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -1354,11 +2013,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
+                productService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1382,11 +2041,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
+                productService.getProductByCity(pRefCityId, pRefProductId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -1415,11 +2074,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
+                productService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
             }
         };
 
@@ -1442,8 +2101,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -1467,11 +2126,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
+                productService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1495,11 +2154,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
+                productService.getProductByState(pRefStateId, pRefProductId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -1528,11 +2187,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
+                productService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
             }
         };
 
@@ -1555,8 +2214,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -1580,11 +2239,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
+                productService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1608,11 +2267,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
+                productService.getProductByRegion(pRefRegionId, pRefProductId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -1641,11 +2300,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
+                productService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
             }
         };
 
@@ -1668,8 +2327,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -1693,11 +2352,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
+                productService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1721,16 +2380,336 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
+                productService.getProductByCountry(pRefCountryId, pRefProductId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
         instance.getProductByCountry(pContextMsg, pRefCountryId, pRefProductId, pTechnicalInformation);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Send">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testSend() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final ProductRequestMsg pProductRequestMsg = new ProductRequestMsg();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.send(pProductRequestMsg);
+            }
+        };
+
+        instance.send(pContextMsg, pProductRequestMsg);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testSendAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final ProductRequestMsg pProductRequestMsg = new ProductRequestMsg();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.send(pContextMsg, pProductRequestMsg);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testSendThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final ProductRequestMsg pProductRequestMsg = new ProductRequestMsg();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+                productService.send(pProductRequestMsg);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.send(pContextMsg, pProductRequestMsg);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testSendByRegionThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final ProductRequestMsg pProductRequestMsg = new ProductRequestMsg();
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+                productService.send(pProductRequestMsg);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.send(pContextMsg, pProductRequestMsg);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Accept">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testAccept() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.accept(pProductRequestId, message);
+            }
+        };
+
+        instance.accept(pContextMsg, pProductRequestId, message);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testAcceptAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.accept(pContextMsg, pProductRequestId, message);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testAcceptThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+                productService.accept(pProductRequestId, message);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.accept(pContextMsg, pProductRequestId, message);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testAcceptByRegionThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+                productService.accept(pProductRequestId, message);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.accept(pContextMsg, pProductRequestId, message);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Refuse">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testRefuse() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.refuse(pProductRequestId, message);
+            }
+        };
+
+        instance.refuse(pContextMsg, pProductRequestId, message);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testRefuseAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.refuse(pContextMsg, pProductRequestId, message);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testRefuseThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+                productService.refuse(pProductRequestId, message);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.refuse(pContextMsg, pProductRequestId, message);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testRefuseByRegionThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final String message = "test";
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long pProductRequestId = 123L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+                productService.refuse(pProductRequestId, message);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.refuse(pContextMsg, pProductRequestId, message);
     }
     // </editor-fold>
 
@@ -1752,11 +2731,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.comment(pProductCommentMsg);
+                productService.comment(pProductCommentMsg);
             }
         };
 
@@ -1777,8 +2756,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
 
             }
@@ -1801,10 +2780,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.comment(pProductCommentMsg);
+                productService.comment(pProductCommentMsg);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1826,10 +2805,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.comment(pProductCommentMsg);
+                productService.comment(pProductCommentMsg);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -1856,14 +2835,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.removeComment(pCommentId);
+                productService.removeComment(pCommentId);
             }
         };
 
@@ -1884,11 +2863,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.SUPERADMIN);
+                rightControlerService.isUserInRole(userId, UserRole.SUPERADMIN);
                 returns(false);
             }
         };
@@ -1910,14 +2889,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(false);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.SUPERADMIN);
+                rightControlerService.isUserInRole(userId, UserRole.SUPERADMIN);
                 returns(false);
             }
         };
@@ -1939,14 +2918,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.removeComment(pCommentId);
+                productService.removeComment(pCommentId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -1968,14 +2947,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.removeComment(pCommentId);
+                productService.removeComment(pCommentId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2002,14 +2981,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.reactivateComment(pCommentId);
+                productService.reactivateComment(pCommentId);
             }
         };
 
@@ -2030,8 +3009,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
 
             }
@@ -2054,8 +3033,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
@@ -2081,15 +3060,15 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.reactivateComment(pCommentId);
+                productService.reactivateComment(pCommentId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2111,15 +3090,15 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
+                Deencapsulation.setField(instance, productService);
 
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.reactivateComment(pCommentId);
+                productService.reactivateComment(pCommentId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2146,11 +3125,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(true);
 
-                gardenService.archiveComment(pCommentId);
+                productService.archiveComment(pCommentId);
             }
         };
 
@@ -2171,8 +3150,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(false);
 
             }
@@ -2195,10 +3174,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(true);
-                gardenService.archiveComment(pCommentId);
+                productService.archiveComment(pCommentId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2220,10 +3199,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.SYSTEM);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.SYSTEM);
                 returns(true);
-                gardenService.archiveComment(pCommentId);
+                productService.archiveComment(pCommentId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2250,14 +3229,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.unarchiveComment(pCommentId);
+                productService.unarchiveComment(pCommentId);
             }
         };
 
@@ -2278,8 +3257,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -2301,8 +3280,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
@@ -2327,14 +3306,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.unarchiveComment(pCommentId);
+                productService.unarchiveComment(pCommentId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2356,14 +3335,14 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
                 rightControlerService.isUserOwnerProductComment(userId, pCommentId);
                 returns(true);
 
-                gardenService.unarchiveComment(pCommentId);
+                productService.unarchiveComment(pCommentId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2391,11 +3370,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductComment(pProductId, pTechnicalInformation);
+                productService.getProductComment(pProductId, pTechnicalInformation);
             }
         };
 
@@ -2417,8 +3396,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -2441,10 +3420,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductComment(pProductId, pTechnicalInformation);
+                productService.getProductComment(pProductId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2468,10 +3447,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductComment(pProductId, pTechnicalInformation);
+                productService.getProductComment(pProductId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2499,11 +3478,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductCommentWrite(pUserId, pTechnicalInformation);
+                productService.getProductCommentWrite(pUserId, pTechnicalInformation);
             }
         };
 
@@ -2525,8 +3504,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -2549,10 +3528,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductCommentWrite(pUserId, pTechnicalInformation);
+                productService.getProductCommentWrite(pUserId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2576,10 +3555,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductCommentWrite(pUserId, pTechnicalInformation);
+                productService.getProductCommentWrite(pUserId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2606,11 +3585,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.like(pProductLikeMsg);
+                productService.like(pProductLikeMsg);
             }
         };
 
@@ -2631,8 +3610,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
 
             }
@@ -2655,10 +3634,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.like(pProductLikeMsg);
+                productService.like(pProductLikeMsg);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2680,10 +3659,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.like(pProductLikeMsg);
+                productService.like(pProductLikeMsg);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2710,11 +3689,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.unlike(pLikeId);
+                productService.unlike(pLikeId);
             }
         };
 
@@ -2735,8 +3714,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -2758,10 +3737,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.unlike(pLikeId);
+                productService.unlike(pLikeId);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2783,10 +3762,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.unlike(pLikeId);
+                productService.unlike(pLikeId);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2814,11 +3793,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductLike(pProductId, pTechnicalInformation);
+                productService.getProductLike(pProductId, pTechnicalInformation);
             }
         };
 
@@ -2840,8 +3819,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -2864,10 +3843,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductLike(pProductId, pTechnicalInformation);
+                productService.getProductLike(pProductId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2891,10 +3870,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductLike(pProductId, pTechnicalInformation);
+                productService.getProductLike(pProductId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
@@ -2922,11 +3901,11 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
 
-                gardenService.getProductLikeWrite(pUserId, pTechnicalInformation);
+                productService.getProductLikeWrite(pUserId, pTechnicalInformation);
             }
         };
 
@@ -2948,8 +3927,8 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(false);
             }
         };
@@ -2972,10 +3951,10 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductLikeWrite(pUserId, pTechnicalInformation);
+                productService.getProductLikeWrite(pUserId, pTechnicalInformation);
                 result = new BusinessException("BusinessException");
             }
         };
@@ -2999,15 +3978,527 @@ public class ProductBeanTest {
 
             {
                 Deencapsulation.setField(instance, rightControlerService);
-                Deencapsulation.setField(instance, gardenService);
-                rightControlerService.isUserInRole(anyLong, UserRole.USER);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
                 returns(true);
-                gardenService.getProductLikeWrite(pUserId, pTechnicalInformation);
+                productService.getProductLikeWrite(pUserId, pTechnicalInformation);
                 result = new TechnicalException("TechnicalException");
             }
         };
 
         instance.getProductLikeWrite(pContextMsg, pUserId, pTechnicalInformation);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getPicture">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetPicture() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getPicture(productPictureId);
+            }
+        };
+
+        instance.getPicture(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetPictureAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+            }
+        };
+
+        instance.getPicture(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetPictureThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getPicture(productPictureId);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getPicture(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetPictureThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getPicture(productPictureId);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getPicture(pContextMsg, productPictureId);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getPictureByProduct">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testgetPictureByProduct() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getPictureByProduct(productPictureId);
+            }
+        };
+
+        instance.getPictureByProduct(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetPictureByProductAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+            }
+        };
+
+        instance.getPictureByProduct(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetPictureByProductThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getPictureByProduct(productPictureId);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getPictureByProduct(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetPictureByProductThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long productPictureId = 2739L;
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                productService.getPictureByProduct(productPictureId);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getPictureByProduct(pContextMsg, productPictureId);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="addPicture">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testaddPicture() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProduct(userId, productId);
+                returns(true);
+
+                productService.addPicture(productPictureMsg);
+            }
+        };
+
+        instance.addPicture(pContextMsg, productPictureMsg);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testaddPictureAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.addPicture(pContextMsg, productPictureMsg);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testaddPictureAccessNotGrantedExceptionNotOwnet() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProduct(userId, productId);
+                returns(false);
+            }
+        };
+
+        instance.addPicture(pContextMsg, productPictureMsg);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testaddPictureThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProduct(userId, productId);
+                returns(true);
+
+                productService.addPicture(productPictureMsg);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.addPicture(pContextMsg, productPictureMsg);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testaddPictureThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProduct(userId, productId);
+                returns(true);
+
+                productService.addPicture(productPictureMsg);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.addPicture(pContextMsg, productPictureMsg);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="removePicture">
+    /**
+     * Test of archive method, of class ProductBean.
+     */
+    @Test
+    public void testremovePicture() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productPictureId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProductPicture(userId, productPictureId);
+                returns(true);
+
+                productService.removePicture(productPictureId);
+            }
+        };
+
+        instance.removePicture(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testremovePictureAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productPictureId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.removePicture(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testremovePictureAccessNotGrantedExceptionNotOwnet() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productPictureId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProductPicture(userId, productPictureId);
+                returns(false);
+            }
+        };
+
+        instance.removePicture(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testremovePictureThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productPictureId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProductPicture(userId, productPictureId);
+                returns(true);
+
+                productService.removePicture(productPictureId);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.removePicture(pContextMsg, productPictureId);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testremovePictureThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long productPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg productPictureMsg = new PictureMsg();
+        productPictureMsg.setObjId(productPictureId);
+        final IProductBean instance = new ProductBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, productService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerProductPicture(userId, productPictureId);
+                returns(true);
+
+                productService.removePicture(productPictureId);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.removePicture(pContextMsg, productPictureId);
     }
     // </editor-fold>
 }
