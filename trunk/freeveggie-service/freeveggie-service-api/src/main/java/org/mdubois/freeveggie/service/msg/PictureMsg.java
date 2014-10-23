@@ -11,6 +11,7 @@ import org.mdubois.freeveggie.framework.msg.Required;
  */
 @XmlRootElement
 public class PictureMsg extends Message {
+
     /**
      * The database id
      */
@@ -20,19 +21,19 @@ public class PictureMsg extends Message {
      */
     @Required
     private Long objId;
-    
+
     /**
      * The picture mime type.
      */
     @Required
-    private String mimeType; 
-    
+    private String mimeType;
+
     /**
      * The picture byte.
      */
     @Required
     private byte[] picture;
-    
+
     /**
      * The picture saved date.
      */
@@ -40,6 +41,7 @@ public class PictureMsg extends Message {
 
     /**
      * The object id (product or garden id).
+     *
      * @return - The object id
      */
     public Long getObjId() {
@@ -48,15 +50,16 @@ public class PictureMsg extends Message {
 
     /**
      * Set the object id.
+     *
      * @param objId - The object id to set
      */
     public void setObjId(Long objId) {
         this.objId = objId;
     }
 
-    
     /**
      * Get the database id.
+     *
      * @return - The database id
      */
     public Long getId() {
@@ -65,6 +68,7 @@ public class PictureMsg extends Message {
 
     /**
      * Set the database id.
+     *
      * @param id - The database id to set
      */
     public void setId(Long id) {
@@ -73,6 +77,7 @@ public class PictureMsg extends Message {
 
     /**
      * Get the mime type.
+     *
      * @return - The mime type
      */
     public String getMimeType() {
@@ -81,6 +86,7 @@ public class PictureMsg extends Message {
 
     /**
      * Set the mime type.
+     *
      * @param mimeType - The mime type to set
      */
     public void setMimeType(String mimeType) {
@@ -89,6 +95,7 @@ public class PictureMsg extends Message {
 
     /**
      * Get the picture
+     *
      * @return - The picture
      */
     public byte[] getPicture() {
@@ -97,6 +104,7 @@ public class PictureMsg extends Message {
 
     /**
      * Set the picture.
+     *
      * @param picture - The picture to set
      */
     public void setPicture(byte[] picture) {
@@ -105,6 +113,7 @@ public class PictureMsg extends Message {
 
     /**
      * Get the creation date.
+     *
      * @return - The creation date to set
      */
     public Date getCreationDate() {
@@ -113,9 +122,11 @@ public class PictureMsg extends Message {
 
     /**
      * Set the creation date.
+     *
      * @param creationDate - The creation date to set
      */
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
 }
