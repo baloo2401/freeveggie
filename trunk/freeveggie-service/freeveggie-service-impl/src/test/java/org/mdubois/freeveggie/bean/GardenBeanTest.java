@@ -25,6 +25,7 @@ import org.mdubois.freeveggie.service.api.IRightControlerService;
 import org.mdubois.freeveggie.service.msg.GardenCommentMsg;
 import org.mdubois.freeveggie.service.msg.GardenLikeMsg;
 import org.mdubois.freeveggie.service.msg.GardenMsg;
+import org.mdubois.freeveggie.service.msg.PictureMsg;
 
 // </editor-fold>
 /**
@@ -2992,4 +2993,517 @@ public class GardenBeanTest {
         instance.getGardenLikeWrite(pContextMsg, pUserId, pTechnicalInformation);
     }
     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getPicture">
+    /**
+     * Test of archive method, of class GardenBean.
+     */
+    @Test
+    public void testgetPicture() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                gardenService.getPicture(gardenPictureId);
+            }
+        };
+
+        instance.getPicture(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetPictureAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+            }
+        };
+
+        instance.getPicture(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetPictureThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                gardenService.getPicture(gardenPictureId);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getPicture(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetPictureThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                gardenService.getPicture(gardenPictureId);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getPicture(pContextMsg, gardenPictureId);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="getPictureByGarden">
+    /**
+     * Test of archive method, of class GardenBean.
+     */
+    @Test
+    public void testgetPictureByGarden() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                gardenService.getPictureByGarden(gardenPictureId);
+            }
+        };
+
+        instance.getPictureByGarden(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testgetPictureByGardenAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+            }
+        };
+
+        instance.getPictureByGarden(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testgetPictureByGardenThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                gardenService.getPictureByGarden(gardenPictureId);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.getPictureByGarden(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testgetPictureByGardenThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final Long gardenPictureId = 2739L;
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                gardenService.getPictureByGarden(gardenPictureId);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.getPictureByGarden(pContextMsg, gardenPictureId);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="addPicture">
+    /**
+     * Test of archive method, of class GardenBean.
+     */
+    @Test
+    public void testaddPicture() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGarden(userId, gardenId);
+                returns(true);
+
+                gardenService.addPicture(gardenPictureMsg);
+            }
+        };
+
+        instance.addPicture(pContextMsg, gardenPictureMsg);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testaddPictureAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.addPicture(pContextMsg, gardenPictureMsg);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testaddPictureAccessNotGrantedExceptionNotOwnet() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGarden(userId, gardenId);
+                returns(false);
+            }
+        };
+
+        instance.addPicture(pContextMsg, gardenPictureMsg);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testaddPictureThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGarden(userId, gardenId);
+                returns(true);
+
+                gardenService.addPicture(gardenPictureMsg);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.addPicture(pContextMsg, gardenPictureMsg);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testaddPictureThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGarden(userId, gardenId);
+                returns(true);
+
+                gardenService.addPicture(gardenPictureMsg);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.addPicture(pContextMsg, gardenPictureMsg);
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="removePicture">
+    /**
+     * Test of archive method, of class GardenBean.
+     */
+    @Test
+    public void testremovePicture() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenPictureId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGardenPicture(userId, gardenPictureId);
+                returns(true);
+
+                gardenService.removePicture(gardenPictureId);
+            }
+        };
+
+        instance.removePicture(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testremovePictureAccessNotGrantedException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenPictureId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(false);
+
+            }
+        };
+
+        instance.removePicture(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = AccessNotGrantedException.class)
+    public void testremovePictureAccessNotGrantedExceptionNotOwnet() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenPictureId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGardenPicture(userId, gardenPictureId);
+                returns(false);
+            }
+        };
+
+        instance.removePicture(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = BusinessException.class)
+    public void testremovePictureThrowBusinessException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenPictureId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGardenPicture(userId, gardenPictureId);
+                returns(true);
+
+                gardenService.removePicture(gardenPictureId);
+                result = new BusinessException("BusinessException");
+            }
+        };
+
+        instance.removePicture(pContextMsg, gardenPictureId);
+    }
+
+    @Test(expected = TechnicalException.class)
+    public void testremovePictureThrowTechnicalException() throws Exception {
+        final ContextMsg pContextMsg = new ContextMsg();
+        final Long userId = 23L;
+        final Long gardenPictureId = 15L;
+        UserContext user = new UserContext();
+        user.setId(userId);
+        pContextMsg.setUser(user);
+        final PictureMsg gardenPictureMsg = new PictureMsg();
+        gardenPictureMsg.setObjId(gardenPictureId);
+        final IGardenBean instance = new GardenBeanLocal();
+
+        new Expectations() {
+
+            {
+                Deencapsulation.setField(instance, rightControlerService);
+                Deencapsulation.setField(instance, gardenService);
+                rightControlerService.isUserInRole(userId, UserRole.USER);
+                returns(true);
+
+                rightControlerService.isUserOwnerGardenPicture(userId, gardenPictureId);
+                returns(true);
+
+                gardenService.removePicture(gardenPictureId);
+                result = new TechnicalException("TechnicalException");
+            }
+        };
+
+        instance.removePicture(pContextMsg, gardenPictureId);
+    }
+    // </editor-fold>
+
 }
