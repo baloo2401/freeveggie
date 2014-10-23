@@ -1,8 +1,6 @@
 package org.mdubois.freeveggie.framework.service.order;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.mdubois.freeveggie.framework.msg.ExtendedSerializable;
 
 /**
  * This is the abstract class for request order.
@@ -10,7 +8,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @param <T>
  * @author Mickael Dubois
  */
-public class ResultOrder<T extends OrderColumn> {
+public class ResultOrder<T extends OrderColumn> extends ExtendedSerializable {
 
     /**
      * The search way.
@@ -68,18 +66,4 @@ public class ResultOrder<T extends OrderColumn> {
         return stringBuilder.toString();
     }
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
 }
