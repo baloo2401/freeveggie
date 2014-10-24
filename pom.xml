@@ -9,6 +9,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <scm>
+        <connection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/trunk</connection>
+        <developerConnection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/trunk</developerConnection>
+        <url>http://usine-dev.edubois.org/svn/freeveggie/trunk</url>
+    </scm>
+
     <modules>
         <module>freeveggie-ear</module>
         <module>freeveggie-service</module>
