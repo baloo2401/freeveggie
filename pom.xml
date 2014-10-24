@@ -20,7 +20,7 @@
         <module>freeveggie-service</module>
         <module>freeveggie-env</module>
         <module>freeveggie-framework</module>
-        <!--module>freeveggie-play</module-->
+        <module>freeveggie-play</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
