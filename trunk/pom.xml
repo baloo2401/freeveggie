@@ -6,13 +6,13 @@
 
     <groupId>org.mdubois</groupId>
     <artifactId>freeveggie</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0.0</version>
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/trunk</connection>
-        <developerConnection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/trunk</developerConnection>
-        <url>http://usine-dev.edubois.org/svn/freeveggie/trunk</url>
+        <connection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/tags/1.0.0.0</connection>
+        <developerConnection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/tags/1.0.0.0</developerConnection>
+        <url>http://usine-dev.edubois.org/svn/freeveggie/tags/1.0.0.0</url>
     </scm>
 
     <modules>
@@ -243,19 +243,19 @@
                                 <configuration>
                                     <debug>true</debug>
                                     <target>
-                                        <echo message="Step 1 - Undeploy application"/>
+                                        <echo message="Step 1 - Undeploy application" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/undeploy.sh" trust="true" />
 
-                                        <echo message="Step 2 - Stop service server"/>
+                                        <echo message="Step 2 - Stop service server" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/stopDomain.sh" trust="true" />
 
-                                        <echo message="Step 3 - Start service server"/>
+                                        <echo message="Step 3 - Start service server" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/startDomain.sh" trust="true" />
 
-                                        <echo message="Step 4 - Deploy application"/>
+                                        <echo message="Step 4 - Deploy application" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="glassfish" password="glassfish" command="~/tools/deploy.sh" trust="true" />
 
-                                        <echo message="Step 5 - Deployement successful"/>
+                                        <echo message="Step 5 - Deployement successful" />
                                     </target>
                                 </configuration>
                                 <goals>
@@ -294,19 +294,19 @@
                                 <configuration>
                                     <debug>true</debug>
                                     <target>
-                                        <echo message="Step 1 - Stop service server"/>
+                                        <echo message="Step 1 - Stop service server" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/shutdownDomain.sh" trust="true" />
 
-                                        <echo message="Step 2 - Undeploy application"/>
+                                        <echo message="Step 2 - Undeploy application" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/undeploy.sh" trust="true" />
 
-                                        <echo message="Step 3 - Deploy application"/>
+                                        <echo message="Step 3 - Deploy application" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/deploy.sh" trust="true" />
 
-                                        <echo message="Step 4 - Start service server"/>
+                                        <echo message="Step 4 - Start service server" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/startDomain.sh" trust="true" />
 
-                                        <echo message="Step 4 - Start service server"/>
+                                        <echo message="Step 4 - Start service server" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="play" password="play" command="~/tools/validateEnvironment.sh " trust="true" />
 
                                     </target>
@@ -346,10 +346,10 @@
                                 <configuration>
                                     <debug>true</debug>
                                     <target>
-                                        <echo message="Step 1 - Test migration scrpit on the pprod postgress db"/>
+                                        <echo message="Step 1 - Test migration scrpit on the pprod postgress db" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="exploit" password="exploit" command="~/tools/database/test_migration.sh" trust="true" />
 
-                                        <echo message="Step 2 - Run the migration"/>
+                                        <echo message="Step 2 - Run the migration" />
                                         <sshexec host="usine-dev.edubois.org" port="2211" username="exploit" password="exploit" command="~/tools/database/migration.sh" trust="true" />
 
                                     </target>
