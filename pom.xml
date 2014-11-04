@@ -6,13 +6,13 @@
 
     <groupId>org.mdubois</groupId>
     <artifactId>freeveggie</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/tags/freeveggie-1.0.0.0</connection>
-        <developerConnection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/tags/freeveggie-1.0.0.0</developerConnection>
-        <url>http://usine-dev.edubois.org/svn/freeveggie/tags/freeveggie-1.0.0.0</url>
+        <connection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/trunk</connection>
+        <developerConnection>scm:svn:http://usine-dev.edubois.org/svn/freeveggie/trunk</developerConnection>
+        <url>http://usine-dev.edubois.org/svn/freeveggie/trunk</url>
     </scm>
 
     <modules>

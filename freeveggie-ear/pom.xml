@@ -4,12 +4,12 @@
   <parent>
     <artifactId>freeveggie</artifactId>
     <groupId>org.mdubois</groupId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>org.mdubois</groupId>
   <artifactId>freeveggie-ear</artifactId>
-  <version>1.0.0.0</version>
+  <version>1.0.0.1-SNAPSHOT</version>
   <packaging>ear</packaging>
 
   <build>
