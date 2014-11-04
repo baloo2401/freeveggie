@@ -4,12 +4,12 @@
     <parent>
         <artifactId>freeveggie-framework</artifactId>
         <groupId>org.mdubois</groupId>
-        <version>1.0.0.0</version>
+        <version>1.0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>org.mdubois</groupId>
     <artifactId>freeveggie-framework-test</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <!-- Scope Test Dependency -->

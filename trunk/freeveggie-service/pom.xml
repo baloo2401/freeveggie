@@ -6,12 +6,12 @@
     <parent>
         <groupId>org.mdubois</groupId>
         <artifactId>freeveggie</artifactId>
-        <version>1.0.0.0</version>
+        <version>1.0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>org.mdubois</groupId>
     <artifactId>freeveggie-service</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
