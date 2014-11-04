@@ -4,12 +4,12 @@
     <parent>
         <artifactId>freeveggie-service</artifactId>
         <groupId>org.mdubois</groupId>
-        <version>1.0.0.0</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.mdubois</groupId>
     <artifactId>freeveggie-service-exp</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>freeveggie-service-exp</name>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.mdubois</groupId>
             <artifactId>freeveggie-service-impl</artifactId>
-            <version>1.0.0.0</version>
+            <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
